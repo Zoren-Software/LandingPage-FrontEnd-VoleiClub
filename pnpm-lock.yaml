@@ -8,7 +8,7 @@ dependencies:
     specifier: ^6.7.0
     version: 6.7.0
   vuestic-ui:
-    specifier: ^1.7.4
+    specifier: ^1.8.0
     version: 1.8.0(vue@3.3.4)
 
 devDependencies:

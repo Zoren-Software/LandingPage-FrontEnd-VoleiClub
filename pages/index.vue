@@ -1,11 +1,5 @@
 <template>
-  <VaNavbar color="primary">
-    <template #right class="">
-      <va-navbar-item>Home</va-navbar-item>
-      <va-navbar-item class="hidden sm:block">Contato</va-navbar-item>
-      <va-navbar-item>FAQ</va-navbar-item>
-    </template>
-  </VaNavbar>
+  <h1>Home bonita</h1>
 </template>
 
 <script setup lang="ts">
@@ -33,23 +27,4 @@ const darkNavbarColors = computed(() => {
 });
 </script>
 
-<style>
-.va-screen-xs {
-  margin: 0 auto;
-}
-.va-screen-sm {
-  margin: 0 auto;
-}
-.va-screen-md {
-  margin: 0 auto;
-}
-.va-screen-lg {
-  margin: 0 auto;
-}
-.va-screen-xl {
-  margin: 0 auto;
-}
-.va-navbar__right {
-  margin-right: 2 rem;
-}
-</style>
+<style></style>
