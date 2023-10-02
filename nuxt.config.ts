@@ -16,6 +16,7 @@ export default defineNuxtConfig({
         config: {
         // Config here
         },
+        css: true
     },
 
     head: {

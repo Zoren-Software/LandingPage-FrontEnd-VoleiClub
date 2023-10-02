@@ -16,8 +16,8 @@
         </template>
         <template #right style="margin-right: 50px">
           <va-navbar-item @click="routeHome()">Home</va-navbar-item>
-          <va-navbar-item @click="routeContact()" class="hidden sm:block"
-            >Contato</va-navbar-item
+          <va-navbar-item @click="routeRegister()" class="hidden sm:block"
+            >Registrar</va-navbar-item
           >
           <va-navbar-item @click="routeFAQ()">FAQ</va-navbar-item>
         </template>
@@ -32,8 +32,8 @@
           </VaSidebarItemContent>
         </VaSidebarItem>
         <VaSidebarItem>
-          <VaSidebarItemContent @click="routeContact()">
-            <VaSidebarItemTitle> Contatos </VaSidebarItemTitle>
+          <VaSidebarItemContent @click="routeRegister()">
+            <VaSidebarItemTitle> Registrar </VaSidebarItemTitle>
           </VaSidebarItemContent>
         </VaSidebarItem>
         <VaSidebarItem>
@@ -59,9 +59,9 @@ export default {
     };
   },
   methods: {
-    routeContact() {
-      console.log("routeContact");
-      this.$router.push("/contact");
+    routeRegister() {
+      console.log("routeRegister");
+      this.$router.push("/register");
     },
     routeFAQ() {
       console.log("routeFAQ");

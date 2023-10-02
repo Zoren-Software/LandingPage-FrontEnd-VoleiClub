@@ -1,5 +1,4 @@
 <template>
-  <h1>Contato</h1>
   <ContactForm />
 </template>
 
