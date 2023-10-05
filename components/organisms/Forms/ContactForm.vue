@@ -111,6 +111,7 @@
               <div class="flex flex-col md12 sm12 xs12">
                 <div class="item">
                   <va-input
+                    name="name"
                     class="display-block"
                     stateful
                     v-model="form.name"
@@ -127,6 +128,7 @@
               <div class="flex flex-col md12 sm12 xs12">
                 <div class="item">
                   <va-input
+                    name="email"
                     class="display-block"
                     v-model="form.email"
                     type="email"
@@ -143,6 +145,7 @@
               <div class="flex flex-col md12 sm12 xs12">
                 <div class="item">
                   <va-select
+                    name="option"
                     class="display-block"
                     v-model="form.option"
                     label="Nível de Experiência"
@@ -150,7 +153,7 @@
                     :options="options"
                     :rules="[
                       (value) =>
-                        (value && value.length > 0) ||
+                        (value.value && value.value.length > 0) ||
                         'Nível de Experiência é obrigatório',
                     ]"
                   />
@@ -161,6 +164,7 @@
               <div class="flex flex-col md12 sm12 xs12">
                 <div class="item">
                   <va-textarea
+                    name="message"
                     class="display-block"
                     v-model="form.message"
                     label="Mensagem"
@@ -183,49 +187,49 @@
   </div>
 </template>
 
-<script>
-export default {
-  setup() {
-    const form = ref({
-      name: "",
-      email: "",
-      option: "",
-      message: "",
-    });
+<script setup>
+import { ref } from "vue";
 
-    const options = ref([
-      { value: null, text: "Selecione" },
-      { value: "beginner", text: "Iniciante" },
-      { value: "amateur", text: "Amador" },
-      { value: "student", text: "Estudante" },
-      { value: "college", text: "Universitário" },
-      { value: "semi-professional", text: "Semi-profissional" },
-      { value: "professional", text: "Profissional" },
-      { value: "intermediate", text: "Intermediário" },
-      { value: "coach", text: "Treinador" },
-      { value: "instructor", text: "Instrutor" },
-      { value: "other", text: "Outro" },
-    ]);
+const { $customFetch } = useNuxtApp();
+const data = ref(null);
 
-    const formRef = ref(null);
+const form = ref({
+  name: "",
+  email: "",
+  option: "",
+  message: "",
+});
 
-    const submit = () => {
-      formRef.value.validate().then((success) => {
-        if (success) {
-          console.log("Form is valid");
-        } else {
-          console.log("Form is not valid");
-        }
+const options = ref([
+  { value: null, text: "Selecione" },
+  { value: "beginner", text: "Iniciante" },
+  { value: "amateur", text: "Amador" },
+  { value: "student", text: "Estudante" },
+  { value: "college", text: "Universitário" },
+  { value: "semi-professional", text: "Semi-profissional" },
+  { value: "professional", text: "Profissional" },
+  { value: "intermediate", text: "Intermediário" },
+  { value: "coach", text: "Treinador" },
+  { value: "instructor", text: "Instrutor" },
+  { value: "other", text: "Outro" },
+]);
+
+const formRef = ref(null);
+
+const submit = () => {
+  console.log("submit");
+  try {
+    // TODO - Fazer o post na API
+    data.value = $customFetch("/ping")
+      .then((resultado) => {
+        console.log(resultado);
+      })
+      .catch((erro) => {
+        console.error("Erro ao buscar dadosss:", erro);
       });
-    };
-
-    return {
-      form,
-      formRef,
-      submit,
-      options,
-    };
-  },
+  } catch (error) {
+    console.error("Erro ao buscar dados:", error);
+  }
 };
 </script>
 
