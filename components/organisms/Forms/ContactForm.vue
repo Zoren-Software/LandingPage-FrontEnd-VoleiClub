@@ -1,7 +1,7 @@
 <template>
   <div class="flex justify-end pa-3">
     <div class="row">
-      <div class="flex flex-col md7 offset-md1 sm12 xs12">
+      <div class="flex flex-col md7 sm12 xs12">
         <div class="pa-3 w-1/2">
           <h1 class="va-h1 va-text-center font-bold">
             Seja bem-vindo ao VoleiClub!
@@ -101,74 +101,76 @@
         </div>
       </div>
       <va-form ref="formRef" class="flex flex-col md3 sm12 xs12 mb-5 ml-4 mr-4">
-        <h2 class="va-h2 va-text-center font-semibold mt-4">
-          Pronto para entrar na jogada?
-        </h2>
-        <va-card class="pa-5">
-          <h2 class="va-h2 va-text-center">Registrar</h2>
-          <div class="row mb-2">
-            <div class="flex flex-col md12 sm12 xs12">
-              <div class="item">
-                <va-input
-                  class="display-block"
-                  stateful
-                  v-model="form.name"
-                  :rules="[
-                    (value) =>
-                      (value && value.length > 0) || 'Nome é obrigatório',
-                  ]"
-                  label="name"
-                />
+        <div class="position-fixed">
+          <h2 class="va-h2 va-text-center font-semibold mt-4 mb-5">
+            Pronto para entrar na jogada?
+          </h2>
+          <va-card class="pa-5">
+            <h2 class="va-h2 va-text-center">Registrar</h2>
+            <div class="row mb-2">
+              <div class="flex flex-col md12 sm12 xs12">
+                <div class="item">
+                  <va-input
+                    class="display-block"
+                    stateful
+                    v-model="form.name"
+                    :rules="[
+                      (value) =>
+                        (value && value.length > 0) || 'Nome é obrigatório',
+                    ]"
+                    label="name"
+                  />
+                </div>
               </div>
             </div>
-          </div>
-          <div class="row mb-2">
-            <div class="flex flex-col md12 sm12 xs12">
-              <div class="item">
-                <va-input
-                  class="display-block"
-                  v-model="form.email"
-                  type="email"
-                  :rules="[
-                    (value) =>
-                      (value && value.length > 0) || 'E-mail é obrigatório',
-                  ]"
-                  label="e-mail"
-                />
+            <div class="row mb-2">
+              <div class="flex flex-col md12 sm12 xs12">
+                <div class="item">
+                  <va-input
+                    class="display-block"
+                    v-model="form.email"
+                    type="email"
+                    :rules="[
+                      (value) =>
+                        (value && value.length > 0) || 'E-mail é obrigatório',
+                    ]"
+                    label="e-mail"
+                  />
+                </div>
               </div>
             </div>
-          </div>
-          <div class="row mb-2">
-            <div class="flex flex-col md12 sm12 xs12">
-              <div class="item">
-                <va-select
-                  class="display-block"
-                  v-model="form.option"
-                  label="Nível de Experiência"
-                  :options="options"
-                />
+            <div class="row mb-2">
+              <div class="flex flex-col md12 sm12 xs12">
+                <div class="item">
+                  <va-select
+                    class="display-block"
+                    v-model="form.option"
+                    label="Nível de Experiência"
+                    :options="options"
+                  />
+                </div>
               </div>
             </div>
-          </div>
-          <div class="row mb-2">
-            <div class="flex flex-col md12 sm12 xs12">
-              <div class="item">
-                <va-textarea
-                  class="display-block"
-                  v-model="form.message"
-                  label="Mensagem"
-                />
+            <div class="row mb-2">
+              <div class="flex flex-col md12 sm12 xs12">
+                <div class="item">
+                  <va-textarea
+                    class="display-block"
+                    v-model="form.message"
+                    label="Mensagem"
+                  />
+                </div>
               </div>
             </div>
-          </div>
-          <div class="row mb-2 mt-2">
-            <div class="flex flex-col md12 sm12 xs12">
-              <div class="item">
-                <va-button block @click="submit">Enviar</va-button>
+            <div class="row mb-2 mt-2">
+              <div class="flex flex-col md12 sm12 xs12">
+                <div class="item">
+                  <va-button block @click="submit">Enviar</va-button>
+                </div>
               </div>
             </div>
-          </div>
-        </va-card>
+          </va-card>
+        </div>
       </va-form>
     </div>
   </div>
@@ -257,6 +259,19 @@ export default {
 @media (min-width: 1640px) {
   .card-content-voz {
     height: 113px;
+  }
+}
+
+@media (min-width: 768px) {
+  .position-fixed {
+    position: fixed;
+  }
+}
+
+@media (min-width: 958px) {
+  .position-fixed {
+    position: fixed;
+    margin-right: 3rem;
   }
 }
 </style>
