@@ -3,7 +3,7 @@
     <div class="row">
       <div class="flex flex-col md7 sm12 xs12">
         <div class="pa-3 w-1/2">
-          <h1 class="va-h1 va-text-center font-bold">
+          <h1 class="va-h1 va-text-center font-bold mt-5">
             Seja bem-vindo ao VoleiClub!
           </h1>
           <p class="text-apresentation">
@@ -146,7 +146,13 @@
                     class="display-block"
                     v-model="form.option"
                     label="Nível de Experiência"
+                    placeholder="Selecione uma opção"
                     :options="options"
+                    :rules="[
+                      (value) =>
+                        (value && value.length > 0) ||
+                        'Nível de Experiência é obrigatório',
+                    ]"
                   />
                 </div>
               </div>
@@ -158,6 +164,7 @@
                     class="display-block"
                     v-model="form.message"
                     label="Mensagem"
+                    placeholder="(opcional) Deixe sua mensagem aqui!"
                   />
                 </div>
               </div>
