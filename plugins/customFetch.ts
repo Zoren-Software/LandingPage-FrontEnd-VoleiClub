@@ -6,12 +6,14 @@ export default defineNuxtPlugin({
     async setup(nuxtApp) {
       const baseUrl = process.env.ENDPOINT_API ?? "http://localhost/api"
 
-      async function customFetch(endpoint, options = {}) {
+      async function customFetch(endpoint, method, options = {}) {
         const url = `${baseUrl}${endpoint}`;
         const response = await fetch(url, {
+          method,
           ...options,
           headers: {
             'Content-Type': 'application/json',
+            'accept': 'application/json',
             ...options.headers,
           },
         });

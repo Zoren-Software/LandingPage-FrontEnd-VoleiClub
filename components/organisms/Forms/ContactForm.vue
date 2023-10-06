@@ -113,6 +113,7 @@
                   <va-input
                     name="name"
                     class="display-block"
+                    placeholder="Digite seu nome"
                     stateful
                     v-model="form.name"
                     :rules="[
@@ -130,6 +131,7 @@
                   <va-input
                     name="email"
                     class="display-block"
+                    placeholder="Digite seu e-mail"
                     v-model="form.email"
                     type="email"
                     :rules="[
@@ -220,7 +222,7 @@ const submit = () => {
   console.log("submit");
   try {
     // TODO - Fazer o post na API
-    data.value = $customFetch("/ping")
+    data.value = $customFetch("/leads", "POST", form.value)
       .then((resultado) => {
         console.log(resultado);
       })
