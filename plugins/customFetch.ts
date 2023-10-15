@@ -17,9 +17,12 @@ export default defineNuxtPlugin({
             ...options.headers,
           },
         });
-  
+
         if (!response.ok) {
-          throw new Error(`Failed to fetch ${url}: ${response.statusText}`);
+            const errorData = await response.json(); // Supondo que o corpo da resposta contém JSON
+            const customError = new Error('Erro na requisição');
+            customError.response = errorData; // Anexar os detalhes do erro
+            throw customError;
         }
   
         return await response.json();

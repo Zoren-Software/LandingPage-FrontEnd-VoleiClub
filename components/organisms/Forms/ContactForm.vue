@@ -116,11 +116,9 @@
                     placeholder="Digite seu nome"
                     stateful
                     v-model="form.name"
-                    :rules="[
-                      (value) =>
-                        (value && value.length > 0) || 'Nome é obrigatório',
-                    ]"
-                    label="name"
+                    :error="errors.errors.name != ''"
+                    :error-messages="errors.errors.name"
+                    label="Nome"
                   />
                 </div>
               </div>
@@ -134,11 +132,9 @@
                     placeholder="Digite seu e-mail"
                     v-model="form.email"
                     type="email"
-                    :rules="[
-                      (value) =>
-                        (value && value.length > 0) || 'E-mail é obrigatório',
-                    ]"
-                    label="e-mail"
+                    :error="errors.errors.email != ''"
+                    :error-messages="errors.errors.email"
+                    label="E-mail"
                   />
                 </div>
               </div>
@@ -149,7 +145,7 @@
                   <va-select
                     name="option"
                     class="display-block"
-                    v-model="form.option"
+                    v-model="form.experience_level"
                     label="Nível de Experiência"
                     placeholder="Selecione uma opção"
                     :options="options"
@@ -158,6 +154,8 @@
                         (value.value && value.value.length > 0) ||
                         'Nível de Experiência é obrigatório',
                     ]"
+                    :error="errors.errors.experience_level != ''"
+                    :error-messages="errors.errors.experience_level"
                   />
                 </div>
               </div>
@@ -193,12 +191,23 @@
 import { ref } from "vue";
 
 const { $customFetch } = useNuxtApp();
+
 const data = ref(null);
 
 const form = ref({
   name: "",
   email: "",
-  option: "",
+  experience_level: "",
+  message: "",
+});
+
+let errors = ref({
+  errors: {
+    name: "",
+    email: "",
+    experience_level: "",
+    message: "",
+  },
   message: "",
 });
 
@@ -218,20 +227,37 @@ const options = ref([
 
 const formRef = ref(null);
 
-const submit = () => {
-  console.log("submit");
+const submit = async () => {
   try {
     // TODO - Fazer o post na API
-    data.value = $customFetch("/leads", "POST", form.value)
+    data.value = await $customFetch("/leads", "POST", {
+      body: JSON.stringify({
+        name: form.value.name,
+        email: form.value.email,
+        experience_level: form.value.experience_level.value,
+        message: form.value.message,
+      }),
+    })
       .then((resultado) => {
+        console.log(resultado, "aqui?");
         console.log(resultado);
       })
-      .catch((erro) => {
-        console.error("Erro ao buscar dadosss:", erro);
+      .catch(({ response }) => {
+        errors.value = response;
       });
-  } catch (error) {
-    console.error("Erro ao buscar dados:", error);
+  } catch ({ response }) {
+    if (response) {
+      // Se o erro tem um campo 'response', então é provável que seja uma resposta HTTP
+      const erroData = await error.response.json(); // Converta o corpo da resposta para JSON
+      console.log("Detalhes do erro:", erroData);
+      // Agora você pode fazer algo com erroData, como mostrá-lo na interface do usuário
+    }
   }
+};
+
+// fazer o emits para o form
+const emit = (event, ...args) => {
+  formRef.value.$emit(event, ...args);
 };
 </script>
 
