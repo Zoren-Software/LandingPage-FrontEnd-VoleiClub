@@ -14,6 +14,9 @@ dependencies:
   material-design-icons-iconfont:
     specifier: ^6.7.0
     version: 6.7.0
+  vue-sweetalert2:
+    specifier: ^5.0.5
+    version: 5.0.5(vue@3.3.4)
   vuestic-ui:
     specifier: ^1.8.0
     version: 1.8.0(vue@3.3.4)
@@ -5200,6 +5203,10 @@ packages:
       csso: 5.0.5
       picocolors: 1.0.0
 
+  /sweetalert2@11.7.32:
+    resolution: {integrity: sha512-44tNNe2oLe7T94mT6dus4hc9G7qg6jZU/K5qZzpNS6e5HGPrSF6Kie6oZ7B5puIJydB34V2h/8f5EhIFivYo4A==}
+    dev: false
+
   /sync-content@1.0.2:
     resolution: {integrity: sha512-znd3rYiiSxU3WteWyS9a6FXkTA/Wjk8WQsOyzHbineeL837dLn3DA4MRhsIX3qGcxDMH6+uuFV4axztssk7wEQ==}
     engines: {node: '>=14'}
@@ -5767,6 +5774,15 @@ packages:
     dependencies:
       '@vue/devtools-api': 6.5.0
       vue: 3.3.4
+
+  /vue-sweetalert2@5.0.5(vue@3.3.4):
+    resolution: {integrity: sha512-Q7+TjQxNwGruT2jfPaSKMz18HHWs81r4umEwlrrtOf/QL5Iwl1T+tUaNkcvKB7Rf9rYftubt7NnOMjfDMnDH3A==}
+    peerDependencies:
+      vue: '*'
+    dependencies:
+      sweetalert2: 11.7.32
+      vue: 3.3.4
+    dev: false
 
   /vue@3.3.4:
     resolution: {integrity: sha512-VTyEYn3yvIeY1Py0WaYGZsXnz3y5UnGi62GjVEqvEGPl6nxbOrCXbVOTQWBEJUqAyTUk2uJ5JLVnYJ6ZzGbrSw==}
