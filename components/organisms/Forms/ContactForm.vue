@@ -156,6 +156,7 @@
                     ]"
                     :error="errors.errors.experience_level != ''"
                     :error-messages="errors.errors.experience_level"
+                    clearable
                   />
                 </div>
               </div>
