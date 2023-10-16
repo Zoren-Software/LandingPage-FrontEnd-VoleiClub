@@ -16,20 +16,23 @@
         </template>
         <template #right style="margin-right: 50px">
           <va-navbar-item>
-            <va-select
-              name="option"
-              v-model="locale"
-              class="display-block"
-              :label="$t('label_language')"
-              :placeholder="$t('placeholder_language')"
-              :options="[
-                { value: 'pt-br', text: $t('option_language_pt_br') },
-                { value: 'en', text: $t('option_language_en') },
-              ]"
-              valueBy="value"
-              autoSelectFirstOption
-              clearable
-          /></va-navbar-item>
+            <div class="custom-select-language">
+              <va-select
+                name="option"
+                v-model="locale"
+                class="display-block"
+                :label="$t('label_language')"
+                :placeholder="$t('placeholder_language')"
+                :options="[
+                  { value: 'pt-br', text: $t('option_language_pt_br') },
+                  { value: 'en', text: $t('option_language_en') },
+                ]"
+                valueBy="value"
+                autoSelectFirstOption
+                style="width: max-content"
+              />
+            </div>
+          </va-navbar-item>
           <va-navbar-item @click="routeHome()">{{
             $t("menu_title_home")
           }}</va-navbar-item>
@@ -106,5 +109,10 @@ const routeHome = () => {
 .logo {
   font-weight: 600;
   font-size: 1.5rem;
+}
+
+.custom-select-language {
+  height: 4rem;
+  width: 11rem;
 }
 </style>
