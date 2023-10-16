@@ -15,6 +15,21 @@
           </va-navbar-item>
         </template>
         <template #right style="margin-right: 50px">
+          <va-navbar-item>
+            <va-select
+              name="option"
+              v-model="locale"
+              class="display-block"
+              label="Linguagens"
+              placeholder="Selecione uma lingua"
+              :options="[
+                { value: 'pt-br', text: 'Português' },
+                { value: 'en', text: 'Inglês' },
+              ]"
+              valueBy="value"
+              autoSelectFirstOption
+              clearable
+          /></va-navbar-item>
           <va-navbar-item @click="routeHome()">Home</va-navbar-item>
           <va-navbar-item @click="routeRegister()" class="hidden sm:block"
             >Registrar</va-navbar-item
@@ -51,27 +66,29 @@
     </template>
   </VaLayout>
 </template>
-<script>
-export default {
-  data() {
-    return {
-      showSidebar: false,
-    };
-  },
-  methods: {
-    routeRegister() {
-      console.log("routeRegister");
-      this.$router.push("/register");
-    },
-    routeFAQ() {
-      console.log("routeFAQ");
-      this.$router.push("/faq");
-    },
-    routeHome() {
-      console.log("routeHome");
-      this.$router.push("/");
-    },
-  },
+<script setup>
+import { ref } from "vue";
+import { useRouter } from "vue-router";
+import { useI18n, useLocalePath } from "#imports";
+
+const router = useRouter();
+const showSidebar = ref(false);
+
+const { locale } = useI18n();
+
+const routeRegister = () => {
+  console.log("routeRegister");
+  router.push("/register");
+};
+
+const routeFAQ = () => {
+  console.log("routeFAQ");
+  router.push("/faq");
+};
+
+const routeHome = () => {
+  console.log("routeHome");
+  router.push("/");
 };
 </script>
 

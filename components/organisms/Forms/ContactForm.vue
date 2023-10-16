@@ -4,17 +4,15 @@
       <div class="flex flex-col md7 sm12 xs12">
         <div class="pa-3 w-1/2">
           <h1 class="va-h1 va-text-center font-bold mt-5">
-            Seja bem-vindo ao VoleiClub!
+            {{ $t("welcome") }}
           </h1>
           <p class="text-apresentation">
-            Estamos felizes em ter você aqui! O VoleiClub não quer ser uma
-            simples plataforma e sim uma comunidade dedicada a transformar a
-            forma como organizamos e gerenciamos treinos e times de voleibol.
+            {{ $t("welcome_message") }}
           </p>
           <va-image src="/images/image_heart_2.svg" fit="contain" lazy />
 
           <h2 class="va-h2 va-text-center font-semibold mt-5 mb-5">
-            Por que se registrar agora?
+            {{ $t("title_why_register") }}
           </h2>
           <div class="row">
             <div class="flex flex-col md12 sm12 lg12 xl4">
@@ -22,9 +20,10 @@
                 <va-card :bordered="false">
                   <va-image src="/images/image_access.svg" fit="contain" lazy />
                   <va-card-content class="card-content-antecipado">
-                    <h6 class="va-h6">Acesso Antecipado</h6>
-                    Esteja entre os primeiros a experimentar as funcionalidades
-                    da nossa versão alpha.
+                    <h6 class="va-h6">
+                      {{ $t("subtitle_early_access") }}
+                    </h6>
+                    {{ $t("text_early_access") }}
                   </va-card-content>
                 </va-card>
               </div>
@@ -34,9 +33,10 @@
                 <va-card :bordered="false">
                   <va-image src="/images/image_price.svg" fit="contain" lazy />
                   <va-card-content class="card-content-exclusivo">
-                    <h6 class="va-h6">Descontos Exclusivos</h6>
-                    Os usuários que nos ajudarem na fase inicial serão
-                    recompensados com descontos nas mensalidades futuras.
+                    <h6 class="va-h6">
+                      {{ $t("subtitle_exclusive_discounts") }}
+                    </h6>
+                    {{ $t("text_exclusive_discounts") }}
                   </va-card-content>
                 </va-card>
               </div>
@@ -50,9 +50,10 @@
                     lazy
                   />
                   <va-card-content class="card-content-voz">
-                    <h6 class="va-h6">Tenha Sua Voz Ouvida</h6>
-                    Utilize o nosso canal de feedback para sugerir melhorias e
-                    novas funcionalidades.
+                    <h6 class="va-h6">
+                      {{ $t("subtitle_have_your_voice_heard") }}
+                    </h6>
+                    {{ $t("text_have_your_voice_heard") }}
                   </va-card-content>
                 </va-card>
               </div>
@@ -60,7 +61,7 @@
           </div>
 
           <h2 class="va-h2 va-text-center font-semibold mt-5 mb-5">
-            Segurança e Desenvolvimento
+            {{ $t("title_security_and_development") }}
           </h2>
           <div class="row">
             <div class="flex flex-col md12 lg6">
@@ -72,10 +73,10 @@
                     lazy
                   ></va-image>
                   <va-card-content>
-                    <h6 class="va-h6">Segurança</h6>
-                    Seus dados estão seguros conosco. Seguimos todas as
-                    diretrizes da LGPD e sua privacidade é nossa prioridade
-                    máxima.
+                    <h6 class="va-h6">
+                      {{ $t("subtitle_security_and_development") }}
+                    </h6>
+                    {{ $t("text_security_and_development") }}
                   </va-card-content>
                 </va-card>
               </div>
@@ -89,10 +90,8 @@
                     lazy
                   ></va-image>
                   <va-card-content>
-                    <h6 class="va-h6">Desenvolvimento</h6>
-                    Nossa equipe de desenvolvedores está constantemente
-                    trabalhando para manter o sistema seguro e livre de
-                    vulnerabilidades.
+                    <h6 class="va-h6">{{ $t("subtitle_development") }}</h6>
+                    {{ $t("text_development") }}
                   </va-card-content>
                 </va-card>
               </div>
@@ -103,22 +102,22 @@
       <va-form ref="formRef" class="flex flex-col md3 sm12 xs12 mb-5 ml-4 mr-4">
         <div class="position-fixed">
           <h2 class="va-h2 va-text-center font-semibold mt-4 mb-5">
-            Pronto para entrar na jogada?
+            {{ $t("title_ready_to_jump_in") }}
           </h2>
           <va-card class="pa-5">
-            <h2 class="va-h2 va-text-center">Registrar</h2>
+            <h2 class="va-h2 va-text-center">{{ $t("title_register") }}</h2>
             <div class="row mb-2">
               <div class="flex flex-col md12 sm12 xs12">
                 <div class="item">
                   <va-input
                     name="name"
                     class="display-block"
-                    placeholder="Digite seu nome"
+                    :placeholder="$t('placeholder_name')"
                     stateful
                     v-model="form.name"
                     :error="errors?.errors?.name != ''"
                     :error-messages="errors?.errors?.name"
-                    label="Nome"
+                    :label="$t('label_name')"
                   />
                 </div>
               </div>
@@ -129,12 +128,12 @@
                   <va-input
                     name="email"
                     class="display-block"
-                    placeholder="Digite seu e-mail"
+                    :placeholder="$t('placeholder_email')"
                     v-model="form.email"
                     type="email"
                     :error="errors?.errors?.email != ''"
                     :error-messages="errors?.errors?.email"
-                    label="E-mail"
+                    :label="$t('label_email')"
                   />
                 </div>
               </div>
@@ -146,13 +145,13 @@
                     name="option"
                     class="display-block"
                     v-model="form.experience_level"
-                    label="Nível de Experiência"
-                    placeholder="Selecione uma opção"
+                    :label="$t('label_experience_level')"
+                    :placeholder="$t('placeholder_experience_level')"
                     :options="options"
                     :rules="[
                       (value) =>
                         (value.value && value.value.length > 0) ||
-                        'Nível de Experiência é obrigatório',
+                        $t('message_error_level_experience_required'),
                     ]"
                     :error="errors?.errors?.experience_level != ''"
                     :error-messages="errors?.errors?.experience_level"
@@ -168,8 +167,8 @@
                     name="message"
                     class="display-block"
                     v-model="form.message"
-                    label="Mensagem"
-                    placeholder="(opcional) Deixe sua mensagem aqui!"
+                    :label="$t('label_message')"
+                    :placeholder="$t('placeholder_message')"
                   />
                 </div>
               </div>
@@ -177,7 +176,9 @@
             <div class="row mb-2 mt-2">
               <div class="flex flex-col md12 sm12 xs12">
                 <div class="item">
-                  <va-button block @click="submit">Enviar</va-button>
+                  <va-button block @click="submit">{{
+                    $t("button_register")
+                  }}</va-button>
                 </div>
               </div>
             </div>

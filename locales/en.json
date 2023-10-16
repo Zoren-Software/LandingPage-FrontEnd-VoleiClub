@@ -1,0 +1,31 @@
+{
+    "welcome": "Welcome to VoleiClub!",
+    "welcome_message": "We're glad to have you here! VoleiClub aims to be more than just a platform; we're a community dedicated to transforming the way we organize and manage volleyball teams and training.",
+    "title_why_register": "Why Register Now?",
+    "subtitle_early_access": "Early Access",
+    "text_early_access": "Be among the first to try out the features of our alpha version.",
+    "subtitle_exclusive_discounts": "Exclusive Discounts",
+    "text_exclusive_discounts": "Users who help us in the initial phase will be rewarded with discounts on future subscriptions.",
+    "subtitle_have_your_voice_heard": "Have Your Voice Heard",
+    "text_have_your_voice_heard": "Use our feedback channel to suggest improvements and new features.",
+    "title_security_and_development": "Security and Development",
+    "subtitle_security_and_development": "Security",
+    "text_security_and_development": "Your data is safe with us. We follow all LGPD guidelines, and your privacy is our top priority.",
+    "subtitle_development": "Development",
+    "text_development": "Our development team is constantly working to keep the system secure and free from vulnerabilities.",
+    "title_ready_to_jump_in": "Ready to Jump In?",
+    "title_register": "Register",
+    "placeholder_name": "Enter your name",
+    "label_name": "Name",
+    "placeholder_email": "Enter your email",
+    "label_email": "Email",
+    "placeholder_experience_level": "Select an option",
+    "label_experience_level": "Experience Level",
+    "message_error_level_experience_required": "Experience Level is required",
+    "label_message": "Message",
+    "placeholder_message": "(optional) Enter your message",
+    "button_register": "Register"
+}
+
+
+
