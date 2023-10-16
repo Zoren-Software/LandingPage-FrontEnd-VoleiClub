@@ -20,21 +20,25 @@
               name="option"
               v-model="locale"
               class="display-block"
-              label="Linguagens"
-              placeholder="Selecione uma lingua"
+              :label="$t('label_language')"
+              :placeholder="$t('placeholder_language')"
               :options="[
-                { value: 'pt-br', text: 'Português' },
-                { value: 'en', text: 'Inglês' },
+                { value: 'pt-br', text: $t('option_language_pt_br') },
+                { value: 'en', text: $t('option_language_en') },
               ]"
               valueBy="value"
               autoSelectFirstOption
               clearable
           /></va-navbar-item>
-          <va-navbar-item @click="routeHome()">Home</va-navbar-item>
-          <va-navbar-item @click="routeRegister()" class="hidden sm:block"
-            >Registrar</va-navbar-item
-          >
-          <va-navbar-item @click="routeFAQ()">FAQ</va-navbar-item>
+          <va-navbar-item @click="routeHome()">{{
+            $t("menu_title_home")
+          }}</va-navbar-item>
+          <va-navbar-item @click="routeRegister()" class="hidden sm:block">{{
+            $t("menu_title_register")
+          }}</va-navbar-item>
+          <va-navbar-item @click="routeFAQ()">{{
+            $t("menu_title_faq")
+          }}</va-navbar-item>
         </template>
       </VaNavbar>
     </template>
@@ -43,17 +47,23 @@
       <VaSidebar v-model="showSidebar">
         <VaSidebarItem>
           <VaSidebarItemContent @click="routeHome()">
-            <VaSidebarItemTitle> Home </VaSidebarItemTitle>
+            <VaSidebarItemTitle>
+              {{ $t("menu_title_home") }}
+            </VaSidebarItemTitle>
           </VaSidebarItemContent>
         </VaSidebarItem>
         <VaSidebarItem>
           <VaSidebarItemContent @click="routeRegister()">
-            <VaSidebarItemTitle> Registrar </VaSidebarItemTitle>
+            <VaSidebarItemTitle>
+              {{ $t("menu_title_register") }}
+            </VaSidebarItemTitle>
           </VaSidebarItemContent>
         </VaSidebarItem>
         <VaSidebarItem>
           <VaSidebarItemContent @click="routeFAQ()">
-            <VaSidebarItemTitle> FAQ </VaSidebarItemTitle>
+            <VaSidebarItemTitle>
+              {{ $t("menu_title_faq") }}
+            </VaSidebarItemTitle>
           </VaSidebarItemContent>
         </VaSidebarItem>
       </VaSidebar>
@@ -69,7 +79,7 @@
 <script setup>
 import { ref } from "vue";
 import { useRouter } from "vue-router";
-import { useI18n, useLocalePath } from "#imports";
+import { useI18n } from "#imports";
 
 const router = useRouter();
 const showSidebar = ref(false);

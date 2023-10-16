@@ -24,5 +24,12 @@
     "message_error_level_experience_required" : "Nível de Experiência é obrigatório",
     "label_message" : "Mensagem",
     "placeholder_message" : "(opcional) Digite sua mensagem",
-    "button_register" : "Registrar"
+    "button_register" : "Registrar",
+    "label_language" : "Idioma",
+    "placeholder_language": "Selecione uma opção",
+    "option_language_pt_br": "Português (Brasil)",
+    "option_language_en": "Inglês",
+    "menu_title_home": "Inicio",
+    "menu_title_register": "Registrar",
+    "menu_title_faq": "FAQ"
 }
