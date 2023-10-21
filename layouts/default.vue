@@ -94,6 +94,17 @@ const showSidebar = ref(false);
 
 const { locale } = useI18n();
 
+// Carregar o idioma do localStorage ou usar 'en' como padrão
+if (!localStorage.getItem("selectedLanguage")) {
+  localStorage.setItem("selectedLanguage", "en");
+}
+locale.value = localStorage.getItem("selectedLanguage");
+
+// Assistir a mudanças no idioma e atualizar o localStorage
+watch(locale, (newLocale) => {
+  localStorage.setItem("selectedLanguage", newLocale);
+});
+
 const routeRegister = () => {
   console.log("routeRegister");
   router.push("/register");
