@@ -29,6 +29,11 @@
     "placeholder_language": "Select an option",
     "option_language_pt_br": "Portuguese (Brazil)",
     "option_language_en": "English",
+    "option_language_es": "Spanish",
+    "option_language_fr": "French",
+    "option_language_it": "Italian",
+    "option_language_pl": "Polish",
+    "option_language_ru": "Russian",
     "menu_title_home": "Home",
     "menu_title_register": "Register",
     "menu_title_faq": "FAQ"

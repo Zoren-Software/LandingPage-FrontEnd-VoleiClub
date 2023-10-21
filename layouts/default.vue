@@ -26,6 +26,11 @@
                 :options="[
                   { value: 'pt-br', text: $t('option_language_pt_br') },
                   { value: 'en', text: $t('option_language_en') },
+                  { value: 'es', text: $t('option_language_es') },
+                  { value: 'fr', text: $t('option_language_fr') },
+                  { value: 'it', text: $t('option_language_it') },
+                  { value: 'pl', text: $t('option_language_pl') },
+                  { value: 'ru', text: $t('option_language_ru') },
                 ]"
                 valueBy="value"
                 autoSelectFirstOption
