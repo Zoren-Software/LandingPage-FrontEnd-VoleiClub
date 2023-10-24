@@ -10,7 +10,14 @@ export default defineNuxtConfig({
         extensions: ['.vue'],
       },
     ],
-    modules: ["@vuestic/nuxt"],
+    modules: [
+        '@nuxtjs/i18n',
+        "@vuestic/nuxt"
+    ],
+
+    i18n: {
+        vueI18n: './i18n.config.ts' // if you are using custom path, default 
+    },
 
     vuestic: {
         config: {

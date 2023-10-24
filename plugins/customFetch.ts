@@ -14,6 +14,8 @@ export default defineNuxtPlugin({
           headers: {
             'Content-Type': 'application/json',
             'accept': 'application/json',
+            // adicionar language
+            'Accept-Language': localStorage.getItem("selectedLanguage"),
             ...options.headers,
           },
         });
