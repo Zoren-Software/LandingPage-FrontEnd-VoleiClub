@@ -1,6 +1,6 @@
 {
-    "welcome": "Seja bem-vindo ao VoleiClub!",
-    "welcome_message": "Estamos felizes em ter você aqui! O VoleiClub não quer ser uma simples plataforma e sim uma comunidade dedicada a transformar a forma como organizamos e gerenciamos treinos e times de voleibol.",
+    "welcome": "Seja bem-vindo ao VolleyTrack!",
+    "welcome_message": "Estamos felizes em ter você aqui! O VolleyTrack não quer ser uma simples plataforma e sim uma comunidade dedicada a transformar a forma como organizamos e gerenciamos treinos e times de voleibol.",
     "title_why_register": "Por que se registrar agora?",
     "subtitle_early_access": "Acesso antecipado",
     "text_early_access": "Esteja entre os primeiros a experimentar as funcionalidades da nossa versão alpha.",
@@ -37,7 +37,7 @@
     "menu_title_home": "Inicio",
     "menu_title_register": "Registrar",
     "menu_title_faq": "FAQ",
-    "question_1": "O que é o VoleiClub?",
+    "question_1": "O que é o VolleyTrack?",
     "answer_1": "- O Vôlei Club é uma plataforma em desenvolvimento que visa simplificar o processo de organização de treinos e equipes de voleibol. Atualmente, estamos na fase alpha e convidamos você a fazer parte desta jornada conosco.",
     "question_2": "Como posso me registrar no Vôlei Club?",
     "answer_2": "- Durante esta fase de desenvolvimento inicial, você pode se registrar fornecendo informações básicas. Nossa equipe de suporte entrará em contato para fornecer o primeiro acesso à sua conta.",
@@ -54,7 +54,7 @@
     "question_8": "Existe uma comunidade onde posso interagir com outros usuários?",
     "answer_8": "- Sim, temos uma comunidade ativa no Discord, onde você pode interagir com outros usuários e a equipe do Vôlei Club. Esse espaço é perfeito para discussões, compartilhamento de ideias e até mesmo para reportar problemas que você possa encontrar.",
     "question_9": "Como posso reportar bugs ou problemas técnicos?",
-    "answer_9": "- Se você encontrar algum bug ou enfrentar problemas técnicos, a maneira mais rápida de reportar é através do nosso canal de suporte no Discord. Também aceitamos relatos de bugs através do nosso e-mail de suporte suporte@voleiclub.com. Para um atendimento mais rápido, você pode abrir uma issue diretamente no GitHub do projeto, que provavelmente será atendido de forma mais imediata pela nossa equipe de desenvolvedores.",
+    "answer_9": "- Se você encontrar algum bug ou enfrentar problemas técnicos, a maneira mais rápida de reportar é através do nosso canal de suporte no Discord. Também aceitamos relatos de bugs através do nosso e-mail de suporte suporte@VolleyTrack.com. Para um atendimento mais rápido, você pode abrir uma issue diretamente no GitHub do projeto, que provavelmente será atendido de forma mais imediata pela nossa equipe de desenvolvedores.",
     "question_10": "Como o Vôlei Club será desenvolvido no futuro?",
     "answer_10": "- O Vôlei Club é um projeto de código aberto e estamos sempre abertos a novas ideias e sugestões. Você pode acompanhar o desenvolvimento do projeto através do nosso GitHub. Se você é um desenvolvedor, pode contribuir com o projeto enviando um pull request."
 }

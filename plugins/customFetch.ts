@@ -1,10 +1,13 @@
 import { defineNuxtPlugin } from '#app'
 
+
 export default defineNuxtPlugin({
     name: 'customFetch',
     enforce: 'pre',
     async setup(nuxtApp) {
-      const baseUrl = process.env.ENDPOINT_API ?? "http://localhost/api"
+      const runtimeConfig = useRuntimeConfig();
+      
+      const baseUrl = runtimeConfig.public.apiBase;
 
       async function customFetch(endpoint, method, options = {}) {
         const url = `${baseUrl}${endpoint}`;

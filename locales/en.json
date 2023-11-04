@@ -1,6 +1,6 @@
 {
-    "welcome": "Welcome to VoleiClub!",
-    "welcome_message": "We're glad to have you here! VoleiClub aims to be more than just a platform; we're a community dedicated to transforming the way we organize and manage volleyball teams and training.",
+    "welcome": "Welcome to VolleyTrack!",
+    "welcome_message": "We're glad to have you here! VolleyTrack aims to be more than just a platform; we're a community dedicated to transforming the way we organize and manage volleyball teams and training.",
     "title_why_register": "Why Register Now?",
     "subtitle_early_access": "Early Access",
     "text_early_access": "Be among the first to try out the features of our alpha version.",
@@ -37,9 +37,9 @@
     "menu_title_home": "Home",
     "menu_title_register": "Register",
     "menu_title_faq": "FAQ",
-    "question_1": "What is VoleiClub?",
-    "answer_1": "- VoleiClub is a developing platform aimed at simplifying the process of organizing volleyball teams and training. We are currently in the alpha phase and invite you to join us on this journey.",
-    "question_2": "How can I register for VoleiClub?",
+    "question_1": "What is VolleyTrack?",
+    "answer_1": "- VolleyTrack is a developing platform aimed at simplifying the process of organizing volleyball teams and training. We are currently in the alpha phase and invite you to join us on this journey.",
+    "question_2": "How can I register for VolleyTrack?",
     "answer_2": "- During this initial development phase, you can register by providing basic information. Our support team will contact you to provide initial access to your account.",
     "question_3": "What are the limitations of the basic version?",
     "answer_3": "- The basic version of the system is limited by the number of players and teams you can register. This rule may change as we validate the product with our customers.",
@@ -48,15 +48,15 @@
     "question_5": "How long does it take to receive support?",
     "answer_5": "- Our support team is available from Monday to Friday, 9 AM to 6 PM. Our goal is to respond to all support requests within 48 hours.",
     "question_6": "Is there a mobile app?",
-    "answer_6": "- Currently, we do not have a mobile app. However, VoleiClub is fully responsive and can be accessed from any device. Depending on user needs and feedback, this may change in the future.",
+    "answer_6": "- Currently, we do not have a mobile app. However, VolleyTrack is fully responsive and can be accessed from any device. Depending on user needs and feedback, this may change in the future.",
     "question_7": "How can I cancel my subscription?",
     "answer_7": "- You can cancel your subscription at any time. Just contact our support team, and they will take care of it for you.",
     "question_8": "Is there a community where I can interact with other users?",
-    "answer_8": "- Yes, we have an active community on Discord, where you can interact with other users and the VoleiClub team. This space is perfect for discussions, idea sharing, and even reporting issues you may encounter.",
+    "answer_8": "- Yes, we have an active community on Discord, where you can interact with other users and the VolleyTrack team. This space is perfect for discussions, idea sharing, and even reporting issues you may encounter.",
     "question_9": "How can I report bugs or technical issues?",
-    "answer_9": "- If you encounter any bugs or face technical issues, the quickest way to report is through our Discord support channel. We also accept bug reports via our support email suporte@voleiclub.com. For faster service, you can open an issue directly on the project's GitHub, which will likely be addressed more immediately by our development team.",
-    "question_10": "How will VoleiClub be developed in the future?",
-    "answer_10": "- VoleiClub is an open-source project, and we are always open to new ideas and suggestions. You can follow the project's development on our GitHub. If you are a developer, you can contribute to the project by submitting a pull request."
+    "answer_9": "- If you encounter any bugs or face technical issues, the quickest way to report is through our Discord support channel. We also accept bug reports via our support email suporte@VolleyTrack.com. For faster service, you can open an issue directly on the project's GitHub, which will likely be addressed more immediately by our development team.",
+    "question_10": "How will VolleyTrack be developed in the future?",
+    "answer_10": "- VolleyTrack is an open-source project, and we are always open to new ideas and suggestions. You can follow the project's development on our GitHub. If you are a developer, you can contribute to the project by submitting a pull request."
   
 }
 

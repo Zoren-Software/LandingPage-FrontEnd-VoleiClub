@@ -11,9 +11,16 @@ export default defineNuxtConfig({
       },
     ],
     modules: [
-        '@nuxtjs/i18n',
-        "@vuestic/nuxt"
+      '@nuxtjs/i18n',
+      "@vuestic/nuxt"
     ],
+
+    runtimeConfig: {
+        public: {
+          apiBase: '', // can be overridden by NUXT_PUBLIC_API_BASE environment variable
+          nameApplication: '', // can be overridden by NUXT_PUBLIC_API_BASE environment variable
+        }
+      },
 
     i18n: {
         vueI18n: './i18n.config.ts' // if you are using custom path, default 

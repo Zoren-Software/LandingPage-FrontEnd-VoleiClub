@@ -11,7 +11,7 @@
         <template #center>
           <va-navbar-item class="font-bold text-lg logo">
             <va-icon name="sports_volleyball" />
-            <span class="ml-2">VoleiClub</span>
+            <span class="ml-2">{{ applicationName }} </span>
           </va-navbar-item>
         </template>
         <template #right style="margin-right: 50px">
@@ -104,6 +104,10 @@ locale.value = localStorage.getItem("selectedLanguage");
 watch(locale, (newLocale) => {
   localStorage.setItem("selectedLanguage", newLocale);
 });
+
+const runtimeConfig = useRuntimeConfig();
+
+const applicationName = runtimeConfig.public.nameApplication;
 
 const routeRegister = () => {
   console.log("routeRegister");
