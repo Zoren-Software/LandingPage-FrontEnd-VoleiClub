@@ -54,7 +54,7 @@
     "question_8": "Existe uma comunidade onde posso interagir com outros usuários?",
     "answer_8": "- Sim, temos uma comunidade ativa no Discord, onde você pode interagir com outros usuários e a equipe do VolleyTrack. Esse espaço é perfeito para discussões, compartilhamento de ideias e até mesmo para reportar problemas que você possa encontrar.",
     "question_9": "Como posso reportar bugs ou problemas técnicos?",
-    "answer_9": "- Se você encontrar algum bug ou enfrentar problemas técnicos, a maneira mais rápida de reportar é através do nosso canal de suporte no Discord. Também aceitamos relatos de bugs através do nosso e-mail de suporte suporte@VolleyTrack.com. Para um atendimento mais rápido, você pode abrir uma issue diretamente no GitHub do projeto, que provavelmente será atendido de forma mais imediata pela nossa equipe de desenvolvedores.",
+    "answer_9": "- Se você encontrar algum bug ou enfrentar problemas técnicos, a maneira mais rápida de reportar é através do nosso canal de suporte no Discord. Também aceitamos relatos de bugs através do nosso e-mail de suporte suporte@volleytrack.com. Para um atendimento mais rápido, você pode abrir uma issue diretamente no GitHub do projeto, que provavelmente será atendido de forma mais imediata pela nossa equipe de desenvolvedores.",
     "question_10": "Como o VolleyTrack será desenvolvido no futuro?",
     "answer_10": "- O VolleyTrack é um projeto de código aberto e estamos sempre abertos a novas ideias e sugestões. Você pode acompanhar o desenvolvimento do projeto através do nosso GitHub. Se você é um desenvolvedor, pode contribuir com o projeto enviando um pull request.",
     "option_experience_level_select": "Selecione",
