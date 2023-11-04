@@ -56,5 +56,16 @@
     "question_9": "Comment puis-je signaler des bugs ou des problèmes techniques?",
     "answer_9": "- Si vous rencontrez des bugs ou des problèmes techniques, le moyen le plus rapide de signaler est via notre canal de support sur Discord. Nous acceptons également les rapports de bugs via notre e-mail de support suporte@VolleyTrack.com. Pour un service plus rapide, vous pouvez ouvrir un problème directement sur le GitHub du projet, qui sera probablement traité plus immédiatement par notre équipe de développement.",
     "question_10": "Comment VolleyTrack sera-t-il développé à l'avenir?",
-    "answer_10": "- VolleyTrack est un projet open source et nous sommes toujours ouverts à de nouvelles idées et suggestions. Vous pouvez suivre le développement du projet sur notre GitHub. Si vous êtes un développeur, vous pouvez contribuer au projet en soumettant une pull request."
+    "answer_10": "- VolleyTrack est un projet open source et nous sommes toujours ouverts à de nouvelles idées et suggestions. Vous pouvez suivre le développement du projet sur notre GitHub. Si vous êtes un développeur, vous pouvez contribuer au projet en soumettant une pull request.",
+    "option_experience_level_select": "Sélectionner",
+    "option_experience_level_beginner": "Débutant",
+    "option_experience_level_amateur": "Amateur",
+    "option_experience_level_student": "Étudiant",
+    "option_experience_level_university_student": "Étudiant Universitaire",
+    "option_experience_level_semi_professional": "Semi-Professionnel",
+    "option_experience_level_professional": "Professionnel",
+    "option_experience_level_intermediate": "Intermédiaire",
+    "option_experience_level_coach": "Entraîneur",
+    "option_experience_level_instructor": "Instructeur",
+    "option_experience_level_other": "Autre"
 }

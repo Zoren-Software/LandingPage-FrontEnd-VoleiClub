@@ -147,7 +147,52 @@
                     v-model="form.experience_level"
                     :label="$t('label_experience_level')"
                     :placeholder="$t('placeholder_experience_level')"
-                    :options="options"
+                    :options="[
+                      {
+                        value: null,
+                        text: $t('option_experience_level_select'),
+                      },
+                      {
+                        value: 'beginner',
+                        text: $t('option_experience_level_beginner'),
+                      },
+                      {
+                        value: 'amateur',
+                        text: $t('option_experience_level_amateur'),
+                      },
+                      {
+                        value: 'student',
+                        text: $t('option_experience_level_student'),
+                      },
+                      {
+                        value: 'college',
+                        text: $t('option_experience_level_university_student'),
+                      },
+                      {
+                        value: 'semi-professional',
+                        text: $t('option_experience_level_semi_professional'),
+                      },
+                      {
+                        value: 'professional',
+                        text: $t('option_experience_level_professional'),
+                      },
+                      {
+                        value: 'intermediate',
+                        text: $t('option_experience_level_intermediate'),
+                      },
+                      {
+                        value: 'coach',
+                        text: $t('option_experience_level_coach'),
+                      },
+                      {
+                        value: 'instructor',
+                        text: $t('option_experience_level_instructor'),
+                      },
+                      {
+                        value: 'other',
+                        text: $t('option_experience_level_other'),
+                      },
+                    ]"
                     :rules="[
                       (value) =>
                         (value.value && value.value.length > 0) ||
@@ -213,20 +258,6 @@ let errors = ref({
   },
   message: "",
 });
-
-const options = ref([
-  { value: null, text: "Selecione" },
-  { value: "beginner", text: "Iniciante" },
-  { value: "amateur", text: "Amador" },
-  { value: "student", text: "Estudante" },
-  { value: "college", text: "Universitário" },
-  { value: "semi-professional", text: "Semi-profissional" },
-  { value: "professional", text: "Profissional" },
-  { value: "intermediate", text: "Intermediário" },
-  { value: "coach", text: "Treinador" },
-  { value: "instructor", text: "Instrutor" },
-  { value: "other", text: "Outro" },
-]);
 
 const formRef = ref(null);
 

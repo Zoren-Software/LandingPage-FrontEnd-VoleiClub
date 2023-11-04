@@ -38,13 +38,15 @@
               />
             </div>
           </va-navbar-item>
-          <va-navbar-item @click="routeHome()">{{
+          <va-navbar-item @click="routeHome()" class="va-button">{{
             $t("menu_title_home")
           }}</va-navbar-item>
-          <va-navbar-item @click="routeRegister()" class="hidden sm:block">{{
-            $t("menu_title_register")
-          }}</va-navbar-item>
-          <va-navbar-item @click="routeFAQ()">{{
+          <va-navbar-item
+            @click="routeRegister()"
+            class="hidden va-button sm:block"
+            >{{ $t("menu_title_register") }}</va-navbar-item
+          >
+          <va-navbar-item @click="routeFAQ()" class="va-button">{{
             $t("menu_title_faq")
           }}</va-navbar-item>
         </template>

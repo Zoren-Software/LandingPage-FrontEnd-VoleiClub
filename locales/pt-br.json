@@ -56,5 +56,16 @@
     "question_9": "Como posso reportar bugs ou problemas técnicos?",
     "answer_9": "- Se você encontrar algum bug ou enfrentar problemas técnicos, a maneira mais rápida de reportar é através do nosso canal de suporte no Discord. Também aceitamos relatos de bugs através do nosso e-mail de suporte suporte@VolleyTrack.com. Para um atendimento mais rápido, você pode abrir uma issue diretamente no GitHub do projeto, que provavelmente será atendido de forma mais imediata pela nossa equipe de desenvolvedores.",
     "question_10": "Como o Vôlei Club será desenvolvido no futuro?",
-    "answer_10": "- O Vôlei Club é um projeto de código aberto e estamos sempre abertos a novas ideias e sugestões. Você pode acompanhar o desenvolvimento do projeto através do nosso GitHub. Se você é um desenvolvedor, pode contribuir com o projeto enviando um pull request."
+    "answer_10": "- O Vôlei Club é um projeto de código aberto e estamos sempre abertos a novas ideias e sugestões. Você pode acompanhar o desenvolvimento do projeto através do nosso GitHub. Se você é um desenvolvedor, pode contribuir com o projeto enviando um pull request.",
+    "option_experience_level_select": "Selecione",
+    "option_experience_level_beginner": "Iniciante",
+    "option_experience_level_amateur": "Amador",
+    "option_experience_level_student": "Estudante",
+    "option_experience_level_university_student": "Universitário",
+    "option_experience_level_semi_professional": "Semi Profissional",
+    "option_experience_level_professional": "Profissional",
+    "option_experience_level_intermediate": "Intermediário",
+    "option_experience_level_coach": "Treinador",
+    "option_experience_level_instructor": "Instrutor",
+    "option_experience_level_other": "Outro"
 }
