@@ -9,7 +9,10 @@
           />
         </template>
         <template #center>
-          <va-navbar-item class="font-bold text-lg logo">
+          <va-navbar-item
+            class="font-bold text-lg logo va-button"
+            @click="goToIndex()"
+          >
             <va-icon name="sports_volleyball" />
             <span class="ml-2">{{ applicationName }}</span>
           </va-navbar-item>
@@ -122,6 +125,11 @@ const routeFAQ = () => {
 };
 
 const routeHome = () => {
+  console.log("routeHome");
+  router.push("/");
+};
+
+const goToIndex = () => {
   console.log("routeHome");
   router.push("/");
 };
