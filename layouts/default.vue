@@ -9,9 +9,12 @@
           />
         </template>
         <template #center>
-          <va-navbar-item class="font-bold text-lg logo">
+          <va-navbar-item
+            class="font-bold text-lg logo va-button"
+            @click="goToIndex()"
+          >
             <va-icon name="sports_volleyball" />
-            <span class="ml-2">VoleiClub</span>
+            <span class="ml-2">{{ applicationName }}</span>
           </va-navbar-item>
         </template>
         <template #right style="margin-right: 50px">
@@ -38,13 +41,15 @@
               />
             </div>
           </va-navbar-item>
-          <va-navbar-item @click="routeHome()">{{
+          <va-navbar-item @click="routeHome()" class="va-button">{{
             $t("menu_title_home")
           }}</va-navbar-item>
-          <va-navbar-item @click="routeRegister()" class="hidden sm:block">{{
-            $t("menu_title_register")
-          }}</va-navbar-item>
-          <va-navbar-item @click="routeFAQ()">{{
+          <va-navbar-item
+            @click="routeRegister()"
+            class="hidden va-button sm:block"
+            >{{ $t("menu_title_register") }}</va-navbar-item
+          >
+          <va-navbar-item @click="routeFAQ()" class="va-button">{{
             $t("menu_title_faq")
           }}</va-navbar-item>
         </template>
@@ -105,6 +110,10 @@ watch(locale, (newLocale) => {
   localStorage.setItem("selectedLanguage", newLocale);
 });
 
+const runtimeConfig = useRuntimeConfig();
+
+const applicationName = runtimeConfig.public.nameApplication;
+
 const routeRegister = () => {
   console.log("routeRegister");
   router.push("/register");
@@ -116,6 +125,11 @@ const routeFAQ = () => {
 };
 
 const routeHome = () => {
+  console.log("routeHome");
+  router.push("/");
+};
+
+const goToIndex = () => {
   console.log("routeHome");
   router.push("/");
 };
