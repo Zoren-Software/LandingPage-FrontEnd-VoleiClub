@@ -82,7 +82,7 @@ export function confirmError(text, footer) {
   confirmAction({
     icon: "error",
     title: "Erro!",
-    text: text,
+    text,
     showConfirmButton: true,
     confirmButtonColor: "#154EC1",
     footer,

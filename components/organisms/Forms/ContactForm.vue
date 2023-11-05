@@ -206,8 +206,14 @@ const submit = async () => {
         });
       })
       .catch(({ response }) => {
-        errors.value = response;
-        confirmError(response.message);
+        // o response volta a mensagem de erro com chave valor, mas o valor é um array, preciso atribuir para o errors.value.errors
+        console.error(typeof response.email);
+        if (typeof response.email == "object") {
+          errors.email = response.email[0];
+          confirmError(response.email[0]);
+        } else {
+          confirmError(response.message);
+        }
       });
   } catch ({ response }) {
     if (response) {
