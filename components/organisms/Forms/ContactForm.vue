@@ -3,6 +3,13 @@
     <div class="row">
       <va-form ref="formRef" class="flex flex-col md3 sm12 xs12 mb-5 ml-4 mr-4">
         <div class="position-fixed">
+          <div class="mt-4">
+            <h2 class="va-h2 va-text-center mb-3">
+              {{ $t("title_join_the_volleyball_vanguard_with") }}
+              {{ applicationName }}
+            </h2>
+            {{ $t("text_join_the_volleyball_vanguard_with") }}
+          </div>
           <h2 class="va-h2 va-text-center font-semibold mt-4 mb-5">
             {{ $t("title_ready_to_jump_in") }}
           </h2>
@@ -130,13 +137,6 @@
               </div>
             </div>
           </va-card>
-          <div class="mt-4">
-            <h4 class="va-h4 va-text-center mb-3">
-              {{ $t("title_join_the_volleyball_vanguard_with") }}
-              {{ applicationName }}
-            </h4>
-            {{ $t("text_join_the_volleyball_vanguard_with") }}
-          </div>
         </div>
       </va-form>
     </div>
