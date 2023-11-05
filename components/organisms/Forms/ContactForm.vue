@@ -146,6 +146,7 @@
 <script setup>
 import { ref } from "vue";
 import { confirmSuccess, confirmError } from "~/utils/sweetAlert2/swalHelper";
+import { useReCaptcha } from "vue-recaptcha-v3";
 
 const { $customFetch } = useNuxtApp();
 
@@ -184,20 +185,22 @@ const errorsDefault = () => {
     message: "",
   };
 };
+const { executeRecaptcha } = useReCaptcha();
 
 const submit = async () => {
   try {
-    // TODO - Fazer o post na API
+    const token = await executeRecaptcha("create_new_lead");
+
     data.value = await $customFetch("/leads", "POST", {
       body: JSON.stringify({
         name: form.value.name,
         email: form.value.email,
         experience_level: form.value.experience_level.value,
         message: form.value.message,
+        recaptchaToken: token,
       }),
     })
       .then((response) => {
-        console.log(response);
         confirmSuccess(response.message, () => {
           //errors.value = this.errorsDefault();
         });
