@@ -67,5 +67,18 @@
     "option_experience_level_intermediate": "Intermediate",
     "option_experience_level_coach": "Coach",
     "option_experience_level_instructor": "Instructor",
-    "option_experience_level_other": "Other"
+    "option_experience_level_other": "Other",
+    "welcome_message_index": "Discover the freedom of managing your volleyball team with efficiency and ease. VolleyManager is the ultimate solution for coaches, players, and organizers looking to elevate their team's level. With our intuitive platform, you can organize games, practices, and manage your roster with just a few clicks.",
+    "welcome_title_index": "The Revolution in Volleyball Team Management",
+    "title_game_changing_features": "Game-Changing Features!",
+    "title_smart_scheduling": "Smart Scheduling",
+    "text_smart_scheduling": "With our advanced calendar system, planning games and practices has never been easier. Set specific fundamentals for each session, detail the technical focus, and make personalized notes to ensure every practice is productive and aligned with the team's goals.",
+    "title_complete_team_management": "Complete Team Management",
+    "text_complete_team_management": "Centralize player information, including statistics, frequency, and individual progress. Our system allows for detailed control of attendance and performance, as well as providing a space for critical notes and observations that aid in the continuous development of athletes.",
+    "title_detaile_analysis_and_statistics": "Detailed Analysis and Statistics",
+    "text_detaile_analysis_and_statistics": "Turn data into insights with our detailed reports. Monitor player growth and team evolution through in-depth analyses, helping to make informed decisions and structure more effective training sessions.",
+    "title_efficient_and_targeted_communication": "Efficient and Targeted Communication",
+    "text_efficient_and_targeted_communication": "Ensure everyone is on the same page with real-time updates and clear communication. Inform about upcoming practices, strategy changes, and news, keeping the team united and focused on constant improvement of collective performance.",
+    "title_join_the_volleyball_vanguard_with": "Join the Volleyball Vanguard with ",
+    "text_join_the_volleyball_vanguard_with": "We're enhancing the future of volleyball team management and we want you with us. By registering now, you become part of an exclusive group that will have early access to our platform still in development."
 }

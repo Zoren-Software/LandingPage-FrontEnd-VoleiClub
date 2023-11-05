@@ -11,7 +11,7 @@
         <template #center>
           <va-navbar-item class="font-bold text-lg logo">
             <va-icon name="sports_volleyball" />
-            <span class="ml-2">{{ applicationName }} </span>
+            <span class="ml-2">{{ applicationName }}</span>
           </va-navbar-item>
         </template>
         <template #right style="margin-right: 50px">

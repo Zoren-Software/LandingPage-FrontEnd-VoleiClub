@@ -67,5 +67,18 @@
     "option_experience_level_intermediate": "Intermédiaire",
     "option_experience_level_coach": "Entraîneur",
     "option_experience_level_instructor": "Instructeur",
-    "option_experience_level_other": "Autre"
+    "option_experience_level_other": "Autre",
+    "welcome_message_index": "Découvrez la liberté de gérer votre équipe de volley-ball avec efficacité et facilité. VolleyManager est la solution ultime pour les entraîneurs, les joueurs et les organisateurs qui souhaitent élever le niveau de leur équipe. Avec notre plateforme intuitive, vous pouvez organiser des matchs, des entraînements et gérer votre effectif en quelques clics.",
+    "welcome_title_index": "La Révolution dans la Gestion des Équipes de Volley-ball",
+    "title_game_changing_features": "Des fonctionnalités qui changent la donne !",
+    "title_smart_scheduling": "Planification Intelligente",
+    "text_smart_scheduling": "Avec notre système de calendrier avancé, planifier des matchs et des entraînements n'a jamais été aussi simple. Définissez les fondamentaux spécifiques pour chaque session, détaillez l'accent technique et faites des notes personnalisées pour assurer que chaque entraînement soit productif et aligné avec les objectifs de l'équipe.",
+    "title_complete_team_management": "Gestion Complète de l'Équipe",
+    "text_complete_team_management": "Centralisez les informations des joueurs, y compris les statistiques, la fréquence et les progrès individuels. Notre système permet un contrôle détaillé de la présence et de la performance, ainsi qu'un espace pour des notes et observations critiques qui aident au développement continu des athlètes.",
+    "title_detaile_analysis_and_statistics": "Analyse et Statistiques Détaillées",
+    "text_detaile_analysis_and_statistics": "Transformez les données en insights avec nos rapports détaillés. Surveillez la croissance des joueurs et l'évolution de l'équipe à travers des analyses approfondies, aidant à prendre des décisions éclairées et à structurer des séances d'entraînement plus efficaces.",
+    "title_efficient_and_targeted_communication": "Communication Efficace et Ciblée",
+    "text_efficient_and_targeted_communication": "Assurez-vous que tout le monde soit sur la même page avec des mises à jour en temps réel et une communication claire. Informez sur les prochains entraînements, les changements de stratégie et les nouveautés, en maintenant l'équipe unie et concentrée sur l'amélioration constante de la performance collective.",
+    "title_join_the_volleyball_vanguard_with": "Rejoignez l'avant-garde du volley-ball avec ",
+    "text_join_the_volleyball_vanguard_with": "Nous améliorons l'avenir de la gestion des équipes de volley-ball et nous voulons que vous soyez avec nous. En vous inscrivant maintenant, vous faites partie d'un groupe exclusif qui aura un accès anticipé à notre plateforme encore en développement."
 }
