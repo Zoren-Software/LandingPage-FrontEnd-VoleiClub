@@ -281,7 +281,7 @@ const emit = (event, ...args) => {
 }
 @media (min-width: 1132px) {
   .card-content-voz {
-    height: 128px;
+    height: 160px;
   }
 }
 @media (min-width: 1640px) {
