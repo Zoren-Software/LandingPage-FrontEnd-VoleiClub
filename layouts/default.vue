@@ -13,34 +13,11 @@
             class="font-bold text-lg logo va-button"
             @click="goToIndex()"
           >
-            <va-icon name="sports_volleyball" />
-            <span class="ml-2">{{ applicationName }}</span>
+            <va-icon class="icon" name="sports_volleyball" />
+            <span class="ml-2 title-and-icon">{{ applicationName }}</span>
           </va-navbar-item>
         </template>
         <template #right style="margin-right: 50px">
-          <va-navbar-item>
-            <div class="custom-select-language">
-              <va-select
-                name="option"
-                v-model="locale"
-                class="display-block"
-                :label="$t('label_language')"
-                :placeholder="$t('placeholder_language')"
-                :options="[
-                  { value: 'pt-br', text: $t('option_language_pt_br') },
-                  { value: 'en', text: $t('option_language_en') },
-                  { value: 'es', text: $t('option_language_es') },
-                  { value: 'fr', text: $t('option_language_fr') },
-                  { value: 'it', text: $t('option_language_it') },
-                  { value: 'pl', text: $t('option_language_pl') },
-                  { value: 'ru', text: $t('option_language_ru') },
-                ]"
-                valueBy="value"
-                autoSelectFirstOption
-                style="width: max-content"
-              />
-            </div>
-          </va-navbar-item>
           <va-navbar-item @click="routeHome()" class="va-button">{{
             $t("menu_title_home")
           }}</va-navbar-item>
@@ -59,23 +36,29 @@
     <template #left>
       <VaSidebar v-model="showSidebar">
         <VaSidebarItem>
-          <VaSidebarItemContent @click="routeHome()">
+          <VaSidebarItemContent>
             <VaSidebarItemTitle>
-              {{ $t("menu_title_home") }}
-            </VaSidebarItemTitle>
-          </VaSidebarItemContent>
-        </VaSidebarItem>
-        <VaSidebarItem>
-          <VaSidebarItemContent @click="routeRegister()">
-            <VaSidebarItemTitle>
-              {{ $t("menu_title_register") }}
-            </VaSidebarItemTitle>
-          </VaSidebarItemContent>
-        </VaSidebarItem>
-        <VaSidebarItem>
-          <VaSidebarItemContent @click="routeFAQ()">
-            <VaSidebarItemTitle>
-              {{ $t("menu_title_faq") }}
+              <div class="custom-select-language">
+                <va-select
+                  name="option"
+                  v-model="locale"
+                  class="display-block"
+                  :label="$t('label_language')"
+                  :placeholder="$t('placeholder_language')"
+                  :options="[
+                    { value: 'pt-br', text: $t('option_language_pt_br') },
+                    { value: 'en', text: $t('option_language_en') },
+                    { value: 'es', text: $t('option_language_es') },
+                    { value: 'fr', text: $t('option_language_fr') },
+                    { value: 'it', text: $t('option_language_it') },
+                    { value: 'pl', text: $t('option_language_pl') },
+                    { value: 'ru', text: $t('option_language_ru') },
+                  ]"
+                  valueBy="value"
+                  autoSelectFirstOption
+                  style="width: max-content"
+                />
+              </div>
             </VaSidebarItemTitle>
           </VaSidebarItemContent>
         </VaSidebarItem>
@@ -144,5 +127,24 @@ const goToIndex = () => {
 .custom-select-language {
   height: 4rem;
   width: 11rem;
+}
+
+@media (max-width: 410px) {
+  .title-and-icon {
+    display: none;
+  }
+
+  .icon {
+    margin-right: 2rem;
+  }
+}
+
+@media (min-width: 410px) {
+  .title-and-icon {
+    margin-right: 2rem;
+  }
+  .icon {
+    margin-right: 1rem;
+  }
 }
 </style>

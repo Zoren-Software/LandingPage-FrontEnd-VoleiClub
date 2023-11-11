@@ -293,6 +293,9 @@ const emit = (event, ...args) => {
 @media (min-width: 768px) {
   .position-fixed {
     position: fixed;
+    margin: 53px 13%;
+    margin-left: -13px;
+    margin-right: 33px;
   }
 }
 
@@ -300,6 +303,18 @@ const emit = (event, ...args) => {
   .position-fixed {
     position: fixed;
     margin-right: 3rem;
+    margin: 53px 13%;
+    margin-left: -13px;
+    margin-right: 33px;
+  }
+}
+
+@media (min-width: 1600px) {
+  .position-fixed {
+    position: fixed;
+    margin-right: 3rem;
+    margin: 65px 12%;
+    margin-left: 32px;
   }
 }
 </style>

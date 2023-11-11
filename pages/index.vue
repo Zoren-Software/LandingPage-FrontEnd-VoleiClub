@@ -1,5 +1,5 @@
 <template>
-  <div class="flex justify-end pa-3">
+  <div class="flex justify-end pa-3 custom-responsive">
     <div class="row">
       <div class="flex flex-col md7 sm12 xs12">
         <div class="pa-3 w-1/2">
@@ -112,4 +112,10 @@ const darkNavbarColors = computed(() => {
 });
 </script>
 
-<style></style>
+<style>
+@media (min-width: 1600px) {
+  .custom-responsive {
+    margin: 0 20%;
+  }
+}
+</style>
