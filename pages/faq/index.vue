@@ -1,6 +1,6 @@
 <template>
   <div class="mt-5 pl-5 pr-5">
-    <h1 class="va-h1 va-text-center font-bold mt-1">
+    <h1 class="va-h1 va-text-center font-bold mt-1 custom-titles">
       {{ $t("menu_title_faq") }}
     </h1>
   </div>

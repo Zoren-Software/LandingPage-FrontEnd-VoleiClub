@@ -3,8 +3,8 @@
     <div class="row">
       <va-form ref="formRef" class="flex flex-col md3 sm12 xs12 mb-5 ml-4 mr-4">
         <div class="position-fixed">
-          <div class="mt-4">
-            <h5 class="va-h5 va-text-center mb-3">
+          <div class="mt-4 mb-5">
+            <h5 class="va-h5 va-text-center mb-3 custom-margin-title">
               {{ $t("title_join_the_volleyball_vanguard_with") }}
               {{ applicationName }}
             </h5>
@@ -315,6 +315,21 @@ const emit = (event, ...args) => {
     margin-right: 3rem;
     margin: 65px 12%;
     margin-left: 32px;
+  }
+}
+
+@media (min-width: 2000px) {
+  .position-fixed {
+    position: fixed;
+    margin-right: 3rem;
+    margin: 61px 20%;
+    margin-left: 45px;
+  }
+}
+
+@media (max-width: 643px) {
+  .custom-margin-title {
+    margin-bottom: 1rem !important;
   }
 }
 </style>
