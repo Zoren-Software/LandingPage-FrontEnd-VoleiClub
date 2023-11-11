@@ -88,3 +88,21 @@ export function confirmError(text, footer) {
     footer,
   });
 }
+
+export function loader(loading) {
+  Swal.fire({
+    title: "Carregando!",
+    text: "Aguarde um momento...",
+    icon: "info",
+    timer: 2000,
+    timerProgressBar: true,
+    showConfirmButton: false,
+    didOpen: () => {
+      Swal.showLoading();
+      const timer = Swal.getPopup().querySelector("b");
+      timerInterval = setInterval(() => {
+        timer.textContent = `${Swal.getTimerLeft()}`;
+      }, 100);
+    },
+  });
+}
