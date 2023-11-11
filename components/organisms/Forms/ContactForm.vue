@@ -145,7 +145,11 @@
 
 <script setup>
 import { ref } from "vue";
-import { confirmSuccess, confirmError } from "~/utils/sweetAlert2/swalHelper";
+import {
+  confirmSuccess,
+  confirmError,
+  loader,
+} from "~/utils/sweetAlert2/swalHelper";
 import { useReCaptcha } from "vue-recaptcha-v3";
 
 const { $customFetch } = useNuxtApp();
@@ -174,6 +178,8 @@ let errors = ref({
 
 const formRef = ref(null);
 
+let loading = ref(false);
+
 const errorsDefault = () => {
   return {
     errors: {
@@ -190,6 +196,9 @@ const { executeRecaptcha } = useReCaptcha();
 const submit = async () => {
   try {
     const token = await executeRecaptcha("create_new_lead");
+
+    loader();
+    await new Promise((resolve) => setTimeout(resolve, 1000));
 
     data.value = await $customFetch("/leads", "POST", {
       body: JSON.stringify({
