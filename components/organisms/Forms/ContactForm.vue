@@ -3,18 +3,18 @@
     <div class="row">
       <va-form ref="formRef" class="flex flex-col md3 sm12 xs12 mb-5 ml-4 mr-4">
         <div class="position-fixed">
-          <div class="mt-4">
-            <h2 class="va-h2 va-text-center mb-3">
+          <div class="mt-4 mb-5">
+            <h5 class="va-h5 va-text-center mb-3 custom-margin-title">
               {{ $t("title_join_the_volleyball_vanguard_with") }}
               {{ applicationName }}
-            </h2>
+            </h5>
             {{ $t("text_join_the_volleyball_vanguard_with") }}
           </div>
-          <h2 class="va-h2 va-text-center font-semibold mt-4 mb-5">
+          <h4 class="va-h4 va-text-center font-semibold mt-3 mb-4">
             {{ $t("title_ready_to_jump_in") }}
-          </h2>
-          <va-card class="pa-5">
-            <h2 class="va-h2 va-text-center">{{ $t("title_register") }}</h2>
+          </h4>
+          <va-card class="px-5 py-3">
+            <h3 class="va-h3 va-text-center">{{ $t("title_register") }}</h3>
             <div class="row mb-2">
               <div class="flex flex-col md12 sm12 xs12">
                 <div class="item">
@@ -130,9 +130,13 @@
             <div class="row mb-2 mt-2">
               <div class="flex flex-col md12 sm12 xs12">
                 <div class="item">
-                  <va-button block @click="submit">{{
-                    $t("button_register")
-                  }}</va-button>
+                  <va-button
+                    block
+                    @click="submit"
+                    :loading="loading.value"
+                    :disabled="loading.value"
+                    >{{ $t("button_register") }}</va-button
+                  >
                 </div>
               </div>
             </div>
@@ -145,7 +149,11 @@
 
 <script setup>
 import { ref } from "vue";
-import { confirmSuccess, confirmError } from "~/utils/sweetAlert2/swalHelper";
+import {
+  confirmSuccess,
+  confirmError,
+  loader,
+} from "~/utils/sweetAlert2/swalHelper";
 import { useReCaptcha } from "vue-recaptcha-v3";
 
 const { $customFetch } = useNuxtApp();
@@ -174,6 +182,8 @@ let errors = ref({
 
 const formRef = ref(null);
 
+let loading = ref(false);
+
 const errorsDefault = () => {
   return {
     errors: {
@@ -189,7 +199,15 @@ const { executeRecaptcha } = useReCaptcha();
 
 const submit = async () => {
   try {
+    loader();
+
+    if (loading.value) return;
+
+    loading.value = true;
+
     const token = await executeRecaptcha("create_new_lead");
+
+    await new Promise((resolve) => setTimeout(resolve, 1000));
 
     data.value = await $customFetch("/leads", "POST", {
       body: JSON.stringify({
@@ -214,6 +232,9 @@ const submit = async () => {
         } else {
           confirmError(response.message);
         }
+      })
+      .finally(() => {
+        loading.value = false;
       });
   } catch ({ response }) {
     if (response) {
@@ -241,8 +262,8 @@ const emit = (event, ...args) => {
 }
 
 .text-apresentation {
-  margin-top: 5rem;
-  margin-bottom: 5rem;
+  margin-top: 2rem;
+  margin-bottom: 3rem;
   text-align: justify;
   text-justify: inter-word;
   font-size: 1.2rem;
@@ -253,25 +274,13 @@ const emit = (event, ...args) => {
   padding-left: 4rem;
   padding-right: 4rem;
 }
-@media (min-width: 996px) {
-  .card-content-voz {
-    height: 144px;
-  }
-}
-@media (min-width: 1132px) {
-  .card-content-voz {
-    height: 128px;
-  }
-}
-@media (min-width: 1640px) {
-  .card-content-voz {
-    height: 113px;
-  }
-}
 
 @media (min-width: 768px) {
   .position-fixed {
     position: fixed;
+    margin: 53px 13%;
+    margin-left: -13px;
+    margin-right: 33px;
   }
 }
 
@@ -279,6 +288,33 @@ const emit = (event, ...args) => {
   .position-fixed {
     position: fixed;
     margin-right: 3rem;
+    margin: 4px 13%;
+    margin-left: -13px;
+    margin-right: 33px;
+  }
+}
+
+@media (min-width: 1600px) {
+  .position-fixed {
+    position: fixed;
+    margin-right: 3rem;
+    margin: 25px 12%;
+    margin-left: 32px;
+  }
+}
+
+@media (min-width: 2000px) {
+  .position-fixed {
+    position: fixed;
+    margin-right: 3rem;
+    margin: 0px 20%;
+    margin-left: 45px;
+  }
+}
+
+@media (max-width: 643px) {
+  .custom-margin-title {
+    margin-bottom: 1rem !important;
   }
 }
 </style>

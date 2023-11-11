@@ -1,9 +1,9 @@
 <template>
-  <div class="flex justify-end pa-3">
+  <div class="flex justify-end pa-3 custom-responsive">
     <div class="row">
       <div class="flex flex-col md7 sm12 xs12">
         <div class="pa-3 w-1/2">
-          <h1 class="va-h1 va-text-center font-bold mt-5">
+          <h1 class="va-h1 va-text-center font-bold mt-1 custom-titles">
             {{ applicationName }} {{ $t("welcome_title_index") }}
           </h1>
           <p class="text-apresentation">
@@ -11,7 +11,9 @@
           </p>
           <va-image src="/images/image_numbers.svg" fit="contain" lazy />
 
-          <h2 class="va-h2 va-text-center font-semibold mt-5 mb-5">
+          <h2
+            class="va-h2 va-text-center font-semibold mt-5 mb-5 custom-titles"
+          >
             {{ $t("title_game_changing_features") }}
           </h2>
           <div class="row">
@@ -112,4 +114,28 @@ const darkNavbarColors = computed(() => {
 });
 </script>
 
-<style></style>
+<style>
+@media (min-width: 1600px) {
+  .custom-responsive {
+    margin: 0 20%;
+  }
+}
+
+@media (max-width: 600px) {
+  .custom-titles {
+    font-size: 2rem;
+  }
+
+  .text-apresentation {
+    margin: 0, 0, 0, 0;
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+}
+
+@media (min-width: 767px) {
+  .custom-titles {
+    font-size: 2rem;
+  }
+}
+</style>
