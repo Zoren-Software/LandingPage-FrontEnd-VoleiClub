@@ -4,17 +4,17 @@
       <va-form ref="formRef" class="flex flex-col md3 sm12 xs12 mb-5 ml-4 mr-4">
         <div class="position-fixed">
           <div class="mt-4">
-            <h2 class="va-h2 va-text-center mb-3">
+            <h5 class="va-h5 va-text-center mb-3">
               {{ $t("title_join_the_volleyball_vanguard_with") }}
               {{ applicationName }}
-            </h2>
+            </h5>
             {{ $t("text_join_the_volleyball_vanguard_with") }}
           </div>
-          <h2 class="va-h2 va-text-center font-semibold mt-4 mb-5">
+          <h4 class="va-h4 va-text-center font-semibold mt-3 mb-4">
             {{ $t("title_ready_to_jump_in") }}
-          </h2>
-          <va-card class="pa-5">
-            <h2 class="va-h2 va-text-center">{{ $t("title_register") }}</h2>
+          </h4>
+          <va-card class="px-5 py-3">
+            <h3 class="va-h3 va-text-center">{{ $t("title_register") }}</h3>
             <div class="row mb-2">
               <div class="flex flex-col md12 sm12 xs12">
                 <div class="item">
@@ -262,8 +262,8 @@ const emit = (event, ...args) => {
 }
 
 .text-apresentation {
-  margin-top: 5rem;
-  margin-bottom: 5rem;
+  margin-top: 2rem;
+  margin-bottom: 3rem;
   text-align: justify;
   text-justify: inter-word;
   font-size: 1.2rem;

@@ -3,7 +3,7 @@
     <div class="row">
       <div class="flex flex-col md7 sm12 xs12">
         <div class="pa-3 w-1/2">
-          <h1 class="va-h1 va-text-center font-bold mt-5">
+          <h1 class="va-h1 va-text-center font-bold mt-1">
             {{ $t("welcome") }}
           </h1>
           <p class="text-apresentation">
