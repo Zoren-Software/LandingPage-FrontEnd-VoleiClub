@@ -274,21 +274,6 @@ const emit = (event, ...args) => {
   padding-left: 4rem;
   padding-right: 4rem;
 }
-@media (min-width: 996px) {
-  .card-content-voz {
-    height: 144px;
-  }
-}
-@media (min-width: 1132px) {
-  .card-content-voz {
-    height: 160px;
-  }
-}
-@media (min-width: 1640px) {
-  .card-content-voz {
-    height: 113px;
-  }
-}
 
 @media (min-width: 768px) {
   .position-fixed {
@@ -303,7 +288,7 @@ const emit = (event, ...args) => {
   .position-fixed {
     position: fixed;
     margin-right: 3rem;
-    margin: 53px 13%;
+    margin: 4px 13%;
     margin-left: -13px;
     margin-right: 33px;
   }
@@ -313,7 +298,7 @@ const emit = (event, ...args) => {
   .position-fixed {
     position: fixed;
     margin-right: 3rem;
-    margin: 65px 12%;
+    margin: 25px 12%;
     margin-left: 32px;
   }
 }
@@ -322,7 +307,7 @@ const emit = (event, ...args) => {
   .position-fixed {
     position: fixed;
     margin-right: 3rem;
-    margin: 61px 20%;
+    margin: 0px 20%;
     margin-left: 45px;
   }
 }

@@ -121,7 +121,7 @@ const darkNavbarColors = computed(() => {
   }
 }
 
-@media (max-width: 390px) {
+@media (max-width: 600px) {
   .custom-titles {
     font-size: 2rem;
   }
@@ -130,6 +130,12 @@ const darkNavbarColors = computed(() => {
     margin: 0, 0, 0, 0;
     padding-left: 1rem;
     padding-right: 1rem;
+  }
+}
+
+@media (min-width: 767px) {
+  .custom-titles {
+    font-size: 2rem;
   }
 }
 </style>

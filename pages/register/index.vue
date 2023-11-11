@@ -136,4 +136,11 @@ export default {
     padding-right: 1rem;
   }
 }
+
+
+@media (min-width: 767px) {
+  .custom-titles {
+    font-size: 2rem;
+  }
+}
 </style>
