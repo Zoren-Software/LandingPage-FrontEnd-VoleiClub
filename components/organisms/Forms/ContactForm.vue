@@ -207,7 +207,7 @@ const submit = async () => {
 
     const token = await executeRecaptcha("create_new_lead");
 
-    await new Promise((resolve) => setTimeout(resolve, 5000));
+    await new Promise((resolve) => setTimeout(resolve, 1000));
 
     data.value = await $customFetch("/leads", "POST", {
       body: JSON.stringify({
