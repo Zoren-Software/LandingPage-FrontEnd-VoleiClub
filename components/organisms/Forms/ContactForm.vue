@@ -130,9 +130,13 @@
             <div class="row mb-2 mt-2">
               <div class="flex flex-col md12 sm12 xs12">
                 <div class="item">
-                  <va-button block @click="submit">{{
-                    $t("button_register")
-                  }}</va-button>
+                  <va-button
+                    block
+                    @click="submit"
+                    :loading="loading.value"
+                    :disabled="loading.value"
+                    >{{ $t("button_register") }}</va-button
+                  >
                 </div>
               </div>
             </div>
@@ -195,10 +199,15 @@ const { executeRecaptcha } = useReCaptcha();
 
 const submit = async () => {
   try {
+    loader();
+
+    if (loading.value) return;
+
+    loading.value = true;
+
     const token = await executeRecaptcha("create_new_lead");
 
-    loader();
-    await new Promise((resolve) => setTimeout(resolve, 1000));
+    await new Promise((resolve) => setTimeout(resolve, 5000));
 
     data.value = await $customFetch("/leads", "POST", {
       body: JSON.stringify({
@@ -223,6 +232,9 @@ const submit = async () => {
         } else {
           confirmError(response.message);
         }
+      })
+      .finally(() => {
+        loading.value = false;
       });
   } catch ({ response }) {
     if (response) {
