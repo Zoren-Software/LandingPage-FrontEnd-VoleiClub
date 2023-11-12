@@ -19,7 +19,8 @@ export default defineNuxtConfig({
         public: {
           apiBase: '', // can be overridden by NUXT_PUBLIC_API_BASE environment variable
           nameApplication: '', // can be overridden by NUXT_PUBLIC_NAME_APPLICATION environment variable
-          googleRecaptcha: '', // can be overridden by NUXT_PUBLIC_NAME_APPLICATION environment variable
+          googleRecaptcha: '', // can be overridden by NUXT_PUBLIC_GOOGLE_RECAPTCHA environment variable
+          discordLink: '', // can be overridden by NUXT_PUBLIC_DISCORD_LINK environment variable
         }
       },
 
