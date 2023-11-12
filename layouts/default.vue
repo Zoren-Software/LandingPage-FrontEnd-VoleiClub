@@ -73,7 +73,45 @@
         <NuxtPage />
       </main>
     </template>
+    <!-- Adicionando o Footer -->
   </VaLayout>
+  <footer
+    class="footer"
+    style="
+      background: rgb(21, 78, 193);
+      color: rgb(255, 255, 255);
+      --va-0-stripe-color-computed: #154ec1;
+    "
+  >
+    <div class="row mb-4 pt-3">
+      <div class="flex flex-col offset-xs2 offset-sm1 offset-md-1 md3 mb-3">
+        <div class="item mb-3 font-bold">
+          <h6 class="va-h6">{{ $t("title_footer_about_us") }}</h6>
+        </div>
+        <div class="item">
+          <p>
+            {{ $t("text_footer_about_us") }}
+          </p>
+        </div>
+      </div>
+      <div class="flex flex-col offset-xs2 offset-sm1 offset-md-1 md3">
+        <div class="item mb-3 font-bold">
+          <h6 class="va-h6">{{ $t("title_responsible_company") }}:</h6>
+        </div>
+        <div class="item">{{ nameCompany }}</div>
+        <div class="item">{{ cnpj }}</div>
+        <div class="item mb-3 font-bold">
+          <h6 class="va-h6">{{ $t("title_footer_contact") }}:</h6>
+        </div>
+        <div class="item">{{ emailSupport }}</div>
+      </div>
+    </div>
+    <p class="va-text-center pb-3">
+      <span role="img" aria-label="Bandeira do Brasil">🇧🇷</span> &copy;
+      {{ currentYear() }} {{ applicationName }}.
+      {{ $t("all_rights_reserved") }}.
+    </p>
+  </footer>
 </template>
 <script setup>
 import { ref } from "vue";
@@ -96,9 +134,16 @@ watch(locale, (newLocale) => {
   localStorage.setItem("selectedLanguage", newLocale);
 });
 
+const currentYear = () => {
+  return new Date().getFullYear();
+};
+
 const runtimeConfig = useRuntimeConfig();
 
 const applicationName = runtimeConfig.public.nameApplication;
+const nameCompany = runtimeConfig.public.nameCompany;
+const emailSupport = runtimeConfig.public.emailSupport;
+const cnpj = runtimeConfig.public.cnpj;
 
 const routeRegister = () => {
   router.push("/register");
