@@ -29,6 +29,9 @@
           <va-navbar-item @click="routeFAQ()" class="va-button">{{
             $t("menu_title_faq")
           }}</va-navbar-item>
+          <va-navbar-item @click="routeDiscord()" class="va-button">{{
+            $t("menu_title_discord")
+          }}</va-navbar-item>
         </template>
       </VaNavbar>
     </template>
@@ -98,23 +101,26 @@ const runtimeConfig = useRuntimeConfig();
 const applicationName = runtimeConfig.public.nameApplication;
 
 const routeRegister = () => {
-  console.log("routeRegister");
   router.push("/register");
 };
 
 const routeFAQ = () => {
-  console.log("routeFAQ");
   router.push("/faq");
 };
 
 const routeHome = () => {
-  console.log("routeHome");
   router.push("/");
 };
 
 const goToIndex = () => {
-  console.log("routeHome");
   router.push("/");
+};
+
+const routeDiscord = () => {
+  const runtimeConfig = useRuntimeConfig();
+
+  const discordLink = runtimeConfig.public.discordLink;
+  window.open(discordLink, "_blank");
 };
 </script>
 
