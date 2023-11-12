@@ -29,6 +29,9 @@
           <va-navbar-item @click="routeFAQ()" class="va-button">{{
             $t("menu_title_faq")
           }}</va-navbar-item>
+          <va-navbar-item @click="routeDiscord()" class="va-button">{{
+            $t("menu_title_discord")
+          }}</va-navbar-item>
         </template>
       </VaNavbar>
     </template>
@@ -111,6 +114,13 @@ const routeHome = () => {
 
 const goToIndex = () => {
   router.push("/");
+};
+
+const routeDiscord = () => {
+  const runtimeConfig = useRuntimeConfig();
+
+  const discordLink = runtimeConfig.public.discordLink;
+  window.open(discordLink, "_blank");
 };
 </script>
 
