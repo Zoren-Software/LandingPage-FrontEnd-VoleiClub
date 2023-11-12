@@ -98,22 +98,18 @@ const runtimeConfig = useRuntimeConfig();
 const applicationName = runtimeConfig.public.nameApplication;
 
 const routeRegister = () => {
-  console.log("routeRegister");
   router.push("/register");
 };
 
 const routeFAQ = () => {
-  console.log("routeFAQ");
   router.push("/faq");
 };
 
 const routeHome = () => {
-  console.log("routeHome");
   router.push("/");
 };
 
 const goToIndex = () => {
-  console.log("routeHome");
   router.push("/");
 };
 </script>
