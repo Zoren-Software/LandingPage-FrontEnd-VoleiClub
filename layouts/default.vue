@@ -5,7 +5,7 @@
         <template #left>
           <VaButton
             @click="showSidebar = !showSidebar"
-            :icon="showSidebar ? 'menu_open' : 'menu'"
+            :icon="showSidebar ? 'menu' : 'language'"
           />
         </template>
         <template #center>
@@ -18,6 +18,27 @@
           </va-navbar-item>
         </template>
         <template #right style="margin-right: 50px">
+          <div class="custom-select-language custom-select-language-none mr-5">
+            <va-select
+              name="option"
+              v-model="locale"
+              class="display-block"
+              :label="$t('label_language')"
+              :placeholder="$t('placeholder_language')"
+              :options="[
+                { value: 'pt-br', text: $t('option_language_pt_br') },
+                { value: 'en', text: $t('option_language_en') },
+                { value: 'es', text: $t('option_language_es') },
+                { value: 'fr', text: $t('option_language_fr') },
+                { value: 'it', text: $t('option_language_it') },
+                { value: 'pl', text: $t('option_language_pl') },
+                { value: 'ru', text: $t('option_language_ru') },
+              ]"
+              valueBy="value"
+              autoSelectFirstOption
+              style="width: max-content"
+            />
+          </div>
           <va-navbar-item @click="routeHome()" class="va-button">{{
             $t("menu_title_home")
           }}</va-navbar-item>
@@ -187,6 +208,11 @@ const routeDiscord = () => {
 
   .icon {
     margin-right: 2rem;
+  }
+}
+@media (max-width: 768px) {
+  .custom-select-language-none {
+    display: none;
   }
 }
 
