@@ -1,59 +1,36 @@
 <template>
   <VaLayout :left="{ absolute: true }">
     <template #top>
-      <VaNavbar color="primary" class="py-2">
+      <VaNavbar color="dark" class="py-2">
         <template #left>
           <VaButton
             @click="showSidebar = !showSidebar"
             :icon="showSidebar ? 'menu' : 'language'"
           />
         </template>
+
         <template #center>
-          <va-navbar-item
-            class="font-bold text-lg logo va-button"
-            @click="goToIndex()"
-          >
-            <va-icon class="icon" name="sports_volleyball" />
-            <span class="ml-2 title-and-icon">{{ applicationName }}</span>
+          <va-navbar-item class="font-bold text-lg va-button ml-3" @click="goToIndex()">
+            <va-image
+              style="width: 200px; height: 70px; cursor: pointer;"
+              src="/images/logo_volleytrack.png"
+              fit="contain"
+              lazy
+            />
+          </va-navbar-item>
+          <va-navbar-item @click="routeHome()" class="custom-navbar-item va-button">{{ $t("menu_title_home") }}</va-navbar-item>
+          <va-navbar-item @click="routeSobre()" class="custom-navbar-item va-button">{{ $t("menu_title_about") }}</va-navbar-item>
+          <va-navbar-item @click="routePlanos()" class="custom-navbar-item va-button">{{ $t("menu_title_plans") }}</va-navbar-item>
+          <va-navbar-item @click="routeSolucoes()" class="custom-navbar-item va-button">{{ $t("menu_title_solutions") }}</va-navbar-item>
+          <va-navbar-item @click="routeFAQ()" class="custom-navbar-item va-button">{{ $t("menu_title_faq") }}</va-navbar-item>
+          <va-navbar-item @click="routeDiscord()" class="custom-navbar-item va-button">{{ $t("menu_title_discord") }}</va-navbar-item>
+          <va-navbar-item @click="routeRegister()" class="custom-navbar-item va-button">
+            <VaButton class="px-2">
+              {{ $t("menu_title_register") }}
+            </VaButton>
           </va-navbar-item>
         </template>
-        <template #right style="margin-right: 50px">
-          <div class="custom-select-language custom-select-language-none mr-5">
-            <va-select
-              name="option"
-              v-model="locale"
-              class="display-block"
-              :label="$t('label_language')"
-              :placeholder="$t('placeholder_language')"
-              :options="[
-                { value: 'pt-br', text: $t('option_language_pt_br') },
-                { value: 'en', text: $t('option_language_en') },
-                { value: 'es', text: $t('option_language_es') },
-                { value: 'fr', text: $t('option_language_fr') },
-                { value: 'it', text: $t('option_language_it') },
-                { value: 'pl', text: $t('option_language_pl') },
-                { value: 'ru', text: $t('option_language_ru') },
-              ]"
-              valueBy="value"
-              autoSelectFirstOption
-              style="width: max-content"
-            />
-          </div>
-          <va-navbar-item @click="routeHome()" class="va-button">{{
-            $t("menu_title_home")
-          }}</va-navbar-item>
-          <va-navbar-item
-            @click="routeRegister()"
-            class="hidden va-button sm:block"
-            >{{ $t("menu_title_register") }}</va-navbar-item
-          >
-          <va-navbar-item @click="routeFAQ()" class="va-button">{{
-            $t("menu_title_faq")
-          }}</va-navbar-item>
-          <va-navbar-item @click="routeDiscord()" class="va-button">{{
-            $t("menu_title_discord")
-          }}</va-navbar-item>
-        </template>
+        
       </VaNavbar>
     </template>
 
@@ -191,11 +168,6 @@ const routeDiscord = () => {
 </script>
 
 <style>
-.logo {
-  font-weight: 600;
-  font-size: 1.5rem;
-}
-
 .custom-select-language {
   height: 4rem;
   width: 11rem;
@@ -223,5 +195,10 @@ const routeDiscord = () => {
   .icon {
     margin-right: 1rem;
   }
+}
+
+.custom-navbar-item {
+  font-weight: 100;
+  padding-left: 1rem;
 }
 </style>
