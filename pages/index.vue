@@ -15,12 +15,12 @@
   <div class="row custom-about">
     <div class="flex flex-col md6">
       <div class="">
-        <va-image src="/images/image_heart_2.svg" fit="contain" lazy />
+        <va-image src="/images/about.svg" fit="contain" lazy />
       </div>
     </div>
     <div class="flex flex-col md6">
       <div class="item">
-        <span>Sobre</span>
+        <LineWithText/>
         <h1>TITULO</h1>
         <p>
           Lorem ipsum dolor sit amet consectetur. Adipiscing nisl id at arcu enim id gravida pulvinar. Tristique consectetur mi curabitur congue enim dignissim amet justo. Porta morbi nulla aliquet adipiscing. Sed diam mauris erat faucibus eu posuere ultricies quisque amet. Quam pellentesque in tristique 
@@ -38,27 +38,41 @@
       </span>
       <div class="row py-4">
         <div class="flex flex-col md6">
-          <div class="custom-card">
-            <VaCard>
-              <VaCardTitle>Agendamento Inteligente</VaCardTitle>
-              <VaCardContent>
-                Com nosso sistema de calendário avançado, planejar jogos e treinos nunca foi tão fácil. Defina os fundamentos específicos para cada sessão, detalhe o foco técnico e faça anotações personalizadas para garantir que cada treino seja produtivo e alinhado com os objetivos da equipe.
-              </VaCardContent>
-            </VaCard>
-          </div>
+          <CardSolution/>
         </div>
         <div class="flex flex-col md6">
-          <div class="custom-card">
-            <VaCard>
-              <VaCardTitle>Gerenciamento Completo de Equipes</VaCardTitle>
-              <VaCardContent>
-                Centralize as informações dos jogadores, incluindo estatísticas, frequência e progresso individual. Nosso sistema permite um controle detalhado da presença e do desempenho, além de oferecer um espaço para anotações e observações críticas que auxiliam no desenvolvimento contínuo dos atletas.
-              </VaCardContent>
-            </VaCard>
-          </div>
+          <CardSolution/>
         </div>
       </div>
     </div>
+  </div>
+  <!-- REGISTRE-SE -->
+  <div class="row custom-register">
+    <div class="flex flex-col md6">
+      <h1>Pronto para entrar na jogada?</h1>
+      <p class="pt-1 pb-3">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Sit nam et assumenda quas animi iusto reiciendis ut rerum alias a inventore dolorem voluptas commodi quasi, itaque ea quisquam, architecto deserunt!</p>
+      
+      <VaForm ref="myForm" class="flex flex-col gap-2">
+        <VaProgressBar v-show="isLoading" indeterminate />
+        <VaInput class="custom-form-input" stateful label="Nome" :rules="[(v) => !!v || 'Required']" />
+        <VaInput class="custom-form-input" stateful label="Email" :rules="[(v) => !!v || 'Required']" />
+        <VaSelect 
+          class="custom-form-input" 
+          stateful
+          label="Nível de Experiência"
+          :options="[
+            {
+              value: null,
+              text: $t('option_experience_level_select'),
+            }]"
+        />
+        <VaButton class="custom-form-button">
+          Registrar
+        </VaButton>
+      </VaForm>
+    
+    </div>
+    <div class="flex flex-col md6">2</div>
   </div>
 </template>
 
@@ -67,6 +81,9 @@ import { computed } from "vue";
 import { useColors } from "vuestic-ui";
 import { ref } from "vue";
 import ContactForm from "~/components/organisms/Forms/ContactForm.vue";
+import LineWithText from "~/components/organisms/Forms/LineWithText.vue";
+import CardSolution from "~/components/organisms/Forms/CardSolution.vue";
+
 
 const showSidebar = ref(false);
 const page = ref(1);
@@ -136,8 +153,12 @@ const darkNavbarColors = computed(() => {
   cursor: pointer;
 }
 
-/* REGISTRE-SE */
+/* SOBRE*/
 .custom-about {
+  padding: 7% 15%;
+}
+
+.custom-register {
   padding: 7% 15%;
 }
 
@@ -150,7 +171,7 @@ const darkNavbarColors = computed(() => {
   font-size: 1.0rem;
 }
 
-/* SOLUÇÕES */
+/* SOLUÇÃO */
 .custom-solutions {
   padding: 3% 15%;
   color: #fff;
@@ -161,8 +182,45 @@ const darkNavbarColors = computed(() => {
   margin-bottom: 20px;
 }
 
-.custom-card {
-  padding: 0 20px 0 0;
+/* REGISTRE-SE */
+.custom-register h1 {
+  font-size: 2.5rem;
+}
+
+.custom-register p {
+  font-size: 1.0rem;
+  color: #696969;
+  line-height: 1.2;
+}
+
+.custom-form-input {
+  width: 100%;
+  padding: 10px;
+  font-size: 1rem;
+  margin-bottom: 10px;
+}
+
+.custom-form-input:focus {
+  border: 1px solid #FF4E1B;
+}
+
+.custom-form-textarea {
+  width: 100%;
+  padding: 10px;
+  font-size: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  margin-bottom: 10px;
+}
+
+.custom-form-button {
+  background-color: #FF4E1B;
+  color: #fff;
+  border: none;
+  padding: 5px;
+  font-size: 1.5rem;
+  cursor: pointer;
+  width: 100%;
 }
 
 </style>
