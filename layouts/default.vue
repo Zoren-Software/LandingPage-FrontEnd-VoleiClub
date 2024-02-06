@@ -74,9 +74,9 @@
     <!-- Adicionando o Footer -->
   </VaLayout>
   <footer
-    class="footer"
+    class="footer mt-4"
     style="
-      background: rgb(21, 78, 193);
+      background: #131B23;
       color: rgb(255, 255, 255);
       --va-0-stripe-color-computed: #154ec1;
     "
@@ -101,12 +101,22 @@
         <div class="item mb-3 font-bold">
           <h6 class="va-h6">{{ $t("title_footer_contact") }}:</h6>
         </div>
-        <div class="item">{{ emailSupport }}</div>
+        <div class="item">
+          {{ emailSupport }}
+        </div>
       </div>
     </div>
+    <div class="va-divider custom-divider-footer pb-2"></div>
     <p class="va-text-center pb-3">
+      <va-image
+        class="mx-auto"
+        style="width: 200px; height: 70px; cursor: pointer;"
+        src="/images/logo_volleytrack.png"
+        fit="contain"
+        lazy
+      />
       <span role="img" aria-label="Bandeira do Brasil">🇧🇷</span> &copy;
-      {{ currentYear() }} {{ applicationName }}.
+      {{ currentYear() }}
       {{ $t("all_rights_reserved") }}.
     </p>
   </footer>
@@ -201,4 +211,20 @@ const routeDiscord = () => {
   font-weight: 100;
   padding-left: 1rem;
 }
+
+.custom-navbar-item:hover {
+  color: #FF4E1B;
+}
+
+.custom-divider-footer {
+  color: #5a5a5a;
+  margin-right: 50px;
+  margin-left: 50px;
+  opacity: 50%;
+}
+
+.custom-icons {
+  color: #FF4E1B;
+}
+
 </style>
