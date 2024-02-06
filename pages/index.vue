@@ -1,86 +1,15 @@
 <template>
-  <div class="flex justify-end pa-3 custom-responsive">
-    <div class="row">
-      <div class="flex flex-col md7 sm12 xs12">
-        <div class="pa-3 w-1/2">
-          <h1 class="va-h1 va-text-center font-bold mt-1 custom-titles">
-            {{ applicationName }} {{ $t("welcome_title_index") }}
-          </h1>
-          <p class="text-apresentation">
-            {{ $t("welcome_message_index") }}
-          </p>
-          <va-image src="/images/image_numbers.svg" fit="contain" lazy />
-
-          <h2
-            class="va-h2 va-text-center font-semibold mt-5 mb-5 custom-titles"
-          >
-            {{ $t("title_game_changing_features") }}
-          </h2>
-          <div class="row">
-            <div class="flex flex-col md12 sm12 lg6 xl12">
-              <div class="pa-3 w-1/2">
-                <va-card :bordered="false">
-                  <va-image
-                    src="/images/image_calendar.svg"
-                    fit="contain"
-                    lazy
-                  />
-                  <va-card-content class="card-content-antecipado">
-                    <h6 class="va-h6">
-                      {{ $t("title_smart_scheduling") }}
-                    </h6>
-                    {{ $t("text_smart_scheduling") }}
-                  </va-card-content>
-                </va-card>
-              </div>
-            </div>
-            <div class="flex flex-col md12 sm12 lg6 xl12">
-              <div class="pa-3 w-1/2">
-                <va-card :bordered="false">
-                  <va-image src="/images/image_check.svg" fit="contain" lazy />
-                  <va-card-content class="card-content-exclusivo">
-                    <h6 class="va-h6">
-                      {{ $t("title_complete_team_management") }}
-                    </h6>
-                    {{ $t("text_complete_team_management") }}
-                  </va-card-content>
-                </va-card>
-              </div>
-            </div>
-            <div class="flex flex-col md12 sm12 lg6 xl12">
-              <div class="pa-3 w-1/2">
-                <va-card :bordered="false">
-                  <va-image src="/images/image_data.svg" fit="contain" lazy />
-                  <va-card-content>
-                    <h6 class="va-h6">
-                      {{ $t("title_detaile_analysis_and_statistics") }}
-                    </h6>
-                    {{ $t("text_detaile_analysis_and_statistics") }}
-                  </va-card-content>
-                </va-card>
-              </div>
-            </div>
-            <div class="flex flex-col md12 sm12 lg6 xl12">
-              <div class="pa-3 w-1/2">
-                <va-card :bordered="false">
-                  <va-image
-                    src="/images/image_communication.svg"
-                    fit="contain"
-                    lazy
-                  />
-                  <va-card-content>
-                    <h6 class="va-h6">
-                      {{ $t("title_efficient_and_targeted_communication") }}
-                    </h6>
-                    {{ $t("text_efficient_and_targeted_communication") }}
-                  </va-card-content>
-                </va-card>
-              </div>
-            </div>
-          </div>
-        </div>
+  <div class="row items-center custom-banner">
+    <div class="flex flex-col w-full custom-banner-text">
+      <div class="item">
+        <h1>Lorem ipsum dolor sit amet consectetur adipisicing elit</h1>
+        <hr class="mb-3">
+        <p class="mb-3">Lorem ipsum dolor sit amet consectetur. Aliquam quisque cursus proin adipiscing quis diam. Eu fringilla elit commodo nec aliquet. Augue pharetra nibh co</p>
+        <VaButton class="px-4 custom-banner-button">
+          Entre na lista de espera
+        </VaButton>
       </div>
-      <ContactForm />
+
     </div>
   </div>
 </template>
@@ -115,27 +44,47 @@ const darkNavbarColors = computed(() => {
 </script>
 
 <style>
-@media (min-width: 1600px) {
-  .custom-responsive {
-    margin: 0 20%;
-  }
+
+.custom-banner {
+  background-image: linear-gradient(#131b23e0, #131b23e0), url('images/background-volei.jpg');
+  background-repeat: no-repeat;
+  background-size: cover;
+  color: #fff;
+  padding: 0% 15%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  height: 90vh;
 }
 
-@media (max-width: 600px) {
-  .custom-titles {
-    font-size: 2rem;
-  }
-
-  .text-apresentation {
-    margin: 0, 0, 0, 0;
-    padding-left: 1rem;
-    padding-right: 1rem;
-  }
+.custom-banner-text {
+  text-align: center;
 }
 
-@media (min-width: 767px) {
-  .custom-titles {
-    font-size: 2rem;
-  }
+.custom-banner hr {
+  width: 50%;
+  height: 3px;
+  background-color: #FF4E1B;
+  border: none;
+}
+
+.custom-banner h1 {
+  font-size: 3.5rem;
+  margin-bottom: 20px
+}
+
+.custom-banner p {
+  font-size: 1.5rem;
+}
+
+.custom-banner-button {
+  background-color: #FF4E1B;
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  font-size: 1.5rem;
+  margin-top: 20px;
+  cursor: pointer;
 }
 </style>

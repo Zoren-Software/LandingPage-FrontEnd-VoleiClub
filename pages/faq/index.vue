@@ -1,10 +1,8 @@
 <template>
-
   <div class="header mt-5">
     <span class="faq-text">FAQs</span>
     <hr class="line-behind" />
   </div>
-
   <div class="mt-3 pl-5 pr-5">
     <h1 class="va-h1 va-text-center font-bold mt-1 custom-titles">
       {{ $t("subtitle_faq_questions") }}
