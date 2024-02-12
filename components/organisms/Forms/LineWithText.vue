@@ -1,6 +1,6 @@
 <template>
-  <div class="line-with-text">
-    <hr class="line" />
+  <div class="line-with-text pb-4">
+    <hr>
     <span class="text">{{ titleText }}</span>
   </div>
 </template>
@@ -13,24 +13,27 @@ const titleText = ref('This is a title')
 </script>
 
 <style>
-.line-with-text {
-  display: flex; /* Usa flexbox para alinhar linha e texto */
-  align-items: center; /* Centraliza verticalmente os filhos */
-  justify-content: flex-end; /* Alinha os filhos à direita */
-}
-
-.line {
-  border: 0;
-  height: 2px;
-  background: #c0c0c0;
-  width: 20%; /* Ajuste conforme necessário */
-  margin-right: 10px; /* Espaçamento entre a linha e o texto */
-}
-
 .text {
-  color: #ff6347; /* Cor do texto */
-  font-size: 18px; /* Tamanho do texto */
-  white-space: nowrap; /* Evita que o texto quebre em várias linhas */
-  font-weight: bold; /* Deixa o texto em negrito */
+  color: #ff6347;
+  font-size: 18px;
+  white-space: nowrap;
+  font-weight: bold;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+}
+
+.line-with-text {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 40%;
+}
+
+.line-with-text hr {
+  flex-grow: 1;
+  border: none;
+  height: 2px;
+  background-color: #D8D8D8;
+  margin: 0;
 }
 </style>

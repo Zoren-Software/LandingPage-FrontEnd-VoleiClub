@@ -11,41 +11,9 @@
       </div>
     </div>
   </div>
-  <!-- SOBRE -->
-  <div class="row custom-about">
-    <div class="flex flex-col md6">
-      <div class="">
-        <va-image src="/images/about.svg" fit="contain" lazy />
-      </div>
-    </div>
-    <div class="flex flex-col md6">
-      <div class="item">
-        <LineWithText/>
-        <h1>TITULO</h1>
-        <p>
-          Lorem ipsum dolor sit amet consectetur. Adipiscing nisl id at arcu enim id gravida pulvinar. Tristique consectetur mi curabitur congue enim dignissim amet justo. Porta morbi nulla aliquet adipiscing. Sed diam mauris erat faucibus eu posuere ultricies quisque amet. Quam pellentesque in tristique 
-          sed neque scelerisque quam pulvinar. Risus dictum elementum lacus urna. Neque eget sagittis vulputate nam id morbi id. Aliquam molestie posuere pulvinar arcu
-        </p>
-      </div>
-    </div>
-  </div>
-  <!-- SOLUÇÕES -->
-  <div class="row custom-solutions" style="background-color: #131B23;">
-    <div class="flex flex-col w-full">
-      <span>Soluções</span>
-      <h1>Gestão de Times de Vôlei</h1>
-      <span>Descubra a liberdade de gerenciar seu time de vôlei com eficiência e facilidade. O VolleyTrack é a solução definitiva para treinadores, jogadores e organizadores que desejam elevar o nível de suas equipes. Com nossa plataforma intuitiva, você pode organizar jogos, treinos e gerenciar seu elenco com apenas alguns cliques.
-      </span>
-      <div class="row py-4">
-        <div class="flex flex-col md6">
-          <CardSolution/>
-        </div>
-        <div class="flex flex-col md6">
-          <CardSolution/>
-        </div>
-      </div>
-    </div>
-  </div>
+  <AboutSection/>
+  <SolutionSection/>
+  
   <!-- REGISTRE-SE -->
   <div class="row custom-register">
     <div class="flex flex-col md6">
@@ -70,7 +38,6 @@
           Registrar
         </VaButton>
       </VaForm>
-    
     </div>
     <div class="flex flex-col md6">2</div>
   </div>
@@ -81,9 +48,9 @@ import { computed } from "vue";
 import { useColors } from "vuestic-ui";
 import { ref } from "vue";
 import ContactForm from "~/components/organisms/Forms/ContactForm.vue";
-import LineWithText from "~/components/organisms/Forms/LineWithText.vue";
 import CardSolution from "~/components/organisms/Forms/CardSolution.vue";
-
+import AboutSection from "~/components/organisms/Forms/AboutSection.vue";
+import SolutionSection from "~/components/organisms/Forms/SolutionSection.vue";
 
 const showSidebar = ref(false);
 const page = ref(1);
@@ -153,33 +120,8 @@ const darkNavbarColors = computed(() => {
   cursor: pointer;
 }
 
-/* SOBRE*/
-.custom-about {
-  padding: 7% 15%;
-}
-
 .custom-register {
   padding: 7% 15%;
-}
-
-.custom-about h1 {
-  font-size: 3.5rem;
-  margin-bottom: 20px;
-}
-
-.custom-about p {
-  font-size: 1.0rem;
-}
-
-/* SOLUÇÃO */
-.custom-solutions {
-  padding: 3% 15%;
-  color: #fff;
-}
-
-.custom-solutions h1 {
-  font-size: 3.5rem;
-  margin-bottom: 20px;
 }
 
 /* REGISTRE-SE */
