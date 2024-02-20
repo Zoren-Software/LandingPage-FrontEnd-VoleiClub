@@ -31,9 +31,18 @@ export default defineNuxtConfig({
     },
 
     vuestic: {
-        config: {
-        // Config here
+      config: {
+        colors: {
+          presets: {
+            light: {
+              primary: '#FF4E1B',
+              myCoolColor: '#ff00ff',
+              onMyCoolColor: '#ffffff',
+              dark: '#131B23'
+            }
+          }
         },
+      },
         css: true
     },
 
