@@ -1,21 +1,43 @@
 <template>
   <div class="custom-card">
     <VaCard>
-      <VaCardTitle class="custom-card-title">Agendamento Inteligente</VaCardTitle>
+      <div class="flex flex-col items-center justify-center md6"> <!-- Centralizar conteúdo -->
+          <va-image class="custom-img-card custom-img-size" :src="imageCard" fit="contain"/>
+      </div>
+      <VaCardTitle class="custom-card-title">{{ title }}</VaCardTitle>
       <VaCardContent class="custom-card-content">
-        Com nosso sistema de calendário avançado, planejar jogos e treinos nunca foi tão fácil. Defina os fundamentos específicos para cada sessão, detalhe o foco técnico e faça anotações personalizadas para garantir que cada treino seja produtivo e alinhado com os objetivos da equipe.
+        {{ description }}
       </VaCardContent>
     </VaCard>
   </div>
 </template>
 
-<script setup>
+<script>
+import { VaImage } from 'vuestic-ui/web-components';
 
+export default {
+  name: 'CardSolution',
+  props: {
+    imageCard: {
+      type: String,
+      default: '/images/about.svg'
+    },
+    title: {
+      type: String,
+      default: 'Título Padrão'
+    },
+    description: {
+      type: String,
+      default: 'Descrição Padrão'
+    }
+  }
+}
 </script>
 
 <style>
 .custom-card {
   padding: 0 20px 0 0;
+  text-align: center
 }
 
 .custom-card .va-card {
@@ -38,12 +60,5 @@
   font-size: 18px;
   color: #696969;
   line-height: 1.2;
-}
-
-.custom-circle {
-  width: 100px;
-  height: 100px;
-  background-color: orange;
-  border-radius: 50%;
 }
 </style>

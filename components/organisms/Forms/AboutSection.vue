@@ -7,8 +7,11 @@
     </div>
     <div class="flex flex-col md6">
       <div class="item">
-        <LineWithText/>
-        <TitleAndDescription/> 
+        <LineWithText titleText="Sobre"/>
+        <TitleAndDescription
+          title="Quem Somos"
+          description="O VolleyTrack é um projeto desenvolvido com paixão e inovação no Brasil. Somos comprometidos com a excelência em software e acreditamos no poder do open source para criar soluções robustas e confiáveis. Nosso sistema é uma plataforma aberta que convida desenvolvedores a colaborar e inovar no mundo do voleibol."
+        /> 
       </div>
     </div>
   </div>
@@ -25,6 +28,6 @@ const titleText = ref('This is a title')
 
 <style>
 .custom-about {
-  padding: 9% 15%;
+  padding: 8% 15%;
 }
 </style>

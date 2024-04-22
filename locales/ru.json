@@ -35,6 +35,8 @@
     "option_language_ru": "Русский",
     "option_language_en": "Английский",
     "menu_title_home": "Главная",
+    "menu_title_about": "О нас",
+    "menu_title_solutions": "Решения",
     "menu_title_register": "Регистрация",
     "menu_title_faq": "ЧАВО",
     "question_1": "Что такое VolleyTrack?",

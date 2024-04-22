@@ -1,16 +1,24 @@
 <template>
-  <h1 class="customer-section-title">TITULO</h1>
+  <h1 class="customer-section-title">{{ title }}</h1>
   <p class="customer-section-description">
-    Lorem ipsum dolor sit amet consectetur. Adipiscing nisl id at arcu enim id gravida pulvinar. Tristique consectetur mi curabitur congue enim dignissim amet justo. Porta morbi nulla aliquet adipiscing. Sed diam mauris erat faucibus eu posuere ultricies quisque amet. Quam pellentesque in tristique 
-    sed neque scelerisque quam pulvinar. Risus dictum elementum lacus urna. Neque eget sagittis vulputate nam id morbi id. Aliquam molestie posuere pulvinar arcu
+    {{ description }}
   </p>
 </template>
 
-<script setup>
-import { ref } from 'vue'
-
-const titleText = ref('This is a title')
-
+<script>
+export default {
+  name: 'LineWithText',
+  props: {
+    title: {
+      type: String,
+      default: 'Título Padrão'
+    },
+    description: {
+      type: String,
+      default: 'Descrição Padrão'
+    }
+  }
+}
 </script>
 
 <style>

@@ -20,7 +20,6 @@
           </va-navbar-item>
           <va-navbar-item @click="routeHome()" class="custom-navbar-item va-button">{{ $t("menu_title_home") }}</va-navbar-item>
           <va-navbar-item @click="routeSobre()" class="custom-navbar-item va-button">{{ $t("menu_title_about") }}</va-navbar-item>
-          <va-navbar-item @click="routePlanos()" class="custom-navbar-item va-button">{{ $t("menu_title_plans") }}</va-navbar-item>
           <va-navbar-item @click="routeSolucoes()" class="custom-navbar-item va-button">{{ $t("menu_title_solutions") }}</va-navbar-item>
           <va-navbar-item @click="routeFAQ()" class="custom-navbar-item va-button">{{ $t("menu_title_faq") }}</va-navbar-item>
           <va-navbar-item @click="routeDiscord()" class="custom-navbar-item va-button">{{ $t("menu_title_discord") }}</va-navbar-item>
@@ -92,6 +91,7 @@
           </p>
         </div>
       </div>
+      
       <div class="flex flex-col offset-xs2 offset-sm1 offset-md-1 md3">
         <div class="item mb-3 font-bold">
           <h6 class="va-h6">{{ $t("title_responsible_company") }}:</h6>

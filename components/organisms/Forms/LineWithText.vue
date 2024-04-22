@@ -5,11 +5,16 @@
   </div>
 </template>
 
-<script setup>
-import { ref } from 'vue'
-
-const titleText = ref('This is a title')
-
+<script>
+export default {
+  name: 'LineWithText',
+  props: {
+    titleText: {
+      type: String,
+      default: 'Título Padrão'
+    }
+  }
+}
 </script>
 
 <style>

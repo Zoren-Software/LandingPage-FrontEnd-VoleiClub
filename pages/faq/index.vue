@@ -50,14 +50,15 @@ export default {
   margin: 0rem 20rem; 
   border-radius: 5px;
   background-color: #e9e6e6;
-  font-size: 1rem;
+  font-size: 1.2rem;
   font-weight: 100 !important;
 }
 
 .custom-collapse-faq .va-collapse__body {
   background-color: rgb(255, 255, 255);
   color: #696969;
-  font-size: 0.8rem;
+  font-size: 1.2rem;
+  line-height: 1.5rem;
   padding: 0.5rem;
 }
 
@@ -83,7 +84,7 @@ export default {
 
 .faq-text {
   color: #FF4E1B;
-  font-size: 1.2rem;
+  font-size: 1.5rem;
   background: #f6f6f6;
   display: inline-block;
   position: relative;
