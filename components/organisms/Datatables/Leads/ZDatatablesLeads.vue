@@ -13,7 +13,7 @@
     :paginatorInfo="paginatorInfo"
     :filter="true"
     @search="searchTrainings"
-    @actionSearch="getTeams"
+    @actionSearch="getLeads"
     @actionClear="clearSearch"
     @add="addTeam"
     @edit="editTeam"
@@ -31,177 +31,125 @@
     <template #cell(name)="{ rowKey: { name } }">
       {{ name }}
     </template>
-    <template #cell(user)="{ rowKey: { user, createdAt, updatedAt } }">
-      <ZUser
-        :data="user || {}"
-        :createdAt="createdAt"
-        :updatedAt="updatedAt"
-        showUpdatedAt
-        showCreatedAt
-      />
-    </template>
   </ZDatatableGeneric>
 </template>
-
-<script>
-import { defineComponent } from "vue";
-import moment from "moment";
+<script setup>
+import { ref, onMounted } from "vue";
+import { useNuxtApp, useRouter } from "#app";
 import ZDatatableGeneric from "~/components/molecules/Datatable/ZDatatableGeneric";
 import ZUser from "~/components/molecules/Datatable/Slots/ZUser";
-import ZDateTraining from "~/components/molecules/Datatable/Slots/ZDateTraining";
-import ZTeam from "~/components/molecules/Datatable/Slots/ZTeam";
-import { confirmSuccess, confirmError } from "~/utils/sweetAlert2/swalHelper";
 
-//import { toRaw } from "vue"; // NOTE - Para debug
+const { $customFetch } = useNuxtApp();
+const router = useRouter();
 
-export default defineComponent({
-  components: {
-    ZDatatableGeneric,
-    ZDateTraining,
-    ZTeam,
-    ZUser,
+const items = ref([]);
+const loading = ref(false);
+const columns = ref([
+  {
+    key: "id",
+    name: "id",
+    sortable: true,
   },
-
-  created() {
-    this.getTeams();
+  {
+    key: "name",
+    name: "name",
+    label: "Cliente",
+    sortable: true,
   },
-
-  data() {
-    let loading = false;
-
-    const columns = [
-      { key: "id", name: "id", sortable: true },
-      { key: "name", name: "name", label: "Time", sortable: true },
-      {
-        key: "user",
-        name: "user",
-        label: "Usuário Alteração",
-        sortable: true,
-      },
-    ];
-
-    return {
-      items: [],
-      loading,
-      columns,
-      paginatorInfo: {
-        currentPage: 1,
-        lastPage: 1,
-        total: 0,
-      },
-      variablesGetTeams: {
-        page: 1,
-        filter: {
-          usersIds: [],
-          playersIds: [],
-          positionsIds: [],
-          search: "%%",
-        },
-        orderBy: "id",
-        sortedBy: "desc",
-      },
-      selectedItems: [],
-      selectedItemsEmitted: [],
-      selectMode: "multiple",
-      selectedColor: "primary",
-      selectModeOptions: ["single", "multiple"],
-      selectColorOptions: ["primary", "danger", "warning", "#EF467F"],
-    };
+  {
+    key: "email",
+    name: "email",
+    label: "E-mail",
+    sortable: true,
   },
-
-  methods: {
-    unselectItem(item) {
-      this.selectedItems = this.selectedItems.filter(
-        (selectedItem) => selectedItem !== item
-      );
-    },
-    addTeam() {
-      this.$router.push("/teams/create");
-    },
-    editTeam(id) {
-      this.$router.push(`/teams/edit/${id}`);
-    },
-    async deleteItems(ids) {
-      try {
-        this.loading = true;
-
-        const query = gql`
-          ${TEAMDELETE}
-        `;
-
-        const variables = {
-          id: ids,
-        };
-
-        const { mutate } = await useMutation(query, { variables });
-
-        const { data } = await mutate();
-
-        confirmSuccess("Time(s) deletado(s) com sucesso!", () => {
-          this.items = this.items.filter((item) => !ids.includes(item.id));
-        });
-
-        this.getTeams({ fetchPolicy: "network-only" });
-      } catch (error) {
-        console.error(error);
-        this.error = true;
-
-        if (
-          error.graphQLErrors &&
-          error.graphQLErrors[0] &&
-          error.graphQLErrors[0].extensions &&
-          error.graphQLErrors[0].extensions.validation
-        ) {
-          this.errors = error.graphQLErrors[0].extensions.validation;
-
-          const errorMessages = Object.values(this.errors).map((item) => {
-            return item[0];
-          });
-
-          this.errorFields = Object.keys(this.errors);
-
-          const footer = errorMessages.join("<br>");
-
-          confirmError("Ocorreu um erro ao deletar o treino!", footer);
-        } else {
-          confirmError("Ocorreu um erro ao deletar o treino!");
-        }
-      }
-      this.loading = false;
-    },
-
-    formatTrainingDate(dateStart) {
-      return moment(dateStart);
-    },
-
-    async deleteTeam(id) {
-      await this.deleteItems([id]);
-    },
-
-    async deleteTeams(items) {
-      await this.deleteItems(items);
-    },
-
-    updateCurrentPageActive(page) {
-      this.variablesGetTeams.page = page;
-      this.getTeams();
-    },
-
-    searchTrainings(search) {
-      this.variablesGetTeams.filter.search = `%${search}%`;
-    },
-
-    clearSearch() {
-      this.variablesGetTeams.filter = {
-        search: "%%",
-        teamsIds: [],
-      };
-    },
-
-    getTeams(fetchPolicyOptions = {}) {
-      this.loading = true;
-      this.items = [];
-    },
+  {
+    key: "status",
+    name: "status",
+    label: "Status",
+    sortable: true,
   },
+  {
+    key: "experience_level",
+    name: "experience_level",
+    label: "Experience level",
+    sortable: true,
+  },
+]);
+const paginatorInfo = ref({
+  currentPage: 1,
+  lastPage: 1,
+  total: 0,
 });
+const variablesGetLeads = ref({
+  page: 1,
+  filter: {
+    usersIds: [],
+    playersIds: [],
+    positionsIds: [],
+    search: "%%",
+  },
+  orderBy: "id",
+  sortedBy: "desc",
+});
+const data = ref({
+  value: [],
+});
+const selectedItems = ref([]);
+const selectedItemsEmitted = ref([]);
+const selectMode = ref("multiple");
+const selectedColor = ref("primary");
+const selectModeOptions = ref(["single", "multiple"]);
+const selectColorOptions = ref(["primary", "danger", "warning", "#EF467F"]);
+
+onMounted(async () => {
+  await getLeads();
+});
+
+function unselectItem(item) {
+  selectedItems.value = selectedItems.value.filter(
+    (selectedItem) => selectedItem !== item
+  );
+}
+
+function addTeam() {
+  router.push("/teams/create");
+}
+
+function editTeam(id) {
+  router.push(`/teams/edit/${id}`);
+}
+
+function updateCurrentPageActive(page) {
+  variablesGetLeads.value.page = page;
+  getLeads();
+}
+
+function searchTrainings(search) {
+  variablesGetLeads.value.filter.search = `%${search}%`;
+}
+
+function clearSearch() {
+  variablesGetLeads.value.filter = {
+    search: "%%",
+    teamsIds: [],
+  };
+}
+
+async function getLeads() {
+  loading.value = true;
+  items.value = [];
+
+  await new Promise((resolve) => setTimeout(resolve, 1000));
+
+  await $customFetch("/leads", "GET")
+    .then((response) => {
+      items.value = response.data;
+    })
+    .catch((error) => {
+      console.error(error);
+    })
+    .finally(() => {
+      loading.value = false;
+    });
+}
 </script>

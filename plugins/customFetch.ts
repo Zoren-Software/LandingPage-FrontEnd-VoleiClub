@@ -19,6 +19,7 @@ export default defineNuxtPlugin({
             'accept': 'application/json',
             // adicionar language
             'Accept-Language': localStorage.getItem("selectedLanguage"),
+            Authorization: `Bearer ${localStorage.getItem("userToken")}`,
             ...options.headers,
           },
         });
