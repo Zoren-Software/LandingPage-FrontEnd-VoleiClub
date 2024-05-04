@@ -16,7 +16,7 @@
     @actionSearch="getLeads"
     @actionClear="clearSearch"
     @add="addTeam"
-    @edit="editTeam"
+    @edit="editStatusLead"
     @update:currentPageActive="updateCurrentPageActive"
   >
     <!-- FILTER -->
@@ -32,16 +32,28 @@
       {{ name }}
     </template>
   </ZDatatableGeneric>
+  <VaModal v-model="showModal" :beforeOk="alterStatusLead" ok-text="Apply">
+    <h3 class="va-h3">Alterar Status Lead</h3>
+    <ZSelectStatusLead
+      label="Status Leads"
+      class="mt-3 mb-3"
+      v-model="statusLead"
+    />
+  </VaModal>
 </template>
+
 <script setup>
 import { ref, onMounted } from "vue";
 import { useNuxtApp, useRouter } from "#app";
 import ZDatatableGeneric from "~/components/molecules/Datatable/ZDatatableGeneric";
+import ZSelectStatusLead from "~/components/molecules/Selects/ZSelectStatusLead";
 import ZUser from "~/components/molecules/Datatable/Slots/ZUser";
+import { confirmSuccess, confirmError } from "~/utils/sweetAlert2/swalHelper";
 
 const { $customFetch } = useNuxtApp();
 const router = useRouter();
 
+let showModal = ref(false);
 const items = ref([]);
 const loading = ref(false);
 const columns = ref([
@@ -100,6 +112,8 @@ const selectMode = ref("multiple");
 const selectedColor = ref("primary");
 const selectModeOptions = ref(["single", "multiple"]);
 const selectColorOptions = ref(["primary", "danger", "warning", "#EF467F"]);
+let leadId = ref(null);
+let statusLead = ref(null);
 
 onMounted(async () => {
   await getLeads();
@@ -115,8 +129,32 @@ function addTeam() {
   router.push("/teams/create");
 }
 
-function editTeam(id) {
-  router.push(`/teams/edit/${id}`);
+function editStatusLead(id) {
+  leadId.value = id;
+  showModal.value = true;
+}
+
+async function alterStatusLead() {
+  showModal.value = false;
+  console.log("LeadID", leadId.value);
+  console.log("Lead status", statusLead.value.value);
+
+  await $customFetch(`/leads/${leadId.value}`, "PUT", {
+    body: JSON.stringify({
+      status: statusLead.value.value,
+      id: leadId.value,
+    }),
+  })
+    .then((response) => {
+      confirmSuccess(response.message, () => {});
+    })
+    .catch((error) => {
+      console.error(error);
+    })
+    .finally(() => {
+      loading.value = false;
+      getLeads();
+    });
 }
 
 function updateCurrentPageActive(page) {
