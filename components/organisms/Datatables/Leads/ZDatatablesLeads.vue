@@ -10,7 +10,7 @@
     :loading="loading"
     :paginatorInfo="paginatorInfo"
     :filter="true"
-    @search="searchTrainings"
+    @search="searchLeads"
     @actionSearch="getLeads"
     @actionClear="clearSearch"
     @update:currentPageActive="updateCurrentPageActive"
@@ -183,7 +183,7 @@ function updateCurrentPageActive(page) {
   getLeads({ page });
 }
 
-function searchTrainings(search) {
+function searchLeads(search) {
   variablesGetLeads.value.filter.search = `%${search}%`;
 }
 
@@ -204,8 +204,11 @@ async function getLeads({ page = 1 } = {}) {
   const status = statusLeadFilter.value
     ? `status=${statusLeadFilter.value.value}`
     : "";
+  const search = variablesGetLeads.value.filter.search
+    ? `search=${variablesGetLeads.value.filter.search}`
+    : "";
 
-  await $customFetch(`/leads?${perPage}&${pageUrl}&${status}`, "GET")
+  await $customFetch(`/leads?${perPage}&${pageUrl}&${status}&${search}`, "GET")
     .then((response) => {
       items.value = response.data;
       paginatorInfo.value = {
