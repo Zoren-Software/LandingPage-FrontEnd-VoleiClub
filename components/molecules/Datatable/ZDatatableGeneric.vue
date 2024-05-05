@@ -67,7 +67,8 @@
       />
       <slot name="cell(actions)" :id="id"></slot>
     </template>
-    <template #bodyAppend v-if="paginatorInfo.firstItem > 0">
+
+    <template #bodyAppend v-if="paginatorInfo.total > 0">
       <tr>
         <td colspan="12">
           <div class="flex justify-center mt-4 ml-4">
@@ -78,9 +79,9 @@
               buttons-preset="secondary"
               rounded
               gapped
-              class="mb-3"
+              class="mb-2"
             />
-            <p>
+            <p class="mb-3">
               Itens de {{ paginatorInfo.firstItem }} a
               {{ paginatorInfo.lastItem }} de {{ paginatorInfo.total }}
             </p>
@@ -219,6 +220,7 @@ export default defineComponent({
     },
 
     actionEdit(id) {
+      console.log("actionEdit", id);
       this.$emit("edit", id);
     },
 

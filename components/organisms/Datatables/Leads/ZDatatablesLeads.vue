@@ -1,7 +1,5 @@
 <template>
   <ZDatatableGeneric
-    buttonActionAdd
-    buttonActionDelete
     includeActionsColumn
     includeActionEditList
     includeActionDeleteList
@@ -15,8 +13,6 @@
     @search="searchTrainings"
     @actionSearch="getLeads"
     @actionClear="clearSearch"
-    @add="addTeam"
-    @edit="editStatusLead"
     @update:currentPageActive="updateCurrentPageActive"
   >
     <!-- FILTER -->
@@ -27,6 +23,24 @@
       </div>
     </template>
 
+    <!-- ACTIONS -->
+    <template
+      #cell(actions)="{ rowKey: { id, name, email, tenantId, status } }"
+    >
+      <ZDataTableActions
+        :id="Number(id)"
+        :optionObject="{ id, name, email, status }"
+        includeActionEditList
+        @edit="actionEdit"
+      />
+      <va-button
+        class="ml-3"
+        preset="plain"
+        icon="public"
+        @click="actionCreateTenant(id, name, email, tenantId)"
+      />
+    </template>
+
     <!-- CELL -->
     <template #cell(name)="{ rowKey: { name } }">
       {{ name }}
@@ -34,6 +48,10 @@
   </ZDatatableGeneric>
   <VaModal v-model="showModal" :beforeOk="alterStatusLead" ok-text="Apply">
     <h3 class="va-h3">Alterar Status Lead</h3>
+    {{ $t("label_lead_id") }}: <span>{{ leadId }}</span> <br />
+    {{ $t("label_name") }}: <span>{{ name }}</span> <br />
+    {{ $t("label_email") }}: <span>{{ email }}</span> <br />
+    {{ $t("label_status") }}: <span>{{ status }}</span>
     <ZSelectStatusLead
       label="Status Leads"
       class="mt-3 mb-3"
@@ -44,22 +62,25 @@
 
 <script setup>
 import { ref, onMounted } from "vue";
-import { useNuxtApp, useRouter } from "#app";
+import { useNuxtApp } from "#app";
 import ZDatatableGeneric from "~/components/molecules/Datatable/ZDatatableGeneric";
 import ZSelectStatusLead from "~/components/molecules/Selects/ZSelectStatusLead";
-import ZUser from "~/components/molecules/Datatable/Slots/ZUser";
 import { confirmSuccess, confirmError } from "~/utils/sweetAlert2/swalHelper";
+import ZDataTableActions from "~/components/molecules/Datatable/ZDataTableActions";
 
 const { $customFetch } = useNuxtApp();
-const router = useRouter();
 
 let showModal = ref(false);
+let name = ref("");
+let email = ref("");
+let status = ref("");
 const items = ref([]);
 const loading = ref(false);
 const columns = ref([
   {
     key: "id",
     name: "id",
+    label: "Id",
     sortable: true,
   },
   {
@@ -90,6 +111,7 @@ const columns = ref([
 const paginatorInfo = ref({
   currentPage: 1,
   lastPage: 1,
+  perPage: 15,
   total: 0,
 });
 const variablesGetLeads = ref({
@@ -106,12 +128,7 @@ const variablesGetLeads = ref({
 const data = ref({
   value: [],
 });
-const selectedItems = ref([]);
-const selectedItemsEmitted = ref([]);
-const selectMode = ref("multiple");
-const selectedColor = ref("primary");
-const selectModeOptions = ref(["single", "multiple"]);
-const selectColorOptions = ref(["primary", "danger", "warning", "#EF467F"]);
+
 let leadId = ref(null);
 let statusLead = ref(null);
 
@@ -119,25 +136,20 @@ onMounted(async () => {
   await getLeads();
 });
 
-function unselectItem(item) {
-  selectedItems.value = selectedItems.value.filter(
-    (selectedItem) => selectedItem !== item
-  );
+function actionCreateTenant(id, name, email, tenantId) {
+  console.log("Create Tenant", id, name, email, tenantId);
 }
 
-function addTeam() {
-  router.push("/teams/create");
-}
-
-function editStatusLead(id) {
-  leadId.value = id;
+function actionEdit(lead) {
+  leadId.value = lead.id;
   showModal.value = true;
+  name.value = lead.name;
+  email.value = lead.email;
+  status.value = lead.status;
 }
 
 async function alterStatusLead() {
   showModal.value = false;
-  console.log("LeadID", leadId.value);
-  console.log("Lead status", statusLead.value.value);
 
   await $customFetch(`/leads/${leadId.value}`, "PUT", {
     body: JSON.stringify({
@@ -153,13 +165,15 @@ async function alterStatusLead() {
     })
     .finally(() => {
       loading.value = false;
+      showModal.value = false;
+      statusLead.value = null;
       getLeads();
     });
 }
 
 function updateCurrentPageActive(page) {
   variablesGetLeads.value.page = page;
-  getLeads();
+  getLeads({ page });
 }
 
 function searchTrainings(search) {
@@ -169,19 +183,29 @@ function searchTrainings(search) {
 function clearSearch() {
   variablesGetLeads.value.filter = {
     search: "%%",
-    teamsIds: [],
   };
 }
 
-async function getLeads() {
+async function getLeads({ page = 1 } = {}) {
   loading.value = true;
   items.value = [];
 
   await new Promise((resolve) => setTimeout(resolve, 1000));
 
-  await $customFetch("/leads", "GET")
+  const pageUrl = `&page=${page}`;
+  const perPage = `per_page=${paginatorInfo.value.perPage}`;
+
+  await $customFetch(`/leads?${perPage}&${pageUrl}`, "GET")
     .then((response) => {
       items.value = response.data;
+      paginatorInfo.value = {
+        currentPage: 1,
+        lastPage: response.last_page,
+        perPage: 15,
+        total: response.total,
+        firstItem: response.from,
+        lastItem: response.to,
+      };
     })
     .catch((error) => {
       console.error(error);

@@ -32,11 +32,15 @@ export default {
       type: Boolean,
       default: false,
     },
+    optionObject: {
+      type: Object,
+      required: false,
+    },
   },
   emits: ["edit", "delete"],
   methods: {
     actEdit(id) {
-      this.$emit("edit", id);
+      this.$emit("edit", this.optionObject);
     },
     actionDelete(id) {
       confirmDeleteSingle(
