@@ -19,7 +19,13 @@
     <template #filter>
       <!-- TODO - Pensar nos reais filtros que deveram existir aqui -->
       <div class="row">
-        <div class="flex flex-col md6 mb-2"></div>
+        <div class="flex flex-col md6 mb-2">
+          <ZSelectStatusLead
+            label="Status Leads"
+            class="mt-3 mb-3"
+            v-model="statusLeadFilter"
+          />
+        </div>
       </div>
     </template>
 
@@ -131,6 +137,7 @@ const data = ref({
 
 let leadId = ref(null);
 let statusLead = ref(null);
+let statusLeadFilter = ref(null);
 
 onMounted(async () => {
   await getLeads();
@@ -194,8 +201,11 @@ async function getLeads({ page = 1 } = {}) {
 
   const pageUrl = `&page=${page}`;
   const perPage = `per_page=${paginatorInfo.value.perPage}`;
+  const status = statusLeadFilter.value
+    ? `status=${statusLeadFilter.value.value}`
+    : "";
 
-  await $customFetch(`/leads?${perPage}&${pageUrl}`, "GET")
+  await $customFetch(`/leads?${perPage}&${pageUrl}&${status}`, "GET")
     .then((response) => {
       items.value = response.data;
       paginatorInfo.value = {
