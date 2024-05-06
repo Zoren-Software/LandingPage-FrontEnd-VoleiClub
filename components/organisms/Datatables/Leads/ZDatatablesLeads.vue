@@ -110,7 +110,7 @@ import { confirmSuccess, confirmError } from "~/utils/sweetAlert2/swalHelper";
 import ZDataTableActions from "~/components/molecules/Datatable/ZDataTableActions";
 import ZInput from "~/components/atoms/Inputs/ZInput";
 
-const { $customFetch } = useNuxtApp();
+const { $customFetch, $customFetchTenant } = useNuxtApp();
 
 let showModalAlterStatus = ref(false);
 let showModalCreateTenant = ref(false);
@@ -124,6 +124,7 @@ const loading = ref(false);
 
 const runtimeConfig = useRuntimeConfig();
 const apiTenantDomain = `.${runtimeConfig.public.apiTenantDomain}`;
+const apiTenantsToken = runtimeConfig.public.apiTenantsToken;
 
 const columns = ref([
   {
@@ -243,10 +244,19 @@ async function createTenant() {
   showModalCreateTenant.value = false;
   loading.value = true;
 
-  await $customFetch(`/leads/${leadId.value}`, "PUT", {
+  console.log({
+    token: apiTenantsToken,
+    tenantId: tenantIdForm.value,
+    email: email.value,
+    name: name.value,
+  });
+
+  await $customFetchTenant(`/tenant`, "POST", {
     body: JSON.stringify({
-      status: statusLead.value.value,
-      id: leadId.value,
+      token: apiTenantsToken,
+      tenantId: tenantIdForm.value,
+      email: email.value,
+      name: name.value,
     }),
   })
     .then((response) => {
@@ -258,7 +268,6 @@ async function createTenant() {
     .finally(() => {
       loading.value = false;
       showModalCreateTenant.value = false;
-      getLeads();
     });
 }
 
