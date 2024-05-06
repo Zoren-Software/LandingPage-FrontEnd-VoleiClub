@@ -127,8 +127,29 @@
                 </div>
               </div>
             </div>
+            <div class="row mb-2">
+              <div class="flex flex-col md9 sm9 xs9">
+                <div class="item">
+                  <va-input
+                    name="tenantId"
+                    class="display-block"
+                    :placeholder="$t('placeholder_tenant_id')"
+                    v-model="form.tenant_id"
+                    type="tenant_id"
+                    :error="errors?.errors?.tenant_id != ''"
+                    :error-messages="errors?.errors?.tenant_id"
+                    :label="$t('label_tenant_id')"
+                  />
+                </div>
+              </div>
+              <div class="flex flex-col md3 sm3 xs3">
+                <div class="item mt-4 ml-2">
+                  <span class="mt-5">{{ apiTenantDomain }}</span>
+                </div>
+              </div>
+            </div>
             <div class="row mb-2 mt-2">
-              <div class="flex flex-col md12 sm12 xs12">
+              <div class="flex flex-col md12 sm12 xs12 mt-2">
                 <div class="item">
                   <va-button
                     block
@@ -160,10 +181,12 @@ const { $customFetch } = useNuxtApp();
 
 const runtimeConfig = useRuntimeConfig();
 const applicationName = runtimeConfig.public.nameApplication;
+const apiTenantDomain = `.${runtimeConfig.public.apiTenantDomain}`;
 
 const data = ref(null);
 
 const form = ref({
+  tenant_id: "",
   name: "",
   email: "",
   experience_level: "",
@@ -172,6 +195,7 @@ const form = ref({
 
 let errors = ref({
   errors: {
+    tenant_id: "",
     name: "",
     email: "",
     experience_level: "",
@@ -191,6 +215,7 @@ const errorsDefault = () => {
       email: "",
       experience_level: "",
       message: "",
+      tenant_id: "",
     },
     message: "",
   };
@@ -211,6 +236,7 @@ const submit = async () => {
 
     data.value = await $customFetch("/leads", "POST", {
       body: JSON.stringify({
+        tenant_id: form.value.tenant_id,
         name: form.value.name,
         email: form.value.email,
         experience_level: form.value.experience_level.value,
@@ -222,6 +248,13 @@ const submit = async () => {
         confirmSuccess(response.message, () => {
           //errors.value = this.errorsDefault();
         });
+        form.value = {
+          tenant_id: "",
+          name: "",
+          email: "",
+          experience_level: "",
+          message: "",
+        };
       })
       .catch(({ response }) => {
         // o response volta a mensagem de erro com chave valor, mas o valor é um array, preciso atribuir para o errors.value.errors
