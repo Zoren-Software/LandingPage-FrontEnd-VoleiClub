@@ -91,5 +91,6 @@
     "placeholder_tenant_id": "Najemcy",
     "label_status": "Status",
     "label_lead": "Prowadzi",
-    "label_lead_id" : "ID Prowadzącego"
+    "label_lead_id" : "ID Prowadzącego",
+    "label_tenant": "Najemca"
 }

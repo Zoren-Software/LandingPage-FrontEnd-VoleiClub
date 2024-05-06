@@ -144,7 +144,7 @@
               </div>
               <div class="flex flex-col md3 sm3 xs3">
                 <div class="item mt-4 ml-2">
-                  <span class="mt-5">.volleytrack.com </span>
+                  <span class="mt-5">{{ apiTenantDomain }}</span>
                 </div>
               </div>
             </div>
@@ -181,6 +181,7 @@ const { $customFetch } = useNuxtApp();
 
 const runtimeConfig = useRuntimeConfig();
 const applicationName = runtimeConfig.public.nameApplication;
+const apiTenantDomain = `.${runtimeConfig.public.apiTenantDomain}`;
 
 const data = ref(null);
 

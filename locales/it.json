@@ -88,8 +88,9 @@
     "title_responsible_company": "Azienda Responsabile",
     "title_footer_contact": "Contatto",
     "label_tenant_id": "ID Tenant",
-    "placeholder_tenant_id": "tenant",
+    "placeholder_tenant_id": "Tenant",
     "label_status": "Stato",
     "label_lead": "Lead",
-    "label_lead_id" : "ID Lead"
+    "label_lead_id" : "ID Lead",
+    "label_tenant": "Tenant"
 }

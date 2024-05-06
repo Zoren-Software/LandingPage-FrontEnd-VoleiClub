@@ -91,5 +91,6 @@
     "placeholder_tenant_id": "арендатора",
     "label_status": "Статус",
     "label_lead": "Лид",
-    "label_lead_id" : "Идентификатор лидера"
+    "label_lead_id" : "Идентификатор лидера",
+    "label_tenant": "Арендатор"
 }

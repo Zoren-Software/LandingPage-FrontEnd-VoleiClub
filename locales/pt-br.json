@@ -88,8 +88,9 @@
     "title_responsible_company": "Empresa Responsável",
     "title_footer_contact": "Contato",
     "label_tenant_id": "Nome do subdomínio",
-    "placeholder_tenant_id": "subdomínio",
+    "placeholder_tenant_id": "Subdomínio",
     "label_status": "Status",
     "label_lead": "Lead",
-    "label_lead_id" : "Lead ID"
+    "label_lead_id" : "Lead ID",
+    "label_tenant": "Tenant"
 }

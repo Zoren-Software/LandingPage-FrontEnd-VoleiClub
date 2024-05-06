@@ -88,8 +88,9 @@
     "title_responsible_company": "Empresa Responsable",
     "title_footer_contact": "Contacto",
     "label_tenant_id": "ID del solicitante",
-    "placeholder_tenant_id": "solicitante",
+    "placeholder_tenant_id": "Solicitante",
     "label_status": "Estado",
     "label_lead": "Líder",
-    "label_lead_id" : "ID del líder"
+    "label_lead_id" : "ID del líder",
+    "label_tenant": "Solicitante"
 }

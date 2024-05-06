@@ -88,8 +88,9 @@
     "title_responsible_company": "Entreprise Responsable",
     "title_footer_contact": "Contact",
     "label_tenant_id": "ID du Locataire",
-    "placeholder_tenant_id": "locataire",
+    "placeholder_tenant_id": "Locataire",
     "label_status": "Statut",
     "label_lead": "Lead",
-    "label_lead_id" : "ID du Lead"
+    "label_lead_id" : "ID du Lead",
+    "label_tenant": "Locataire"
 }

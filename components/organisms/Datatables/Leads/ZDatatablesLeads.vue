@@ -31,7 +31,7 @@
 
     <!-- ACTIONS -->
     <template
-      #cell(actions)="{ rowKey: { id, name, email, tenantId, status } }"
+      #cell(actions)="{ rowKey: { id, name, email, tenant_id, status } }"
     >
       <ZDataTableActions
         :id="Number(id)"
@@ -43,7 +43,7 @@
         class="ml-3"
         preset="plain"
         icon="public"
-        @click="actionCreateTenant(id, name, email, tenantId)"
+        @click="actionCreateTenant(id, name, email, tenant_id, status)"
       />
     </template>
 
@@ -51,18 +51,53 @@
     <template #cell(name)="{ rowKey: { name } }">
       {{ name }}
     </template>
+    <template #cell(tenantId)="{ rowKey: { tenant_id } }">
+      {{ tenant_id }}{{ apiTenantDomain }}
+    </template>
   </ZDatatableGeneric>
-  <VaModal v-model="showModal" :beforeOk="alterStatusLead" ok-text="Apply">
+  <VaModal
+    v-model="showModalAlterStatus"
+    :beforeOk="alterStatusLead"
+    ok-text="Apply"
+  >
     <h3 class="va-h3">Alterar Status Lead</h3>
-    {{ $t("label_lead_id") }}: <span>{{ leadId }}</span> <br />
-    {{ $t("label_name") }}: <span>{{ name }}</span> <br />
-    {{ $t("label_email") }}: <span>{{ email }}</span> <br />
-    {{ $t("label_status") }}: <span>{{ status }}</span>
+    {{ $t("label_lead_id") }}: <span class="px-2 py-3">{{ leadId }}</span>
+    <br />
+    {{ $t("label_name") }}: <span class="px-2 py-3">{{ name }}</span> <br />
+    {{ $t("label_email") }}: <span class="px-2 py-3">{{ email }}</span> <br />
+    {{ $t("label_status") }}: <span class="px-2 py-3">{{ status }}</span>
     <ZSelectStatusLead
       label="Status Leads"
       class="mt-3 mb-3"
       v-model="statusLead"
     />
+  </VaModal>
+  <VaModal
+    v-model="showModalCreateTenant"
+    :beforeOk="createTenant"
+    ok-text="Create"
+  >
+    <h3 class="va-h3">Criar Tenant para Cliente</h3>
+    {{ $t("label_lead_id") }}: <span class="px-2 py-3">{{ leadId }}</span>
+    <br />
+    {{ $t("label_name") }}: <span class="px-2 py-3">{{ name }}</span> <br />
+    {{ $t("label_email") }}: <span class="px-2 py-3">{{ email }}</span> <br />
+    {{ $t("label_status") }}: <span class="px-2 py-3">{{ status }}</span> <br />
+    {{ $t("label_tenant") }}:
+    <span class="px-2 py-3">{{ tenantId }}{{ apiTenantDomain }}</span>
+
+    <div class="row mb-2">
+      <div class="flex flex-col md7 sm7 xs7">
+        <div class="item">
+          <ZInput class="mt-4" label="Domínio" v-model="tenantIdForm" />
+        </div>
+      </div>
+      <div class="flex flex-col md3 sm3 xs3">
+        <div class="item mt-5 ml-2 pt-3">
+          <span class="mt-5">{{ apiTenantDomain }} </span>
+        </div>
+      </div>
+    </div>
   </VaModal>
 </template>
 
@@ -73,15 +108,23 @@ import ZDatatableGeneric from "~/components/molecules/Datatable/ZDatatableGeneri
 import ZSelectStatusLead from "~/components/molecules/Selects/ZSelectStatusLead";
 import { confirmSuccess, confirmError } from "~/utils/sweetAlert2/swalHelper";
 import ZDataTableActions from "~/components/molecules/Datatable/ZDataTableActions";
+import ZInput from "~/components/atoms/Inputs/ZInput";
 
 const { $customFetch } = useNuxtApp();
 
-let showModal = ref(false);
+let showModalAlterStatus = ref(false);
+let showModalCreateTenant = ref(false);
+let tenantId = ref("");
+let tenantIdForm = ref("");
 let name = ref("");
 let email = ref("");
 let status = ref("");
 const items = ref([]);
 const loading = ref(false);
+
+const runtimeConfig = useRuntimeConfig();
+const apiTenantDomain = `.${runtimeConfig.public.apiTenantDomain}`;
+
 const columns = ref([
   {
     key: "id",
@@ -93,6 +136,12 @@ const columns = ref([
     key: "name",
     name: "name",
     label: "Cliente",
+    sortable: true,
+  },
+  {
+    key: "tenant_id",
+    name: "tenantId",
+    label: "Tenant ID",
     sortable: true,
   },
   {
@@ -143,20 +192,32 @@ onMounted(async () => {
   await getLeads();
 });
 
-function actionCreateTenant(id, name, email, tenantId) {
-  console.log("Create Tenant", id, name, email, tenantId);
+function actionCreateTenant(id, nameLead, emailLead, tenantIdLead, statusLead) {
+  leadId.value = id;
+  showModalCreateTenant.value = true;
+  name.value = nameLead;
+  email.value = emailLead;
+  status.value = statusLead;
+  tenantId.value = tenantIdLead;
+
+  if (tenantIdLead === null) {
+    tenantIdLead = "";
+  }
+
+  tenantIdForm.value = tenantIdLead;
 }
 
 function actionEdit(lead) {
   leadId.value = lead.id;
-  showModal.value = true;
+  showModalAlterStatus.value = true;
   name.value = lead.name;
   email.value = lead.email;
   status.value = lead.status;
 }
 
 async function alterStatusLead() {
-  showModal.value = false;
+  showModalAlterStatus.value = false;
+  loading.value = true;
 
   await $customFetch(`/leads/${leadId.value}`, "PUT", {
     body: JSON.stringify({
@@ -172,8 +233,31 @@ async function alterStatusLead() {
     })
     .finally(() => {
       loading.value = false;
-      showModal.value = false;
+      showModalAlterStatus.value = false;
       statusLead.value = null;
+      getLeads();
+    });
+}
+
+async function createTenant() {
+  showModalCreateTenant.value = false;
+  loading.value = true;
+
+  await $customFetch(`/leads/${leadId.value}`, "PUT", {
+    body: JSON.stringify({
+      status: statusLead.value.value,
+      id: leadId.value,
+    }),
+  })
+    .then((response) => {
+      confirmSuccess(response.message, () => {});
+    })
+    .catch((error) => {
+      console.error(error);
+    })
+    .finally(() => {
+      loading.value = false;
+      showModalCreateTenant.value = false;
       getLeads();
     });
 }
