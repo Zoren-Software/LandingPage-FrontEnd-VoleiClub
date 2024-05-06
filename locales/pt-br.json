@@ -86,5 +86,11 @@
     "title_footer_about_us": "Sobre nós",
     "text_footer_about_us": "O VolleyTrack é um projeto desenvolvido com paixão e inovação no Brasil. Somos comprometidos com a excelência em software e acreditamos no poder do open source para criar soluções robustas e confiáveis. Nosso sistema é uma plataforma aberta que convida desenvolvedores a colaborar e inovar no mundo do voleibol.",
     "title_responsible_company": "Empresa Responsável",
-    "title_footer_contact": "Contato"
+    "title_footer_contact": "Contato",
+    "label_tenant_id": "Nome do subdomínio",
+    "placeholder_tenant_id": "Subdomínio",
+    "label_status": "Status",
+    "label_lead": "Lead",
+    "label_lead_id" : "Lead ID",
+    "label_tenant": "Tenant"
 }
