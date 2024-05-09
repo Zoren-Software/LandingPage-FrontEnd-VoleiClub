@@ -292,16 +292,16 @@ async function getLeads({ page = 1 } = {}) {
 
   await new Promise((resolve) => setTimeout(resolve, 1000));
 
-  const pageUrl = `&page=${page}`;
   const perPage = `per_page=${paginatorInfo.value.perPage}`;
+  const pageUrl = `&page=${page}`;
   const status = statusLeadFilter.value
-    ? `status=${statusLeadFilter.value.value}`
+    ? `&status=${statusLeadFilter.value.value}`
     : "";
   const search = variablesGetLeads.value.filter.search
-    ? `search=${variablesGetLeads.value.filter.search}`
+    ? `&search=${variablesGetLeads.value.filter.search}`
     : "";
 
-  await $customFetch(`/leads?${perPage}&${pageUrl}&${status}&${search}`, "GET")
+  await $customFetch(`/leads?${perPage}${pageUrl}${status}${search}`, "GET")
     .then((response) => {
       items.value = response.data;
       paginatorInfo.value = {
