@@ -31,11 +31,13 @@
 
     <!-- ACTIONS -->
     <template
-      #cell(actions)="{ rowKey: { id, name, email, tenant_id, status } }"
+      #cell(actions)="{
+        rowKey: { id, name, email, tenant_id, status, message },
+      }"
     >
       <ZDataTableActions
         :id="Number(id)"
-        :optionObject="{ id, name, email, status }"
+        :optionObject="{ id, name, email, status, message }"
         includeActionEditList
         @edit="actionEdit"
       />
@@ -65,7 +67,9 @@
     <br />
     {{ $t("label_name") }}: <span class="px-2 py-3">{{ name }}</span> <br />
     {{ $t("label_email") }}: <span class="px-2 py-3">{{ email }}</span> <br />
-    {{ $t("label_status") }}: <span class="px-2 py-3">{{ status }}</span>
+    {{ $t("label_status") }}: <span class="px-2 py-3">{{ status }}</span> <br />
+    {{ $t("label_message") }}: <span class="px-2 py-3">{{ message }}</span>
+
     <ZSelectStatusLead
       label="Status Leads"
       class="mt-3 mb-3"
@@ -83,6 +87,7 @@
     {{ $t("label_name") }}: <span class="px-2 py-3">{{ name }}</span> <br />
     {{ $t("label_email") }}: <span class="px-2 py-3">{{ email }}</span> <br />
     {{ $t("label_status") }}: <span class="px-2 py-3">{{ status }}</span> <br />
+    <br />
     {{ $t("label_tenant") }}:
     <span class="px-2 py-3">{{ tenantId }}{{ apiTenantDomain }}</span>
 
@@ -119,6 +124,7 @@ let tenantIdForm = ref("");
 let name = ref("");
 let email = ref("");
 let status = ref("");
+let message = ref("");
 const items = ref([]);
 const loading = ref(false);
 
@@ -214,6 +220,7 @@ function actionEdit(lead) {
   name.value = lead.name;
   email.value = lead.email;
   status.value = lead.status;
+  message.value = lead.message;
 }
 
 async function alterStatusLead() {
