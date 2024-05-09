@@ -7,8 +7,8 @@ export default defineNuxtPlugin({
     async setup(nuxtApp) {
         const runtimeConfig = useRuntimeConfig();
         
-        const baseUrl = runtimeConfig.public.apiBaseTenant;
-        const token = runtimeConfig.public.apiBaseTenantToken;
+        const baseUrl = runtimeConfig.public.apiTenants;
+        const token = runtimeConfig.public.apiTenantsToken;
 
         async function customFetchTenant(endpoint, method, options = {}) {
             const url = `${baseUrl}${endpoint}`;
