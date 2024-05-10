@@ -14,15 +14,17 @@ export default defineNuxtPlugin({
             const url = `${baseUrl}${endpoint}`;
             const response = await fetch(url, {
                 method,
-                ...options,
+                mode: 'cors',
                 headers: {
                     'Content-Type': 'application/json',
-                    'accept': 'application/json',
+                    'Accept': 'application/json',
+                    'Access-Control-Allow-Origin': '*',
                     // adicionar language
                     'Accept-Language': localStorage.getItem("selectedLanguage"),
                     token: token,
                     ...options.headers,
                 },
+                ...options,
             });
 
             if (!response.ok) {
