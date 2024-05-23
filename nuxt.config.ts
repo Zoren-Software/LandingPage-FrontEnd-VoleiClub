@@ -17,6 +17,7 @@ export default defineNuxtConfig({
 
     runtimeConfig: {
         public: {
+          tawkto: '', // can be overridden by NUXT_PUBLIC_TAWKTO environment variable
           apiTenantDomain: '', // can be overridden by NUXT_PUBLIC_API_TENANT_DOMAIN environment variable
           apiTenantsToken: '', // can be overridden by NUXT_PUBLIC_API_TENANTS_TOKEN environment variable
           apiTenants: '', // can be overridden by NUXT_PUBLIC_API_TENANTS environment variable
