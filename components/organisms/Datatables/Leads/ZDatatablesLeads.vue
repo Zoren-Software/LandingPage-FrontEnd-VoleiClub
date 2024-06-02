@@ -251,13 +251,6 @@ async function createTenant() {
   showModalCreateTenant.value = false;
   loading.value = true;
 
-  console.log({
-    token: apiTenantsToken,
-    tenantId: tenantIdForm.value,
-    email: email.value,
-    name: name.value,
-  });
-
   await $customFetchTenant(`/tenant`, "POST", {
     body: JSON.stringify({
       token: apiTenantsToken,
@@ -275,6 +268,26 @@ async function createTenant() {
     .finally(() => {
       loading.value = false;
       showModalCreateTenant.value = false;
+    });
+
+  await $customFetch(`/leads/${leadId.value}`, "PUT", {
+    body: JSON.stringify({
+      status: status.value,
+      tenantId: tenantIdForm.value,
+      id: leadId.value,
+    }),
+  })
+    .then((response) => {
+      confirmSuccess(response.message, () => {});
+    })
+    .catch((error) => {
+      console.error(error);
+    })
+    .finally(() => {
+      loading.value = false;
+      showModalAlterStatus.value = false;
+      statusLead.value = null;
+      getLeads();
     });
 }
 
