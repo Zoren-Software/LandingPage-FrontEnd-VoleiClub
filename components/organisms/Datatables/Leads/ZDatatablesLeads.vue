@@ -230,6 +230,7 @@ async function alterStatusLead() {
   await $customFetch(`/leads/${leadId.value}`, "PUT", {
     body: JSON.stringify({
       status: statusLead.value.value,
+      tenantId: tenantIdForm.value,
       id: leadId.value,
     }),
   })
