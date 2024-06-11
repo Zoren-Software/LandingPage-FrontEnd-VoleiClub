@@ -44,6 +44,12 @@
       <va-button
         class="ml-3"
         preset="plain"
+        icon="forum"
+        @click="actionInterationLead(id, name, email, tenant_id, status)"
+      />
+      <va-button
+        class="ml-3"
+        preset="plain"
         icon="public"
         @click="actionCreateTenant(id, name, email, tenant_id, status)"
       />
@@ -104,6 +110,23 @@
       </div>
     </div>
   </VaModal>
+  <VaModal
+    v-model="showModalInteractionLead"
+    :beforeOk="createInteraction"
+    ok-text="Create"
+  >
+    <h3 class="va-h3">Interações com Lead</h3>
+    {{ $t("label_lead_id") }}: <span class="px-2 py-3">{{ leadId }}</span>
+    <br />
+    {{ $t("label_name") }}: <span class="px-2 py-3">{{ name }}</span> <br />
+    {{ $t("label_email") }}: <span class="px-2 py-3">{{ email }}</span> <br />
+    {{ $t("label_status") }}: <span class="px-2 py-3">{{ status }}</span> <br />
+    <br />
+    {{ $t("label_tenant") }}:
+    <span class="px-2 py-3">{{ tenantId }}{{ apiTenantDomain }}</span>
+
+    <div class="row mb-2"></div>
+  </VaModal>
 </template>
 
 <script setup>
@@ -119,6 +142,7 @@ const { $customFetch, $customFetchTenant } = useNuxtApp();
 
 let showModalAlterStatus = ref(false);
 let showModalCreateTenant = ref(false);
+let showModalInteractionLead = ref(false);
 let tenantId = ref("");
 let tenantIdForm = ref("");
 let name = ref("");
@@ -202,6 +226,27 @@ onMounted(async () => {
 function actionCreateTenant(id, nameLead, emailLead, tenantIdLead, statusLead) {
   leadId.value = id;
   showModalCreateTenant.value = true;
+  name.value = nameLead;
+  email.value = emailLead;
+  status.value = statusLead;
+  tenantId.value = tenantIdLead;
+
+  if (tenantIdLead === null) {
+    tenantIdLead = "";
+  }
+
+  tenantIdForm.value = tenantIdLead;
+}
+
+function actionInterationLead(
+  id,
+  nameLead,
+  emailLead,
+  tenantIdLead,
+  statusLead
+) {
+  leadId.value = id;
+  showModalInteractionLead.value = true;
   name.value = nameLead;
   email.value = emailLead;
   status.value = statusLead;
