@@ -1,5 +1,5 @@
 <template>
-  <div class="row justify-start">
+  <div class="row justify-start" v-if="buttonActionAdd || buttonActionDelete">
     <div class="flex flex-col xs2">
       <div class="item">
         <ZDataTableActionButtons
