@@ -81,6 +81,12 @@
       class="mt-3 mb-3"
       v-model="statusLead"
     />
+    <div class="item">
+      <ZInput class="mt-4" label="Mensagem" v-model="messageAlterStatus" />
+    </div>
+    <div class="item">
+      <ZInput class="mt-4" label="Anotações" v-model="notes" />
+    </div>
   </VaModal>
   <VaModal
     v-model="showModalCreateTenant"
@@ -110,11 +116,7 @@
       </div>
     </div>
   </VaModal>
-  <VaModal
-    v-model="showModalInteractionLead"
-    :beforeOk="createInteraction"
-    ok-text="Create"
-  >
+  <VaModal v-model="showModalInteractionLead" ok-text="Create">
     <h3 class="va-h3">Interações com Lead</h3>
     {{ $t("label_lead_id") }}: <span class="px-2 py-3">{{ leadId }}</span>
     <br />
@@ -125,7 +127,9 @@
     {{ $t("label_tenant") }}:
     <span class="px-2 py-3">{{ tenantId }}{{ apiTenantDomain }}</span>
 
-    <div class="row mb-2"></div>
+    <div class="row mb-2" style="display: block">
+      <ZDatatablesInteractionsLead :leadId="leadId" />
+    </div>
   </VaModal>
 </template>
 
@@ -137,6 +141,7 @@ import ZSelectStatusLead from "~/components/molecules/Selects/ZSelectStatusLead"
 import { confirmSuccess, confirmError } from "~/utils/sweetAlert2/swalHelper";
 import ZDataTableActions from "~/components/molecules/Datatable/ZDataTableActions";
 import ZInput from "~/components/atoms/Inputs/ZInput";
+import ZDatatablesInteractionsLead from "~/components/organisms/Datatables/Leads/ZDatatablesInteractionsLead.vue";
 
 const { $customFetch, $customFetchTenant } = useNuxtApp();
 
@@ -149,6 +154,8 @@ let name = ref("");
 let email = ref("");
 let status = ref("");
 let message = ref("");
+let messageAlterStatus = ref("");
+let notes = ref("");
 const items = ref([]);
 const loading = ref(false);
 
@@ -276,6 +283,8 @@ async function alterStatusLead() {
     body: JSON.stringify({
       status: statusLead.value.value,
       tenantId: tenantIdForm.value,
+      message: messageAlterStatus.value,
+      notes: notes.value,
       id: leadId.value,
     }),
   })
