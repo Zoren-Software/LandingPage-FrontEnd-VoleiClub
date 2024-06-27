@@ -62,6 +62,9 @@ export default {
           { text: "qualified", value: "qualified" },
           { text: "bad_email", value: "bad_email" },
           { text: "spam", value: "spam" },
+          { text: "test", value: "test" },
+          { text: "trial_period", value: "trial_period" },
+          { text: "active_customer", value: "active_customer" },
         ];
 
         this.loading = false;

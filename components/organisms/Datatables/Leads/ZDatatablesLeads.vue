@@ -44,6 +44,12 @@
       <va-button
         class="ml-3"
         preset="plain"
+        icon="forum"
+        @click="actionInterationLead(id, name, email, tenant_id, status)"
+      />
+      <va-button
+        class="ml-3"
+        preset="plain"
         icon="public"
         @click="actionCreateTenant(id, name, email, tenant_id, status)"
       />
@@ -75,6 +81,12 @@
       class="mt-3 mb-3"
       v-model="statusLead"
     />
+    <div class="item">
+      <ZInput class="mt-4" label="Mensagem" v-model="messageAlterStatus" />
+    </div>
+    <div class="item">
+      <ZInput class="mt-4" label="Anotações" v-model="notes" />
+    </div>
   </VaModal>
   <VaModal
     v-model="showModalCreateTenant"
@@ -104,6 +116,21 @@
       </div>
     </div>
   </VaModal>
+  <VaModal v-model="showModalInteractionLead" ok-text="Create">
+    <h3 class="va-h3">Interações com Lead</h3>
+    {{ $t("label_lead_id") }}: <span class="px-2 py-3">{{ leadId }}</span>
+    <br />
+    {{ $t("label_name") }}: <span class="px-2 py-3">{{ name }}</span> <br />
+    {{ $t("label_email") }}: <span class="px-2 py-3">{{ email }}</span> <br />
+    {{ $t("label_status") }}: <span class="px-2 py-3">{{ status }}</span> <br />
+    <br />
+    {{ $t("label_tenant") }}:
+    <span class="px-2 py-3">{{ tenantId }}{{ apiTenantDomain }}</span>
+
+    <div class="row mb-2" style="display: block">
+      <ZDatatablesInteractionsLead :leadId="leadId" />
+    </div>
+  </VaModal>
 </template>
 
 <script setup>
@@ -114,17 +141,21 @@ import ZSelectStatusLead from "~/components/molecules/Selects/ZSelectStatusLead"
 import { confirmSuccess, confirmError } from "~/utils/sweetAlert2/swalHelper";
 import ZDataTableActions from "~/components/molecules/Datatable/ZDataTableActions";
 import ZInput from "~/components/atoms/Inputs/ZInput";
+import ZDatatablesInteractionsLead from "~/components/organisms/Datatables/Leads/ZDatatablesInteractionsLead.vue";
 
 const { $customFetch, $customFetchTenant } = useNuxtApp();
 
 let showModalAlterStatus = ref(false);
 let showModalCreateTenant = ref(false);
+let showModalInteractionLead = ref(false);
 let tenantId = ref("");
 let tenantIdForm = ref("");
 let name = ref("");
 let email = ref("");
 let status = ref("");
 let message = ref("");
+let messageAlterStatus = ref("");
+let notes = ref("");
 const items = ref([]);
 const loading = ref(false);
 
@@ -214,6 +245,27 @@ function actionCreateTenant(id, nameLead, emailLead, tenantIdLead, statusLead) {
   tenantIdForm.value = tenantIdLead;
 }
 
+function actionInterationLead(
+  id,
+  nameLead,
+  emailLead,
+  tenantIdLead,
+  statusLead
+) {
+  leadId.value = id;
+  showModalInteractionLead.value = true;
+  name.value = nameLead;
+  email.value = emailLead;
+  status.value = statusLead;
+  tenantId.value = tenantIdLead;
+
+  if (tenantIdLead === null) {
+    tenantIdLead = "";
+  }
+
+  tenantIdForm.value = tenantIdLead;
+}
+
 function actionEdit(lead) {
   leadId.value = lead.id;
   showModalAlterStatus.value = true;
@@ -230,6 +282,9 @@ async function alterStatusLead() {
   await $customFetch(`/leads/${leadId.value}`, "PUT", {
     body: JSON.stringify({
       status: statusLead.value.value,
+      tenantId: tenantIdForm.value,
+      message: messageAlterStatus.value,
+      notes: notes.value,
       id: leadId.value,
     }),
   })
