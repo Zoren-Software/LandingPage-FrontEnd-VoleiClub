@@ -88,5 +88,11 @@
     "title_footer_about_us": "À Propos de Nous",
     "text_footer_about_us": "VolleyTrack est un projet développé avec passion et innovation au Brésil. Nous sommes engagés envers l'excellence logicielle et croyons en la puissance de l'open source pour créer des solutions robustes et fiables. Notre système est une plateforme ouverte qui invite les développeurs à collaborer et innover dans le monde du volley-ball.",
     "title_responsible_company": "Entreprise Responsable",
-    "title_footer_contact": "Contact"
+    "title_footer_contact": "Contact",
+    "label_tenant_id": "ID du Locataire",
+    "placeholder_tenant_id": "Locataire",
+    "label_status": "Statut",
+    "label_lead": "Lead",
+    "label_lead_id" : "ID du Lead",
+    "label_tenant": "Locataire"
 }

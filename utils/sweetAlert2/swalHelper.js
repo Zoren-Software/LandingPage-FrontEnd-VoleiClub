@@ -99,9 +99,9 @@ export function loader(loading) {
     showConfirmButton: false,
     didOpen: () => {
       Swal.showLoading();
-      const timer = Swal.getPopup().querySelector("b");
-      timerInterval = setInterval(() => {
-        timer.textContent = `${Swal.getTimerLeft()}`;
+      let timer = Swal.getPopup().querySelector("b");
+      setInterval(() => {
+        timer = `${Swal.getTimerLeft()}`;
       }, 100);
     },
   });
