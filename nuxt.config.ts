@@ -35,15 +35,25 @@ export default defineNuxtConfig({
     },
 
     vuestic: {
-        config: {
-        // Config here
+      config: {
+        colors: {
+          presets: {
+            light: {
+              primary: '#FF4E1B',
+              myCoolColor: '#ff00ff',
+              onMyCoolColor: '#ffffff',
+              dark: '#131B23'
+            }
+          }
         },
+      },
         css: true
     },
 
     head: {
         link: [
           //NOTE - List Icons https://fonts.google.com/icons?selected=Material+Icons
+          //{ rel: 'stylesheet', href: 'https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap' },
           { rel: 'stylesheet', href: 'https://fonts.googleapis.com/icon?family=Material+Icons' },
           { rel: 'stylesheet', href: "https://fonts.googleapis.com/css2?family=Source+Sans+Pro:ital,wght@0,400;1,700&display=swap" },
           { rel: 'stylesheet', href: "https://fonts.googleapis.com/icon?family=Material+Icons" }
