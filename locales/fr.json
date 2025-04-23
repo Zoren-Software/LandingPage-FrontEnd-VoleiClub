@@ -23,7 +23,7 @@
     "label_experience_level": "Niveau d'expérience",
     "message_error_level_experience_required": "Le niveau d'expérience est requis",
     "label_message": "Message",
-    "placeholder_message": "(facultatif) Entrez votre message",
+    "placeholder_message": "Ce message sera examiné manuellement par notre équipe pour déterminer si vous correspondez à notre profil client idéal. Votre accès à la plateforme pourra être approuvé ou refusé.",
     "button_register": "S'inscrire",
     "label_language": "Langue",
     "placeholder_language": "Sélectionnez une option",

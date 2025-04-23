@@ -23,7 +23,7 @@
     "label_experience_level": "Poziom doświadczenia",
     "message_error_level_experience_required": "Poziom doświadczenia jest wymagany",
     "label_message": "Wiadomość",
-    "placeholder_message": "(opcjonalnie) Wprowadź swoją wiadomość",
+    "placeholder_message": "Ta wiadomość zostanie ręcznie sprawdzona przez nasz zespół, aby ocenić, czy pasujesz do naszego idealnego profilu klienta. Na tej podstawie dostęp do platformy może zostać zatwierdzony lub odrzucony.",
     "button_register": "Zarejestruj się",
     "label_language": "Język",
     "placeholder_language": "Wybierz opcję",
