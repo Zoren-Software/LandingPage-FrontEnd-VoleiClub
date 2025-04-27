@@ -25,6 +25,7 @@
     "label_message": "Wiadomość",
     "placeholder_message": "Ta wiadomość zostanie ręcznie sprawdzona przez nasz zespół, aby ocenić, czy pasujesz do naszego idealnego profilu klienta. Na tej podstawie dostęp do platformy może zostać zatwierdzony lub odrzucony.",
     "button_register": "Zarejestruj się",
+    "button_unsubscribe": "Anuluj subskrypcję",
     "label_language": "Język",
     "placeholder_language": "Wybierz opcję",
     "option_language_pt_br": "Portugalski (Brazylia)",

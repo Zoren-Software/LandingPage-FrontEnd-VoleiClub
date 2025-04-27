@@ -25,6 +25,7 @@
     "label_message" : "Mensagem",
     "placeholder_message": "Esta mensagem será analisada manualmente pela nossa equipe para entender se você tem o perfil de cliente ideal. Com base nela, seu acesso à plataforma poderá ser aprovado ou não.",
     "button_register" : "Registrar",
+    "button_unsubscribe" : "Cancelar inscrição",
     "label_language" : "Idioma",
     "placeholder_language": "Selecione uma opção",
     "option_language_pt_br": "Português (Brasil)",

@@ -162,6 +162,12 @@
               </div>
             </div>
           </va-card>
+          <!-- Fazer o Modal -->
+          <div class="flex justify-center w-full mt-4 mb-4">
+            <va-button preset="plain" class="mb-2">{{
+              $t("button_unsubscribe")
+            }}</va-button>
+          </div>
         </div>
       </va-form>
     </div>
@@ -284,6 +290,11 @@ const emit = (event, ...args) => {
 </script>
 
 <style>
+.position-fixed {
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* Alinha horizontalmente */
+}
 .display-block {
   display: block;
 }
