@@ -164,9 +164,12 @@
           </va-card>
           <!-- Fazer o Modal -->
           <div class="flex justify-center w-full mt-4 mb-4">
-            <va-button preset="plain" class="mb-2">{{
-              $t("button_unsubscribe")
-            }}</va-button>
+            <va-button
+              preset="plain"
+              class="mb-2"
+              @click="openUnsubscribeModal"
+              >{{ $t("button_unsubscribe") }}</va-button
+            >
           </div>
         </div>
       </va-form>
@@ -177,6 +180,7 @@
 <script setup>
 import { ref } from "vue";
 import {
+  confirmUnsubscribe,
   confirmSuccess,
   confirmError,
   loader,
@@ -281,6 +285,44 @@ const submit = async () => {
       console.log("Detalhes do erro:", erroData);
     }
   }
+};
+
+const openUnsubscribeModal = async () => {
+  confirmUnsubscribe(
+    async (email) => {
+      try {
+        loader();
+
+        const response = await $customFetch("/leads/unsubscribe", "POST", {
+          body: JSON.stringify({ email }),
+        });
+
+        confirmSuccess(response.message || "E-mail descadastrado com sucesso!");
+      } catch (error) {
+        console.error("Erro capturado:", error);
+
+        if (error?.response) {
+          const errorBody = error.response;
+
+          if (
+            errorBody?.errors?.email &&
+            Array.isArray(errorBody.errors.email)
+          ) {
+            confirmError(errorBody.errors.email[0]); // Erro específico no campo e-mail
+          } else if (errorBody?.message) {
+            confirmError(errorBody.message); // Mensagem geral
+          } else {
+            confirmError("Erro desconhecido ao cancelar inscrição.");
+          }
+        } else {
+          confirmError("Erro ao cancelar inscrição.");
+        }
+      }
+    },
+    () => {
+      console.log("Usuário cancelou o modal de descadastro.");
+    }
+  );
 };
 
 // fazer o emits para o form

@@ -106,3 +106,35 @@ export function loader(loading) {
     },
   });
 }
+
+export function confirmUnsubscribe(onConfirm, onCancel) {
+  Swal.fire({
+    title: "Cancelar inscrição",
+    text: "Por favor, digite seu e-mail para cancelar sua inscrição e não receber mais nossos e-mails.",
+    input: "email",
+    inputPlaceholder: "Digite seu e-mail",
+    showCancelButton: true,
+    confirmButtonText: "Confirmar cancelamento",
+    cancelButtonText: "Voltar",
+    confirmButtonColor: "#154EC1",
+    cancelButtonColor: "#E42222",
+    reverseButtons: true,
+    inputValidator: (value) => {
+      if (!value) {
+        return "O e-mail é obrigatório!";
+      }
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (!emailRegex.test(value)) {
+        return "Digite um e-mail válido!";
+      }
+      return undefined;
+    },
+    allowOutsideClick: () => !Swal.isLoading()
+  }).then((result) => {
+    if (result.isConfirmed) {
+      if (onConfirm) onConfirm(result.value);
+    } else if (result.dismiss === Swal.DismissReason.cancel) {
+      if (onCancel) onCancel();
+    }
+  });
+}
