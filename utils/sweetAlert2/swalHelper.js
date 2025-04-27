@@ -109,7 +109,7 @@ export function loader(loading) {
 
 export function confirmUnsubscribe(onConfirm, onCancel) {
   Swal.fire({
-    title: "Cancelar inscrição",
+    title: "Cancelar Inscrição",
     text: "Por favor, digite seu e-mail para cancelar sua inscrição e não receber mais nossos e-mails.",
     input: "email",
     inputPlaceholder: "Digite seu e-mail",
