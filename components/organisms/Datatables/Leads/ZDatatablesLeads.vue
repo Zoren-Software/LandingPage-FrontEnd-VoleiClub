@@ -32,12 +32,19 @@
     <!-- ACTIONS -->
     <template
       #cell(actions)="{
-        rowKey: { id, name, email, tenant_id, status, message },
+        rowKey: {
+          id,
+          name,
+          email,
+          tenant_id,
+          status: { name: statusName },
+          message,
+        },
       }"
     >
       <ZDataTableActions
         :id="Number(id)"
-        :optionObject="{ id, name, email, status, message }"
+        :optionObject="{ id, name, email, statusName, message }"
         includeActionEditList
         @edit="actionEdit"
       />
@@ -45,13 +52,13 @@
         class="ml-3"
         preset="plain"
         icon="forum"
-        @click="actionInterationLead(id, name, email, tenant_id, status)"
+        @click="actionInterationLead(id, name, email, tenant_id, statusName)"
       />
       <va-button
         class="ml-3"
         preset="plain"
         icon="public"
-        @click="actionCreateTenant(id, name, email, tenant_id, status)"
+        @click="actionCreateTenant(id, name, email, tenant_id, statusName)"
       />
     </template>
 
@@ -189,7 +196,7 @@ const columns = ref([
     sortable: true,
   },
   {
-    key: "status",
+    key: "status.name",
     name: "status",
     label: "Status",
     sortable: true,
@@ -279,9 +286,12 @@ async function alterStatusLead() {
   showModalAlterStatus.value = false;
   loading.value = true;
 
+  console.log("statusLead.value", statusLead.value);
+  console.log("statusLead.value.value", statusLead.value.value);
+
   await $customFetch(`/leads/${leadId.value}`, "PUT", {
     body: JSON.stringify({
-      status: statusLead.value.value,
+      status_id: parseInt(statusLead.value.value, 10),
       tenantId: tenantIdForm.value,
       message: messageAlterStatus.value,
       notes: notes.value,
