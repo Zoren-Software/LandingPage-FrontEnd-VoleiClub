@@ -138,8 +138,13 @@
 import { ref } from "vue";
 import { useRouter } from "vue-router";
 import { useI18n } from "#imports";
+import { useKonamiCode } from "~/composables/useKonamiCode";
 
 const router = useRouter();
+
+useKonamiCode(() => {
+  router.push("/login");
+});
 const showSidebar = ref(false);
 
 const { locale } = useI18n();
