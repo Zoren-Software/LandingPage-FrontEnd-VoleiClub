@@ -58,7 +58,6 @@ watch(
 );
 
 watch(selected, (val) => {
-  console.log("selected", val);
   emit("update:modelValue", val);
 });
 

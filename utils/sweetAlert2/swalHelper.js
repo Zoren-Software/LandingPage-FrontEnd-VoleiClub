@@ -78,15 +78,17 @@ export function confirmSuccess(text, onConfirm) {
   );
 }
 
-export function confirmError(text, footer) {
-  confirmAction({
-    icon: "error",
-    title: "Erro!",
-    text,
-    showConfirmButton: true,
-    confirmButtonColor: "#154EC1",
-    footer,
-  });
+export function confirmError(text, onConfirm) {
+  confirmAction(
+    {
+      icon: "error",
+      title: "Erro!",
+      text,
+      showConfirmButton: true,
+      confirmButtonColor: "#154EC1",
+    },
+    onConfirm
+  );
 }
 
 export function loader(loading) {

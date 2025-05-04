@@ -286,9 +286,6 @@ async function alterStatusLead() {
   showModalAlterStatus.value = false;
   loading.value = true;
 
-  console.log("statusLead.value", statusLead.value);
-  console.log("statusLead.value.value", statusLead.value.value);
-
   await $customFetch(`/leads/${leadId.value}`, "PUT", {
     body: JSON.stringify({
       status_id: parseInt(statusLead.value.value, 10),
@@ -302,6 +299,7 @@ async function alterStatusLead() {
       confirmSuccess(response.message, () => {});
     })
     .catch((error) => {
+      confirmError(error.message, () => {});
       console.error(error);
     })
     .finally(() => {
@@ -328,6 +326,7 @@ async function createTenant() {
       confirmSuccess(response.message, () => {});
     })
     .catch((error) => {
+      confirmError(error.message, "Erro ao executar a ação");
       console.error(error);
     })
     .finally(() => {
@@ -346,6 +345,7 @@ async function createTenant() {
       confirmSuccess(response.message, () => {});
     })
     .catch((error) => {
+      confirmError(error.message, "Erro ao executar a ação");
       console.error(error);
     })
     .finally(() => {
