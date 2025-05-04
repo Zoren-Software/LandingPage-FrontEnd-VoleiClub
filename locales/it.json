@@ -38,6 +38,7 @@
     "menu_title_home": "Home",
     "menu_title_register": "Registrati",
     "menu_title_faq": "FAQ",
+    "menu_title_logout" : "Logout",
     "question_1": "Cos'è VolleyTrack?",
     "answer_1": "- VolleyTrack è una piattaforma in sviluppo che mira a semplificare il processo di organizzazione di squadre e allenamenti di pallavolo. Attualmente siamo nella fase alfa e ti invitiamo a unirti a noi in questo viaggio.",
     "question_2": "Come posso registrarmi a VolleyTrack?",

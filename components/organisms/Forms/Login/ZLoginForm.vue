@@ -80,6 +80,7 @@ const login = async () => {
     }).then((response) => {
       confirmSuccess(response.message, () => {});
       localStorage.setItem("userToken", response.token);
+      localStorage.setItem("email", email.value);
       navigateTo("/leads");
     });
     if (response.status === 200) {
