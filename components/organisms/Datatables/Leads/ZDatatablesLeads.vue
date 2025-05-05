@@ -69,6 +69,9 @@
     <template #cell(tenantId)="{ rowKey: { tenant_id } }">
       {{ tenant_id }}{{ apiTenantDomain }}
     </template>
+    <template #cell(created_at)="{ rowKey: { created_at } }">
+      {{ formatDate(created_at) }}
+    </template>
   </ZDatatableGeneric>
   <VaModal
     v-model="showModalAlterStatus"
@@ -207,6 +210,12 @@ const columns = ref([
     label: "Experience level",
     sortable: true,
   },
+  {
+    key: "created_at",
+    name: "created_at",
+    label: "Se registro em",
+    sortable: true,
+  },
 ]);
 const paginatorInfo = ref({
   currentPage: 1,
@@ -232,6 +241,18 @@ const data = ref({
 let leadId = ref(null);
 let statusLead = ref(null);
 let statusLeadFilter = ref(null);
+
+function formatDate(date) {
+  if (!date) return "-";
+  return new Date(date).toLocaleString("pt-BR", {
+    day: "2-digit",
+    month: "2-digit",
+    year: "numeric",
+    hour: "2-digit",
+    minute: "2-digit",
+    second: "2-digit",
+  });
+}
 
 onMounted(async () => {
   await getLeads();
