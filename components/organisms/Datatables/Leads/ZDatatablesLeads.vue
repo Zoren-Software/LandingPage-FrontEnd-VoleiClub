@@ -326,7 +326,7 @@ async function createTenant() {
       confirmSuccess(response.message, () => {});
     })
     .catch((error) => {
-      confirmError(error.message, "Erro ao executar a ação");
+      confirmError(error.message, () => {});
       console.error(error);
     })
     .finally(() => {
