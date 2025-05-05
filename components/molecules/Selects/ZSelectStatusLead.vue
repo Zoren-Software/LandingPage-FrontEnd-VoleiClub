@@ -9,7 +9,6 @@
     @scrollBottom="loadMore"
     :clearable="false"
   />
-  {{ items }}
 </template>
 
 <script setup>
