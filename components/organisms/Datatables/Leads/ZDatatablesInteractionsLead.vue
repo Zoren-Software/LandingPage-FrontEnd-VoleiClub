@@ -127,7 +127,7 @@ const columns = ref([
     sortable: true,
   },
   {
-    key: "status",
+    key: "status.name",
     name: "status",
     label: "Status",
     sortable: true,
@@ -232,7 +232,7 @@ function alterInteraction() {
   console.log(status.value);
   $customFetch(`/leads/${props.leadId}/interactions/${id.value}`, "PUT", {
     body: JSON.stringify({
-      status: status.value.value ?? status.value,
+      status_id: status.value.value ?? status.value,
       message: message.value,
       notes: notes.value,
     }),

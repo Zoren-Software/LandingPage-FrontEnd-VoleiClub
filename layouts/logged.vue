@@ -53,6 +53,9 @@
           <va-navbar-item @click="routeDiscord()" class="va-button">{{
             $t("menu_title_discord")
           }}</va-navbar-item>
+          <va-navbar-item @click="routeLogout()" class="va-button">{{
+            $t("menu_title_logout")
+          }}</va-navbar-item>
         </template>
       </VaNavbar>
     </template>
@@ -104,6 +107,8 @@ import { useI18n } from "#imports";
 
 const router = useRouter();
 const showSidebar = ref(false);
+const { $customFetch } = useNuxtApp();
+import { confirmSuccess, confirmError } from "~/utils/sweetAlert2/swalHelper";
 
 const { locale } = useI18n();
 
@@ -150,6 +155,28 @@ const routeDiscord = () => {
 
   const discordLink = runtimeConfig.public.discordLink;
   window.open(discordLink, "_blank");
+};
+
+const routeLogout = () => {
+  $customFetch("/logout", "POST", {
+    body: JSON.stringify({
+      email: localStorage.getItem("email"),
+      token: localStorage.getItem("userToken"),
+    }),
+  })
+    .then((response) => {
+      // deve exibir uma mensagem de sucesso
+      confirmSuccess(response.message, () => {});
+    })
+    .catch((error) => {
+      // deve exibir uma mensagem de erro
+      confirmError(error.message, () => {});
+    });
+
+  localStorage.removeItem("userToken");
+  localStorage.removeItem("email");
+
+  router.push("/");
 };
 </script>
 

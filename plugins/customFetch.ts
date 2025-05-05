@@ -27,9 +27,11 @@ export default defineNuxtPlugin({
             });
 
             if (!response.ok) {
-                const errorData = await response.json(); // Supondo que o corpo da resposta contém JSON
-                const customError = new Error('Erro na requisição');
-                customError.response = errorData; // Anexar os detalhes do erro
+                const errorData = await response.json();
+                const customError = new Error(errorData.message || 'Erro na requisição');
+                customError.response = errorData;
+
+                
                 throw customError;
             }
     
