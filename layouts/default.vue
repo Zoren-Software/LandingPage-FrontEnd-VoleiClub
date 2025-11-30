@@ -1,60 +1,22 @@
 <template>
   <VaLayout :left="{ absolute: true }">
     <template #top>
-      <VaNavbar color="primary" class="py-2">
-        <template #left>
-          <VaButton
-            @click="showSidebar = !showSidebar"
-            :icon="showSidebar ? 'menu' : 'language'"
-          />
-        </template>
-        <template #center>
-          <va-navbar-item
-            class="font-bold text-lg logo va-button"
-            @click="goToIndex()"
-          >
-            <va-icon class="icon" name="sports_volleyball" />
-            <span class="ml-2 title-and-icon">{{ applicationName }}</span>
-          </va-navbar-item>
-        </template>
-        <template #right style="margin-right: 50px">
-          <div class="custom-select-language custom-select-language-none mr-5">
-            <va-select
-              name="option"
-              v-model="locale"
-              class="display-block"
-              :label="$t('label_language')"
-              :placeholder="$t('placeholder_language')"
-              :options="[
-                { value: 'pt-br', text: $t('option_language_pt_br') },
-                { value: 'en', text: $t('option_language_en') },
-                { value: 'es', text: $t('option_language_es') },
-                { value: 'fr', text: $t('option_language_fr') },
-                { value: 'it', text: $t('option_language_it') },
-                { value: 'pl', text: $t('option_language_pl') },
-                { value: 'ru', text: $t('option_language_ru') },
-              ]"
-              valueBy="value"
-              autoSelectFirstOption
-              style="width: max-content"
-            />
-          </div>
-          <va-navbar-item @click="routeHome()" class="va-button">{{
-            $t("menu_title_home")
-          }}</va-navbar-item>
-          <va-navbar-item
-            @click="routeRegister()"
-            class="hidden va-button sm:block"
-            >{{ $t("menu_title_register") }}</va-navbar-item
-          >
-          <va-navbar-item @click="routeFAQ()" class="va-button">{{
-            $t("menu_title_faq")
-          }}</va-navbar-item>
-          <va-navbar-item @click="routeDiscord()" class="va-button">{{
-            $t("menu_title_discord")
-          }}</va-navbar-item>
-        </template>
-      </VaNavbar>
+      <nav class="custom-navbar">
+        <div class="navbar-logo" @click="goToIndex()">
+          <va-icon class="icon" name="sports_volleyball" />
+          <span class="ml-2 title-and-icon">VolleyTrack</span>
+        </div>
+        <div class="navbar-links">
+          <a href="/" class="navbar-link">Sobre</a>
+          <a href="#benefits-section" class="navbar-link" @click.prevent="routeBenefits">Funcionalidades</a>
+          <a href="#plans-section" class="navbar-link" @click.prevent="routePlans">Planos e Preços</a>
+          <a href="#faq-section" class="navbar-link" @click.prevent="routeFAQ">FAQ</a>
+          <a href="/register" class="navbar-link">Registro</a>
+        </div>
+        <div class="navbar-actions">
+          <button class="navbar-register-btn" @click="routeRegister()">Registrar-se grátis</button>
+        </div>
+      </nav>
     </template>
 
     <template #left>
@@ -97,41 +59,54 @@
     <!-- Adicionando o Footer -->
   </VaLayout>
   <footer
-    class="footer"
-    style="
-      background: rgb(21, 78, 193);
-      color: rgb(255, 255, 255);
-      --va-0-stripe-color-computed: #154ec1;
-    "
+    class="footer custom-footer"
+    style="background: #02254a; color: #fff;"
   >
-    <div class="row mb-4 pt-3">
-      <div class="flex flex-col offset-xs2 offset-sm1 offset-md-1 md3 mb-3">
-        <div class="item mb-3 font-bold">
-          <h6 class="va-h6">{{ $t("title_footer_about_us") }}</h6>
+    <div class="footer-content">
+      <div class="footer-col">
+        <div class="footer-title">
+          <va-icon name="mail" color="#ff7300" size="18px" class="footer-icon" />
+          <span class="footer-title-text">Contato</span>
         </div>
-        <div class="item">
-          <p>
-            {{ $t("text_footer_about_us") }}
-          </p>
+        <div class="footer-item">
+          <va-icon name="mail" color="#ff7300" size="14px" class="footer-icon" />
+          <span style="font-size: 15px;">support@volleytrack.com</span>
         </div>
       </div>
-      <div class="flex flex-col offset-xs2 offset-sm1 offset-md-1 md3">
-        <div class="item mb-3 font-bold">
-          <h6 class="va-h6">{{ $t("title_responsible_company") }}:</h6>
+      <div class="footer-col">
+        <div class="footer-title">
+          <va-icon name="link" color="#ff7300" size="18px" class="footer-icon" />
+          <span class="footer-title-text">Links úteis</span>
         </div>
-        <div class="item">{{ nameCompany }}</div>
-        <div class="item">{{ cnpj }}</div>
-        <div class="item mb-3 font-bold">
-          <h6 class="va-h6">{{ $t("title_footer_contact") }}:</h6>
+        <div class="footer-links">
+          <a href="/sobre" class="footer-link">Sobre</a>
+          <a href="/planos" class="footer-link">Planos</a>
+          <a href="#faq-section" class="footer-link" @click.prevent="routeFAQ">FAQ</a>
+          <a href="#" @click.prevent="routeDiscord" class="footer-link">Discord</a>
         </div>
-        <div class="item">{{ emailSupport }}</div>
+      </div>
+      <div class="footer-col">
+        <div class="footer-title">
+          <va-icon name="share" color="#ff7300" size="18px" class="footer-icon" />
+          <span class="footer-title-text">Redes sociais</span>
+        </div>
+        <div class="footer-social">
+          <a href="https://www.linkedin.com" target="_blank" class="footer-social-link" aria-label="LinkedIn">
+            <va-icon name="linkedin" size="22px" color="#fff" />
+          </a>
+          <a href="https://www.instagram.com" target="_blank" class="footer-social-link" aria-label="Instagram">
+            <va-icon name="instagram" size="22px" color="#fff" />
+          </a>
+          <a href="https://www.facebook.com" target="_blank" class="footer-social-link" aria-label="Facebook">
+            <va-icon name="facebook" size="22px" color="#fff" />
+          </a>
+        </div>
       </div>
     </div>
-    <p class="va-text-center pb-3">
-      <span role="img" aria-label="Bandeira do Brasil">🇧🇷</span> &copy;
-      {{ currentYear() }} {{ applicationName }}.
-      {{ $t("all_rights_reserved") }}.
-    </p>
+    <div class="footer-divider"></div>
+    <div class="footer-bottom">
+      <span>© {{ currentYear() }} VolleyTrack – Todos os direitos reservados.</span>
+    </div>
   </footer>
 </template>
 <script setup>
@@ -176,7 +151,21 @@ const routeRegister = () => {
 };
 
 const routeFAQ = () => {
-  router.push("/faq");
+  if (window.location.pathname !== "/") {
+    router.push("/").then(() => {
+      setTimeout(() => {
+        const faqSection = document.querySelector('.faq-section');
+        if (faqSection) {
+          faqSection.scrollIntoView({ behavior: 'smooth' });
+        }
+      }, 400);
+    });
+  } else {
+    const faqSection = document.querySelector('.faq-section');
+    if (faqSection) {
+      faqSection.scrollIntoView({ behavior: 'smooth' });
+    }
+  }
 };
 
 const routeHome = () => {
@@ -227,6 +216,194 @@ const routeDiscord = () => {
   }
   .icon {
     margin-right: 1rem;
+  }
+}
+</style>
+<style>
+.custom-navbar {
+  width: 100%;
+  background: #02254a;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 32px;
+  height: 56px;
+  border-bottom: 1px solid #0a2c4d;
+  position: relative;
+  z-index: 10;
+}
+.navbar-logo {
+  display: flex;
+  align-items: center;
+  font-weight: bold;
+  font-size: 20px;
+  color: #fff;
+  cursor: pointer;
+}
+.navbar-links {
+  display: flex;
+  gap: 32px;
+  justify-content: center;
+  flex: 1;
+}
+.navbar-link {
+  color: #fff;
+  text-decoration: none;
+  font-size: 15px;
+  font-weight: 500;
+  transition: color 0.2s;
+  padding: 4px 0;
+}
+.navbar-link:hover {
+  color: #ff7300;
+}
+.navbar-actions {
+  display: flex;
+  align-items: center;
+}
+.navbar-register-btn {
+  background: #ff7300;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  font-weight: bold;
+  font-size: 15px;
+  padding: 8px 20px;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+.navbar-register-btn:hover {
+  background: #ff8c1a;
+}
+@media (max-width: 900px) {
+  .custom-navbar {
+    padding: 0 12px;
+  }
+  .navbar-links {
+    gap: 16px;
+  }
+}
+@media (max-width: 600px) {
+  .custom-navbar {
+    flex-direction: column;
+    height: auto;
+    padding: 0 4px;
+  }
+  .navbar-links {
+    flex-direction: column;
+    gap: 8px;
+    width: 100%;
+    align-items: center;
+    margin: 8px 0;
+  }
+  .navbar-actions {
+    width: 100%;
+    justify-content: center;
+    margin-bottom: 8px;
+  }
+}
+</style>
+<style>
+.custom-footer {
+  padding-top: 24px;
+  padding-bottom: 0;
+  background: #02254a;
+  color: #fff;
+  border-top: 1px solid #0a2c4d;
+}
+.footer-content {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 80px;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 32px 0 16px 0;
+}
+.footer-col {
+  display: flex;
+  flex-direction: column;
+  min-width: 200px;
+  gap: 10px;
+}
+.footer-title {
+  display: flex;
+  align-items: center;
+  font-weight: bold;
+  margin-bottom: 8px;
+  color: #fff;
+  font-size: 15px;
+}
+.footer-title-text {
+  margin-left: 6px;
+}
+.footer-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 15px;
+  margin-bottom: 8px;
+}
+.footer-links {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.footer-link {
+  color: #fff;
+  text-decoration: none;
+  font-size: 15px;
+  margin-bottom: 2px;
+  transition: color 0.2s;
+}
+.footer-link:hover {
+  color: #ff7300;
+}
+.footer-social {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  margin-top: 4px;
+}
+.footer-social-link {
+  display: flex;
+  align-items: center;
+  color: #fff;
+  transition: color 0.2s;
+}
+.footer-social-link:hover {
+  color: #ff7300;
+}
+.footer-divider {
+  width: 100%;
+  height: 2px;
+  background: #0a2c4d;
+  margin: 0 0 0 0;
+}
+.footer-bottom {
+  width: 100%;
+  text-align: center;
+  padding: 12px 0 10px 0;
+  font-size: 15px;
+  color: #fff;
+}
+@media (max-width: 900px) {
+  .footer-content {
+    gap: 24px;
+  }
+}
+@media (max-width: 600px) {
+  .footer-content {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 16px;
+    padding-left: 16px;
+    padding-right: 16px;
+  }
+  .footer-col {
+    min-width: 0;
+    width: 100%;
+    gap: 6px;
   }
 }
 </style>
