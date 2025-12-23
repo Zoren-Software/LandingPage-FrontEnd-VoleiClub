@@ -2,16 +2,9 @@
   <section class="hero-banner">
     <div class="hero-overlay"></div>
     <div class="hero-content">
-      <h1 class="hero-title">
-        Automatize seus treinos e evolua sua equipe <span class="highlight">com inteligência.</span>
-      </h1>
-      <p class="hero-subtitle">
-        O VolleyTrack é a plataforma feita para técnicos e gestores de vôlei que querem otimizar o desempenho dos seus atletas com tecnologia e organização.
-      </p>
-      <div class="hero-btn-row">
-        <button class="hero-btn hero-btn-orange">Entrar na lista de espera</button>
-        <button class="hero-btn" @click="routeRegister()">Registrar-se grátis</button>
-      </div>
+      <p class="hero-top-text">LEVE SUA EQUIPE A OUTRO NÍVEL COM O VOLLEYTRACK</p>
+      <h1 class="hero-title">Plataforma inteligente para gestão de treinos, atletas e desempenho de volei</h1>
+      <p class="hero-desc-text">Tudo o que técnicos e gestores precisam para planejar, acompanhar e evoluir equipes com dados, organização e tecnologia em um só lugar.</p>
     </div>
   </section>
 
@@ -26,12 +19,12 @@
           <p class="benefit-card-desc">Programe treinos e compromissos em poucos cliques. Receba lembretes automáticos e mantenha todos informados.</p>
         </div>
         <div class="benefit-card border-blue">
-          <va-icon name="groups" size="38px" color="#1976d2" class="benefit-icon" />
+          <va-icon name="groups" size="38px" color="#ff7300" class="benefit-icon" />
           <h3 class="benefit-card-title">Gerenciamento de Equipes</h3>
           <p class="benefit-card-desc">Organize jogadores, monte times, defina funções e acompanhe o desempenho técnico de cada atleta.</p>
         </div>
         <div class="benefit-card border-dark">
-          <va-icon name="show_chart" size="38px" color="#02254a" class="benefit-icon" />
+          <va-icon name="show_chart" size="38px" color="#ff7300" class="benefit-icon" />
           <h3 class="benefit-card-title">Análise e Estatísticas Detalhadas</h3>
           <p class="benefit-card-desc">Visualize gráficos, relatórios e histórico de desempenho para tomar as melhores decisões para o time.</p>
         </div>
@@ -56,17 +49,8 @@
         <p class="about-text">
           O VolleyTrack nasceu para simplificar a vida dos treinadores de vôlei. Com ele, você organiza sua equipe, planeja treinos, registra presença e desempenho técnico com poucos cliques.
         </p>
-        <div class="about-highlights">
-          <span class="about-highlight"><va-icon name="mobile" size="18px" color="#ff7300" /> Facilidade e Mobilidade</span>
-          <span class="about-highlight"><va-icon name="database" size="18px" color="#1976d2" /> Gestão Centralizada</span>
-          <span class="about-highlight"><va-icon name="user" size="18px" color="#0a2c4d" /> Segurança de Dados</span>
-        </div>
       </div>
     </div>
-  </section>
-  <section class="faq-section">
-  <section class="faq-section">
-    ...existing code...
   </section>
 
   <section class="plans-section">
@@ -81,16 +65,16 @@
         <!-- Card 1: Trial -->
         <div class="plan-card border-orange plan-trial">
           <div class="plan-card-badge plan-card-badge-active">Plano Ativo</div>
-          <va-icon name="card_giftcard" size="38px" color="#ff7300" class="plan-card-icon" />
+          <va-icon name="card_giftcard" size="38px" color="#02254a" class="plan-card-icon" />
           <h3 class="plan-card-title plan-card-title-bold">15 Dias Grátis</h3>
           <div class="plan-card-price plan-card-price-bold">R$ 0</div>
           <div class="plan-card-desc plan-card-desc-muted">Duração: 15 dias</div>
           <ul class="plan-card-benefits plan-card-benefits-check">
-            <li><va-icon name="check" size="18px" color="#ff7300" /> Times ilimitados</li>
-            <li><va-icon name="check" size="18px" color="#ff7300" /> Jogadores ilimitados</li>
+            <li><va-icon name="check" size="18px" color="#02254a" /> Times ilimitados</li>
+            <li><va-icon name="check" size="18px" color="#02254a" /> Jogadores ilimitados</li>
           </ul>
           <div class="plan-card-warning plan-card-warning-box">
-            <va-icon name="mail" size="16px" color="#ff7300" style="margin-right:6px;" />
+            <va-icon name="mail" size="16px" color="#02254a" style="margin-right:6px;" />
             E-mail automático 3 dias antes do fim
           </div>
         </div>
@@ -137,6 +121,16 @@
       </div>
     </div>
   </section>
+
+  <section class="register-section" id="register">
+    <div class="register-container">
+      <div class="register-form-wrapper">
+        <ContactForm />
+      </div>
+    </div>
+  </section>
+
+  <section class="faq-section">
     <h2 class="faq-title">Perguntas Frequentes</h2>
     <div class="faq-list">
       <va-collapse
@@ -323,7 +317,7 @@ const darkNavbarColors = computed(() => {
   background: #fff;
   border-radius: 18px;
   box-shadow: 0 2px 16px rgba(34, 41, 64, 0.08);
-  border-top: 5px solid #ff7300;
+  border-top: 5px solid #02254a;
   padding: 32px 24px 28px 24px;
   width: 260px;
   min-height: 370px;
@@ -334,10 +328,10 @@ const darkNavbarColors = computed(() => {
   transition: box-shadow 0.2s;
 }
 .plan-card.border-orange {
-  border-top: 5px solid #ff7300;
+  border-top: 5px solid #02254a;
 }
 .plan-card.border-blue {
-  border-top: 5px solid #1976d2;
+  border-top: 5px solid #02254a;
 }
 .plan-card.border-dark {
   border-top: 5px solid #02254a;
@@ -482,7 +476,7 @@ const darkNavbarColors = computed(() => {
 .hero-banner {
   position: relative;
   width: 100%;
-  min-height: 70vh;
+  min-height: 90vh;
   background: url('/images/volei-banner.jpg') center center/cover no-repeat;
   display: flex;
   align-items: center;
@@ -507,7 +501,7 @@ const darkNavbarColors = computed(() => {
   justify-content: center;
   text-align: center;
   width: 100%;
-  max-width: 900px;
+  max-width: 1200px;
   padding: 48px 16px 40px 16px;
 }
 .hero-title {
@@ -520,12 +514,38 @@ const darkNavbarColors = computed(() => {
 .highlight {
   color: #ff7300;
 }
+
+.hero-top-text {
+  color: #bfc7d5;
+  font-size: 1.1rem;
+  font-weight: 500;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  margin-bottom: 18px;
+  margin-top: 12px;
+}
+.hero-title {
+  font-size: 4rem;
+  font-weight: 900;
+  color: #fff;
+  margin-bottom: 18px;
+  line-height: 1.1;
+}
+.hero-desc-text {
+  color: #bfc7d5;
+  font-size: 1.25rem;
+  font-weight: 400;
+  margin-top: 18px;
+  margin-bottom: 0;
+  line-height: 1.6;
+}
 .hero-subtitle {
   font-size: 1.25rem;
   color: #fff;
   margin-bottom: 32px;
   font-weight: 400;
   max-width: 700px;
+  line-height: 2.1;
 }
 .hero-btn-row {
   display: flex;
@@ -628,7 +648,7 @@ const darkNavbarColors = computed(() => {
   background: #fff;
   border-radius: 18px;
   box-shadow: 0 2px 16px rgba(34, 41, 64, 0.08);
-  border-top: 5px solid #ff7300;
+  border-top: 5px solid #02254a;
   padding: 32px 24px 28px 24px;
   width: 260px;
   min-height: 320px;
@@ -638,10 +658,10 @@ const darkNavbarColors = computed(() => {
   transition: box-shadow 0.2s;
 }
 .benefit-card.border-orange {
-  border-top: 5px solid #ff7300;
+  border-top: 5px solid #02254a;
 }
 .benefit-card.border-blue {
-  border-top: 5px solid #1976d2;
+  border-top: 5px solid #02254a;
 }
 .benefit-card.border-dark {
   border-top: 5px solid #02254a;
@@ -924,7 +944,7 @@ const darkNavbarColors = computed(() => {
 }
 .faq-list {
   width: 100%;
-  max-width: 520px;
+  max-width: 800px;
   display: flex;
   flex-direction: column;
   gap: 18px;
@@ -938,6 +958,7 @@ const darkNavbarColors = computed(() => {
   font-weight: 600;
   color: #ff7300;
   transition: box-shadow 0.2s;
+  width: 100%;
 }
 .faq-item .va-collapse__header {
   color: #ff7300;
@@ -1021,25 +1042,6 @@ const darkNavbarColors = computed(() => {
   max-width: 600px;
   line-height: 1.6;
 }
-.about-highlights {
-  display: flex;
-  gap: 32px;
-  flex-wrap: wrap;
-  margin-top: 8px;
-}
-.about-highlight {
-  display: flex;
-  align-items: center;
-  font-weight: 700;
-  color: #02254a;
-  font-size: 1.08rem;
-  gap: 8px;
-  background: none;
-  padding: 0;
-}
-.about-highlight va-icon {
-  margin-right: 4px;
-}
 @media (max-width: 900px) {
   .about-container {
     flex-direction: column;
@@ -1075,7 +1077,6 @@ const darkNavbarColors = computed(() => {
 }
 .faq-list {
   width: 100%;
-  max-width: 520px;
   display: flex;
   flex-direction: column;
   gap: 18px;
@@ -1299,5 +1300,53 @@ const darkNavbarColors = computed(() => {
     flex-direction: column;
     gap: 24px;
     align-items: center;
+  }
+}
+/* REGISTER SECTION */
+.register-section {
+  width: 100%;
+  background: #fff;
+  padding: 64px 0 64px 0;
+  display: flex;
+  justify-content: center;
+  border-bottom: 6px solid #f7f9fc;
+}
+.register-container {
+  max-width: 1200px;
+  width: 100%;
+  padding: 0 32px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.register-form-wrapper {
+  width: 100%;
+  max-width: 800px;
+}
+/* Anular o position fixed do ContactForm */
+.register-form-wrapper .position-fixed {
+  position: static !important;
+  margin: 0 !important;
+  width: 100% !important;
+}
+.register-form-wrapper .flex.justify-end {
+  justify-content: center !important;
+}
+.register-form-wrapper .va-form {
+  width: 100% !important;
+  max-width: 600px !important;
+  margin: 0 auto !important;
+}
+@media (max-width: 900px) {
+  .register-container {
+    padding: 0 16px;
+  }
+}
+@media (max-width: 600px) {
+  .register-section {
+    padding: 32px 0 32px 0;
+  }
+  .register-container {
+    padding: 0 8px;
   }
 }

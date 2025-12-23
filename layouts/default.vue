@@ -218,6 +218,13 @@ const routeDiscord = () => {
     margin-right: 1rem;
   }
 }
+
+/* Importa a fonte Poppins */
+@import url('/poppins.css');
+
+body, html {
+  font-family: 'Poppins', Arial, Helvetica, sans-serif !important;
+}
 </style>
 <style>
 .custom-navbar {
