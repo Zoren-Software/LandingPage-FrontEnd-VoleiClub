@@ -2,36 +2,36 @@
   <section class="hero-banner">
     <div class="hero-overlay"></div>
     <div class="hero-content">
-      <p class="hero-top-text">LEVE SUA EQUIPE A OUTRO NÍVEL COM O VOLLEYTRACK</p>
-      <h1 class="hero-title">Plataforma inteligente para gestão de treinos, atletas e desempenho de volei</h1>
-      <p class="hero-desc-text">Tudo o que técnicos e gestores precisam para planejar, acompanhar e evoluir equipes com dados, organização e tecnologia em um só lugar.</p>
+      <p class="hero-top-text">{{ $t('hero_top_text') }}</p>
+      <h1 class="hero-title">{{ $t('hero_title_main') }}</h1>
+      <p class="hero-desc-text">{{ $t('hero_desc_text') }}</p>
     </div>
   </section>
 
   <section class="benefits-section">
     <div class="benefits-container">
-      <h2 class="benefits-title-highlight">Gestão de Times de Vôlei — mais simples, mais inteligente.</h2>
-      <p class="benefits-subtitle">O sistema traz recursos práticos para o dia a dia dos treinadores e clubes —<br>mais organização, dados e resultados, menos complexidade.</p>
+      <h2 class="benefits-title-highlight">{{ $t('benefits_title_highlight') }}</h2>
+      <p class="benefits-subtitle">{{ $t('benefits_subtitle') }}</p>
       <div class="benefits-cards-row">
         <div class="benefit-card border-orange">
           <va-icon name="event" size="38px" color="#ff7300" class="benefit-icon" />
-          <h3 class="benefit-card-title">Agendamento Inteligente</h3>
-          <p class="benefit-card-desc">Programe treinos e compromissos em poucos cliques. Receba lembretes automáticos e mantenha todos informados.</p>
+          <h3 class="benefit-card-title">{{ $t('benefit_card_title_smart_scheduling') }}</h3>
+          <p class="benefit-card-desc">{{ $t('benefit_card_desc_smart_scheduling') }}</p>
         </div>
         <div class="benefit-card border-blue">
           <va-icon name="groups" size="38px" color="#ff7300" class="benefit-icon" />
-          <h3 class="benefit-card-title">Gerenciamento de Equipes</h3>
-          <p class="benefit-card-desc">Organize jogadores, monte times, defina funções e acompanhe o desempenho técnico de cada atleta.</p>
+          <h3 class="benefit-card-title">{{ $t('benefit_card_title_team_management') }}</h3>
+          <p class="benefit-card-desc">{{ $t('benefit_card_desc_team_management') }}</p>
         </div>
         <div class="benefit-card border-dark">
           <va-icon name="show_chart" size="38px" color="#ff7300" class="benefit-icon" />
-          <h3 class="benefit-card-title">Análise e Estatísticas Detalhadas</h3>
-          <p class="benefit-card-desc">Visualize gráficos, relatórios e histórico de desempenho para tomar as melhores decisões para o time.</p>
+          <h3 class="benefit-card-title">{{ $t('benefit_card_title_analysis') }}</h3>
+          <p class="benefit-card-desc">{{ $t('benefit_card_desc_analysis') }}</p>
         </div>
         <div class="benefit-card border-orange">
           <va-icon name="forum" size="38px" color="#ff7300" class="benefit-icon" />
-          <h3 class="benefit-card-title">Comunicação Direcionada</h3>
-          <p class="benefit-card-desc">Envie avisos, mensagens e feedbacks aos times ou jogadores de forma rápida e segmentada.</p>
+          <h3 class="benefit-card-title">{{ $t('benefit_card_title_communication') }}</h3>
+          <p class="benefit-card-desc">{{ $t('benefit_card_desc_communication') }}</p>
         </div>
       </div>
     </div>
@@ -45,9 +45,9 @@
         </div>
       </div>
       <div class="about-content-col">
-        <h2 class="about-title">Sobre o VolleyTrack</h2>
+        <h2 class="about-title">{{ $t('about_title') }}</h2>
         <p class="about-text">
-          O VolleyTrack nasceu para simplificar a vida dos treinadores de vôlei. Com ele, você organiza sua equipe, planeja treinos, registra presença e desempenho técnico com poucos cliques.
+          {{ $t('about_text') }}
         </p>
       </div>
     </div>
@@ -55,68 +55,68 @@
 
   <section class="plans-section">
     <div class="plans-container">
-      <h2 class="plans-title">Escolha o plano ideal para o seu time</h2>
-      <p class="plans-subtitle">Comece grátis, evolua conforme sua equipe cresce e pague apenas pelo que precisa.</p>
+      <h2 class="plans-title">{{ $t('plans_title') }}</h2>
+      <p class="plans-subtitle">{{ $t('plans_subtitle') }}</p>
       <div class="plans-toggle-row">
-        <button :class="['plans-toggle', { active: !isYearly }]" @click="isYearly = false">Mensal</button>
-        <button :class="['plans-toggle', { active: isYearly }]" @click="isYearly = true">Anual</button>
+        <button :class="['plans-toggle', { active: !isYearly }]" @click="isYearly = false">{{ $t('plan_toggle_monthly') }}</button>
+        <button :class="['plans-toggle', { active: isYearly }]" @click="isYearly = true">{{ $t('plan_toggle_yearly') }}</button>
       </div>
       <div class="plans-cards-row">
         <!-- Card 1: Trial -->
         <div class="plan-card border-orange plan-trial">
-          <div class="plan-card-badge plan-card-badge-active">Plano Ativo</div>
+          <div class="plan-card-badge plan-card-badge-active">{{ $t('plan_card_badge_active') }}</div>
           <va-icon name="card_giftcard" size="38px" color="#02254a" class="plan-card-icon" />
-          <h3 class="plan-card-title plan-card-title-bold">15 Dias Grátis</h3>
-          <div class="plan-card-price plan-card-price-bold">R$ 0</div>
-          <div class="plan-card-desc plan-card-desc-muted">Duração: 15 dias</div>
+          <h3 class="plan-card-title plan-card-title-bold">{{ $t('plan_card_trial_title') }}</h3>
+          <div class="plan-card-price plan-card-price-bold">{{ $t('plan_card_trial_price') }}</div>
+          <div class="plan-card-desc plan-card-desc-muted">{{ $t('plan_card_trial_duration') }}</div>
           <ul class="plan-card-benefits plan-card-benefits-check">
-            <li><va-icon name="check" size="18px" color="#02254a" /> Times ilimitados</li>
-            <li><va-icon name="check" size="18px" color="#02254a" /> Jogadores ilimitados</li>
+            <li><va-icon name="check" size="18px" color="#02254a" /> {{ $t('plan_card_trial_benefit_1') }}</li>
+            <li><va-icon name="check" size="18px" color="#02254a" /> {{ $t('plan_card_trial_benefit_2') }}</li>
           </ul>
           <div class="plan-card-warning plan-card-warning-box">
             <va-icon name="mail" size="16px" color="#02254a" style="margin-right:6px;" />
-            E-mail automático 3 dias antes do fim
+            {{ $t('plan_card_trial_warning') }}
           </div>
         </div>
         <!-- Card 2: Pro -->
         <div class="plan-card border-orange recommended">
-          <div class="plan-card-badge">Recomendado</div>
-          <h3 class="plan-card-title">Pro</h3>
-          <div class="plan-card-price">R$ {{ isYearly ? '490 / ano' : '49 / mês' }}</div>
-          <div class="plan-card-alt-price">{{ isYearly ? 'ou R$ 49 / mês' : 'ou R$ 490 / ano' }}</div>
+          <div class="plan-card-badge">{{ $t('plan_card_badge_recommended') }}</div>
+          <h3 class="plan-card-title">{{ $t('plan_card_pro_title') }}</h3>
+          <div class="plan-card-price">{{ isYearly ? $t('plan_card_pro_price_yearly') : $t('plan_card_pro_price_monthly') }}</div>
+          <div class="plan-card-alt-price">{{ isYearly ? $t('plan_card_pro_alt_yearly') : $t('plan_card_pro_alt_monthly') }}</div>
           <ul class="plan-card-benefits">
-            <li>Até 5 times</li>
-            <li>Até 50 jogadores</li>
+            <li>{{ $t('plan_card_pro_benefit_1') }}</li>
+            <li>{{ $t('plan_card_pro_benefit_2') }}</li>
           </ul>
-          <div class="plan-card-highlight">Migração automática pós-trial</div>
+          <div class="plan-card-highlight">{{ $t('plan_card_pro_highlight') }}</div>
         </div>
         <!-- Card 3: Clubers -->
         <div class="plan-card border-blue">
-          <div class="plan-card-badge">Para equipes grandes</div>
-          <h3 class="plan-card-title">Clubers</h3>
-          <div class="plan-card-price">R$ {{ isYearly ? '1.490 / ano' : '149 / mês' }}</div>
-          <div class="plan-card-alt-price">{{ isYearly ? 'ou R$ 149 / mês' : 'ou R$ 1.490 / ano' }}</div>
+          <div class="plan-card-badge">{{ $t('plan_card_badge_large_teams') }}</div>
+          <h3 class="plan-card-title">{{ $t('plan_card_clubers_title') }}</h3>
+          <div class="plan-card-price">{{ isYearly ? $t('plan_card_clubers_price_yearly') : $t('plan_card_clubers_price_monthly') }}</div>
+          <div class="plan-card-alt-price">{{ isYearly ? $t('plan_card_clubers_alt_yearly') : $t('plan_card_clubers_alt_monthly') }}</div>
           <ul class="plan-card-benefits">
-            <li>Times ilimitados</li>
-            <li>Jogadores ilimitados</li>
-            <li>Acesso completo à plataforma</li>
+            <li>{{ $t('plan_card_clubers_benefit_1') }}</li>
+            <li>{{ $t('plan_card_clubers_benefit_2') }}</li>
+            <li>{{ $t('plan_card_clubers_benefit_3') }}</li>
           </ul>
         </div>
         <!-- Card 4: Vitalício -->
         <div class="plan-card border-dark">
-          <div class="plan-card-badge">Oferta Limitada</div>
-          <h3 class="plan-card-title">Vitalício</h3>
-          <div class="plan-card-price">R$ 25</div>
-          <div class="plan-card-desc">Pagamento único</div>
+          <div class="plan-card-badge">{{ $t('plan_card_badge_limited') }}</div>
+          <h3 class="plan-card-title">{{ $t('plan_card_lifetime_title') }}</h3>
+          <div class="plan-card-price">{{ $t('plan_card_lifetime_price') }}</div>
+          <div class="plan-card-desc">{{ $t('plan_card_lifetime_payment') }}</div>
           <ul class="plan-card-benefits">
-            <li>1 time</li>
-            <li>Até 20 jogadores</li>
+            <li>{{ $t('plan_card_lifetime_benefit_1') }}</li>
+            <li>{{ $t('plan_card_lifetime_benefit_2') }}</li>
           </ul>
-          <div class="plan-card-warning">Só para os primeiros 500 usuários</div>
+          <div class="plan-card-warning">{{ $t('plan_card_lifetime_warning') }}</div>
           <div class="plan-card-progress-bar">
             <div class="plan-card-progress" :style="{ width: '24%' }"></div>
           </div>
-          <div class="plan-card-progress-label">120 restantes</div>
+          <div class="plan-card-progress-label">{{ $t('plan_card_lifetime_remaining') }}</div>
         </div>
       </div>
     </div>
@@ -131,7 +131,7 @@
   </section>
 
   <section class="faq-section">
-    <h2 class="faq-title">Perguntas Frequentes</h2>
+    <h2 class="faq-title">{{ $t('faq_title') }}</h2>
     <div class="faq-list">
       <va-collapse
         v-for="i in 10"

@@ -7,14 +7,51 @@
           <span class="ml-2 title-and-icon">VolleyTrack</span>
         </div>
         <div class="navbar-links">
-          <a href="/" class="navbar-link">Sobre</a>
-          <a href="#benefits-section" class="navbar-link" @click.prevent="routeBenefits">Funcionalidades</a>
-          <a href="#plans-section" class="navbar-link" @click.prevent="routePlans">Planos e Preços</a>
-          <a href="#faq-section" class="navbar-link" @click.prevent="routeFAQ">FAQ</a>
-          <a href="/register" class="navbar-link">Registro</a>
+          <a href="/" class="navbar-link">{{ $t("menu_title_about") }}</a>
+          <a
+            href="#benefits-section"
+            class="navbar-link"
+            @click.prevent="routeBenefits"
+            >{{ $t("menu_title_features") }}</a
+          >
+          <a
+            href="#plans-section"
+            class="navbar-link"
+            @click.prevent="routePlans"
+            >{{ $t("menu_title_plans") }}</a
+          >
+          <a
+            href="#faq-section"
+            class="navbar-link"
+            @click.prevent="routeFAQ"
+            >{{ $t("menu_title_faq") }}</a
+          >
+          <a href="/register" class="navbar-link">{{
+            $t("menu_title_register")
+          }}</a>
         </div>
         <div class="navbar-actions">
-          <button class="navbar-register-btn" @click="routeRegister()">Registrar-se grátis</button>
+          <div class="navbar-language-selector">
+            <va-select
+              name="option"
+              v-model="locale"
+              class="navbar-language-select"
+              :options="[
+                { value: 'pt-br', text: $t('option_language_pt_br') },
+                { value: 'en', text: $t('option_language_en') },
+                { value: 'es', text: $t('option_language_es') },
+                { value: 'fr', text: $t('option_language_fr') },
+                { value: 'it', text: $t('option_language_it') },
+                { value: 'pl', text: $t('option_language_pl') },
+                { value: 'ru', text: $t('option_language_ru') },
+              ]"
+              valueBy="value"
+              autoSelectFirstOption
+            />
+          </div>
+          <button class="navbar-register-btn" @click="routeRegister()">
+            {{ $t("button_register_free") }}
+          </button>
         </div>
       </nav>
     </template>
@@ -58,46 +95,91 @@
     </template>
     <!-- Adicionando o Footer -->
   </VaLayout>
-  <footer
-    class="footer custom-footer"
-    style="background: #02254a; color: #fff;"
-  >
+  <footer class="footer custom-footer" style="background: #02254a; color: #fff">
     <div class="footer-content">
       <div class="footer-col">
         <div class="footer-title">
-          <va-icon name="mail" color="#ff7300" size="18px" class="footer-icon" />
-          <span class="footer-title-text">Contato</span>
+          <va-icon
+            name="mail"
+            color="#ff7300"
+            size="18px"
+            class="footer-icon"
+          />
+          <span class="footer-title-text">{{
+            $t("title_footer_contact")
+          }}</span>
         </div>
         <div class="footer-item">
-          <va-icon name="mail" color="#ff7300" size="14px" class="footer-icon" />
-          <span style="font-size: 15px;">support@volleytrack.com</span>
+          <va-icon
+            name="mail"
+            color="#ff7300"
+            size="14px"
+            class="footer-icon"
+          />
+          <span style="font-size: 15px">support@volleytrack.com</span>
         </div>
       </div>
       <div class="footer-col">
         <div class="footer-title">
-          <va-icon name="link" color="#ff7300" size="18px" class="footer-icon" />
-          <span class="footer-title-text">Links úteis</span>
+          <va-icon
+            name="link"
+            color="#ff7300"
+            size="18px"
+            class="footer-icon"
+          />
+          <span class="footer-title-text">{{
+            $t("title_footer_useful_links")
+          }}</span>
         </div>
         <div class="footer-links">
-          <a href="/sobre" class="footer-link">Sobre</a>
-          <a href="/planos" class="footer-link">Planos</a>
-          <a href="#faq-section" class="footer-link" @click.prevent="routeFAQ">FAQ</a>
-          <a href="#" @click.prevent="routeDiscord" class="footer-link">Discord</a>
+          <a href="/sobre" class="footer-link">{{ $t("menu_title_about") }}</a>
+          <a href="/planos" class="footer-link">{{ $t("menu_title_plans") }}</a>
+          <a
+            href="#faq-section"
+            class="footer-link"
+            @click.prevent="routeFAQ"
+            >{{ $t("menu_title_faq") }}</a
+          >
+          <a href="#" @click.prevent="routeDiscord" class="footer-link">{{
+            $t("menu_title_discord")
+          }}</a>
         </div>
       </div>
       <div class="footer-col">
         <div class="footer-title">
-          <va-icon name="share" color="#ff7300" size="18px" class="footer-icon" />
-          <span class="footer-title-text">Redes sociais</span>
+          <va-icon
+            name="share"
+            color="#ff7300"
+            size="18px"
+            class="footer-icon"
+          />
+          <span class="footer-title-text">{{
+            $t("title_footer_social_networks")
+          }}</span>
         </div>
         <div class="footer-social">
-          <a href="https://www.linkedin.com" target="_blank" class="footer-social-link" aria-label="LinkedIn">
+          <a
+            href="https://www.linkedin.com"
+            target="_blank"
+            class="footer-social-link"
+            aria-label="LinkedIn"
+          >
             <va-icon name="linkedin" size="22px" color="#fff" />
           </a>
-          <a href="https://www.instagram.com" target="_blank" class="footer-social-link" aria-label="Instagram">
+          <a
+            href="https://www.instagram.com"
+            target="_blank"
+            class="footer-social-link"
+            aria-label="Instagram"
+          >
             <va-icon name="instagram" size="22px" color="#fff" />
           </a>
-          <a href="https://www.facebook.com" target="_blank" class="footer-social-link" aria-label="Facebook">
+          <a
+            href="https://www.facebook.com"
+            target="_blank"
+            class="footer-social-link"
+            aria-label="Facebook"
+          >
             <va-icon name="facebook" size="22px" color="#fff" />
           </a>
         </div>
@@ -105,7 +187,10 @@
     </div>
     <div class="footer-divider"></div>
     <div class="footer-bottom">
-      <span>© {{ currentYear() }} VolleyTrack – Todos os direitos reservados.</span>
+      <span
+        >© {{ currentYear() }} VolleyTrack –
+        {{ $t("all_rights_reserved") }}.</span
+      >
     </div>
   </footer>
 </template>
@@ -154,16 +239,52 @@ const routeFAQ = () => {
   if (window.location.pathname !== "/") {
     router.push("/").then(() => {
       setTimeout(() => {
-        const faqSection = document.querySelector('.faq-section');
+        const faqSection = document.querySelector(".faq-section");
         if (faqSection) {
-          faqSection.scrollIntoView({ behavior: 'smooth' });
+          faqSection.scrollIntoView({ behavior: "smooth" });
         }
       }, 400);
     });
   } else {
-    const faqSection = document.querySelector('.faq-section');
+    const faqSection = document.querySelector(".faq-section");
     if (faqSection) {
-      faqSection.scrollIntoView({ behavior: 'smooth' });
+      faqSection.scrollIntoView({ behavior: "smooth" });
+    }
+  }
+};
+
+const routeBenefits = () => {
+  if (window.location.pathname !== "/") {
+    router.push("/").then(() => {
+      setTimeout(() => {
+        const benefitsSection = document.querySelector(".benefits-section");
+        if (benefitsSection) {
+          benefitsSection.scrollIntoView({ behavior: "smooth" });
+        }
+      }, 400);
+    });
+  } else {
+    const benefitsSection = document.querySelector(".benefits-section");
+    if (benefitsSection) {
+      benefitsSection.scrollIntoView({ behavior: "smooth" });
+    }
+  }
+};
+
+const routePlans = () => {
+  if (window.location.pathname !== "/") {
+    router.push("/").then(() => {
+      setTimeout(() => {
+        const plansSection = document.querySelector(".plans-section");
+        if (plansSection) {
+          plansSection.scrollIntoView({ behavior: "smooth" });
+        }
+      }, 400);
+    });
+  } else {
+    const plansSection = document.querySelector(".plans-section");
+    if (plansSection) {
+      plansSection.scrollIntoView({ behavior: "smooth" });
     }
   }
 };
@@ -220,10 +341,11 @@ const routeDiscord = () => {
 }
 
 /* Importa a fonte Poppins */
-@import url('/poppins.css');
+@import url("/poppins.css");
 
-body, html {
-  font-family: 'Poppins', Arial, Helvetica, sans-serif !important;
+body,
+html {
+  font-family: "Poppins", Arial, Helvetica, sans-serif !important;
 }
 </style>
 <style>
@@ -267,6 +389,115 @@ body, html {
 .navbar-actions {
   display: flex;
   align-items: center;
+  gap: 12px;
+}
+.navbar-language-selector {
+  display: flex;
+  align-items: center;
+  position: relative;
+}
+.navbar-language-select {
+  min-width: 160px;
+  max-width: 180px;
+}
+.navbar-language-selector :deep(.va-select) {
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 6px;
+  transition: all 0.2s ease;
+}
+.navbar-language-selector :deep(.va-select:hover) {
+  background: rgba(255, 255, 255, 0.12);
+  border-color: rgba(255, 255, 255, 0.25);
+}
+.navbar-language-selector :deep(.va-select:focus-within) {
+  background: rgba(255, 255, 255, 0.12);
+  border-color: rgba(255, 115, 0, 0.5);
+  box-shadow: 0 0 0 2px rgba(255, 115, 0, 0.1);
+}
+.navbar-language-selector :deep(.va-input-wrapper) {
+  background: transparent;
+}
+.navbar-language-selector :deep(.va-input-wrapper__text) {
+  color: #ffffff !important;
+  caret-color: #ffffff !important;
+  --va-input-wrapper-text-color: #ffffff !important;
+}
+.navbar-language-selector :deep(.va-input-wrapper__field) {
+  color: #ffffff !important;
+  font-size: 14px;
+  font-weight: 500;
+  padding: 7px 32px 7px 12px;
+  background: transparent;
+  border: none;
+  height: auto;
+  min-height: auto;
+}
+.navbar-language-selector :deep(.va-input-wrapper__field::placeholder) {
+  color: rgba(255, 255, 255, 0.7) !important;
+}
+.navbar-language-selector :deep(input) {
+  color: #ffffff !important;
+}
+.navbar-language-selector :deep(.va-select__selected) {
+  color: #ffffff !important;
+}
+.navbar-language-selector :deep(.va-input-wrapper__field input) {
+  color: #ffffff !important;
+}
+.navbar-language-selector :deep(.va-input-wrapper__field span) {
+  color: #ffffff !important;
+}
+.navbar-language-selector :deep(.va-select__text) {
+  color: #ffffff !important;
+}
+.navbar-language-selector :deep(.va-input-wrapper__field *) {
+  color: #ffffff !important;
+}
+.navbar-language-selector :deep(.va-select__content) {
+  color: #ffffff !important;
+}
+.navbar-language-selector :deep(.va-select__content *) {
+  color: #ffffff !important;
+}
+.navbar-language-selector :deep(.va-input-wrapper__field:focus) {
+  outline: none;
+  border: none;
+  box-shadow: none;
+}
+.navbar-language-selector :deep(.va-select__content) {
+  background: transparent;
+}
+.navbar-language-selector :deep(.va-icon) {
+  color: rgba(255, 255, 255, 0.7);
+  right: 10px;
+}
+.navbar-language-selector :deep(.va-select__dropdown) {
+  background: #02254a;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 8px;
+  margin-top: 6px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  overflow: hidden;
+}
+.navbar-language-selector :deep(.va-select-option) {
+  color: rgba(255, 255, 255, 0.9);
+  padding: 10px 16px;
+  font-size: 14px;
+  transition: all 0.2s ease;
+}
+.navbar-language-selector :deep(.va-select-option:hover) {
+  background: rgba(255, 115, 0, 0.15);
+  color: #ff7300;
+}
+.navbar-language-selector :deep(.va-select-option--selected) {
+  background: rgba(255, 115, 0, 0.25);
+  color: #ff7300;
+  font-weight: 600;
+}
+
+.va-input-wrapper__text {
+  color: #ffffff !important;
 }
 .navbar-register-btn {
   background: #ff7300;
@@ -307,6 +538,14 @@ body, html {
     width: 100%;
     justify-content: center;
     margin-bottom: 8px;
+    flex-direction: column;
+    gap: 8px;
+  }
+  .navbar-language-selector {
+    width: 100%;
+  }
+  .navbar-language-selector .navbar-language-select {
+    width: 100%;
   }
 }
 </style>
