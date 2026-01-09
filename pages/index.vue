@@ -386,11 +386,6 @@
                     text: $t('option_experience_level_other'),
                   },
                 ]"
-                :rules="[
-                  (value) =>
-                    (value.value && value.value.length > 0) ||
-                    $t('message_error_level_experience_required'),
-                ]"
                 :error="
                   !!(
                     errors?.errors?.experience_level &&
@@ -730,12 +725,21 @@ const validateField = (
       }
       break;
     case "experience_level":
-      const experienceValue =
-        typeof value === "object" && value !== null ? value.value : value;
+      // O va-select pode retornar um objeto { value, text } ou apenas o valor
+      let experienceValue = null;
+      if (value === null || value === undefined || value === "") {
+        experienceValue = null;
+      } else if (typeof value === "object" && value !== null) {
+        experienceValue = value.value || value;
+      } else {
+        experienceValue = value;
+      }
+
       if (
         !experienceValue ||
         experienceValue === "" ||
-        experienceValue === null
+        experienceValue === null ||
+        experienceValue === undefined
       ) {
         fieldErrors.push("O campo nível de experiência é obrigatório.");
       }
@@ -2557,7 +2561,8 @@ const darkNavbarColors = computed(() => {
   }
 }
 
-.va-select-content__option {
+/* Estilo específico para o seletor de idioma na navbar */
+.navbar-language-selector {
   color: white !important;
 }
 </style>

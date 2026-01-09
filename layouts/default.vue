@@ -2,9 +2,18 @@
   <VaLayout :left="{ absolute: true }">
     <template #top>
       <nav class="custom-navbar">
-        <div class="navbar-logo" @click="goToIndex()">
-          <va-icon class="icon" name="sports_volleyball" />
-          <span class="ml-2 title-and-icon">VolleyTrack</span>
+        <div class="navbar-left">
+          <button
+            class="navbar-hamburger"
+            @click="showSidebar = !showSidebar"
+            aria-label="Menu"
+          >
+            <va-icon name="menu" size="24px" />
+          </button>
+          <div class="navbar-logo" @click="goToIndex()">
+            <va-icon class="icon" name="sports_volleyball" />
+            <span class="ml-2 title-and-icon">VolleyTrack</span>
+          </div>
         </div>
         <div class="navbar-links">
           <a href="/" class="navbar-link">{{ $t("menu_title_about") }}</a>
@@ -21,19 +30,22 @@
             >{{ $t("menu_title_plans") }}</a
           >
           <a
-            href="#faq-section"
-            class="navbar-link"
-            @click.prevent="routeFAQ"
-            >{{ $t("menu_title_faq") }}</a
-          >
-          <a
             href="#register-section"
             class="navbar-link"
             @click.prevent="routeRegister"
             >{{ $t("menu_title_register") }}</a
           >
+          <a
+            href="#faq-section"
+            class="navbar-link"
+            @click.prevent="routeFAQ"
+            >{{ $t("menu_title_faq") }}</a
+          >
         </div>
         <div class="navbar-actions">
+          <button class="navbar-register-btn" @click="routeRegister()">
+            {{ $t("button_register_free") }}
+          </button>
           <div class="navbar-language-selector">
             <va-select
               name="option"
@@ -52,15 +64,100 @@
               autoSelectFirstOption
             />
           </div>
-          <button class="navbar-register-btn" @click="routeRegister()">
-            {{ $t("button_register_free") }}
-          </button>
         </div>
       </nav>
     </template>
 
     <template #left>
-      <VaSidebar v-model="showSidebar">
+      <VaSidebar v-model="showSidebar" color="#02254a">
+        <VaSidebarItem>
+          <VaSidebarItemContent>
+            <VaSidebarItemTitle>
+              <a href="/" class="sidebar-link" @click="showSidebar = false">
+                {{ $t("menu_title_about") }}
+              </a>
+            </VaSidebarItemTitle>
+          </VaSidebarItemContent>
+        </VaSidebarItem>
+        <VaSidebarItem>
+          <VaSidebarItemContent>
+            <VaSidebarItemTitle>
+              <a
+                href="#benefits-section"
+                class="sidebar-link"
+                @click.prevent="
+                  routeBenefits();
+                  showSidebar = false;
+                "
+              >
+                {{ $t("menu_title_features") }}
+              </a>
+            </VaSidebarItemTitle>
+          </VaSidebarItemContent>
+        </VaSidebarItem>
+        <VaSidebarItem>
+          <VaSidebarItemContent>
+            <VaSidebarItemTitle>
+              <a
+                href="#plans-section"
+                class="sidebar-link"
+                @click.prevent="
+                  routePlans();
+                  showSidebar = false;
+                "
+              >
+                {{ $t("menu_title_plans") }}
+              </a>
+            </VaSidebarItemTitle>
+          </VaSidebarItemContent>
+        </VaSidebarItem>
+        <VaSidebarItem>
+          <VaSidebarItemContent>
+            <VaSidebarItemTitle>
+              <a
+                href="#register-section"
+                class="sidebar-link"
+                @click.prevent="
+                  routeRegister();
+                  showSidebar = false;
+                "
+              >
+                {{ $t("menu_title_register") }}
+              </a>
+            </VaSidebarItemTitle>
+          </VaSidebarItemContent>
+        </VaSidebarItem>
+        <VaSidebarItem>
+          <VaSidebarItemContent>
+            <VaSidebarItemTitle>
+              <a
+                href="#faq-section"
+                class="sidebar-link"
+                @click.prevent="
+                  routeFAQ();
+                  showSidebar = false;
+                "
+              >
+                {{ $t("menu_title_faq") }}
+              </a>
+            </VaSidebarItemTitle>
+          </VaSidebarItemContent>
+        </VaSidebarItem>
+        <VaSidebarItem>
+          <VaSidebarItemContent>
+            <VaSidebarItemTitle>
+              <button
+                class="sidebar-register-btn"
+                @click="
+                  routeRegister();
+                  showSidebar = false;
+                "
+              >
+                {{ $t("button_register_free") }}
+              </button>
+            </VaSidebarItemTitle>
+          </VaSidebarItemContent>
+        </VaSidebarItem>
         <VaSidebarItem>
           <VaSidebarItemContent>
             <VaSidebarItemTitle>
@@ -82,7 +179,7 @@
                   ]"
                   valueBy="value"
                   autoSelectFirstOption
-                  style="width: max-content"
+                  style="width: 100%"
                 />
               </div>
             </VaSidebarItemTitle>
@@ -374,6 +471,27 @@ html {
   border-bottom: 1px solid #0a2c4d;
   position: relative;
   z-index: 10;
+  gap: 16px;
+}
+.navbar-left {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.navbar-hamburger {
+  display: none;
+  background: transparent;
+  border: none;
+  color: #fff;
+  cursor: pointer;
+  padding: 8px;
+  border-radius: 4px;
+  transition: background 0.2s;
+  align-items: center;
+  justify-content: center;
+}
+.navbar-hamburger:hover {
+  background: rgba(255, 255, 255, 0.1);
 }
 .navbar-logo {
   display: flex;
@@ -524,40 +642,177 @@ html {
 .navbar-register-btn:hover {
   background: #ff8c1a;
 }
+/* Tablet */
+@media (max-width: 1024px) {
+  .custom-navbar {
+    padding: 0 20px;
+  }
+  .navbar-links {
+    gap: 20px;
+  }
+  .navbar-link {
+    font-size: 14px;
+  }
+}
+
+/* Mobile Large */
 @media (max-width: 900px) {
   .custom-navbar {
-    padding: 0 12px;
+    padding: 0 16px;
   }
   .navbar-links {
     gap: 16px;
   }
+  .navbar-link {
+    font-size: 14px;
+  }
+  .navbar-register-btn {
+    font-size: 14px;
+    padding: 6px 16px;
+  }
+  .navbar-language-select {
+    min-width: 140px;
+    max-width: 160px;
+  }
 }
-@media (max-width: 600px) {
-  .custom-navbar {
-    flex-direction: column;
-    height: auto;
-    padding: 0 4px;
+
+/* Mobile Medium */
+@media (max-width: 768px) {
+  .navbar-hamburger {
+    display: flex;
   }
   .navbar-links {
-    flex-direction: column;
-    gap: 8px;
-    width: 100%;
-    align-items: center;
-    margin: 8px 0;
+    display: none;
   }
   .navbar-actions {
-    width: 100%;
-    justify-content: center;
-    margin-bottom: 8px;
-    flex-direction: column;
     gap: 8px;
   }
   .navbar-language-selector {
-    width: 100%;
+    display: none;
   }
-  .navbar-language-selector .navbar-language-select {
-    width: 100%;
+  .navbar-register-btn {
+    font-size: 13px;
+    padding: 6px 14px;
+    white-space: nowrap;
   }
+  .navbar-logo {
+    font-size: 18px;
+  }
+}
+
+/* Mobile Small */
+@media (max-width: 480px) {
+  .custom-navbar {
+    padding: 0 12px;
+    height: 56px;
+  }
+  .navbar-logo .title-and-icon {
+    font-size: 16px;
+  }
+  .navbar-register-btn {
+    font-size: 12px;
+    padding: 6px 12px;
+  }
+  .navbar-left {
+    gap: 8px;
+  }
+}
+
+/* Sidebar Styles - Forçar cor azul #02254a */
+:deep(.va-sidebar),
+:deep(.va-sidebar[style]),
+:deep(.va-sidebar[style*="background-color"]),
+:deep(.va-sidebar[style*="background"]) {
+  background: #02254a !important;
+  background-color: #02254a !important;
+  border-right: 1px solid #0a2c4d !important;
+  color: #ffffff !important;
+}
+:deep(.va-sidebar__menu),
+:deep(.va-sidebar__menu[style]),
+:deep(.va-sidebar__menu[style*="background-color"]),
+:deep(.va-sidebar__menu[style*="background"]) {
+  background: #02254a !important;
+  background-color: #02254a !important;
+}
+:deep(.va-sidebar__content),
+:deep(.va-sidebar__content[style]),
+:deep(.va-sidebar__content[style*="background-color"]),
+:deep(.va-sidebar__content[style*="background"]) {
+  background: #02254a !important;
+  background-color: #02254a !important;
+}
+:deep(.va-sidebar-item),
+:deep(.va-sidebar-item[style]),
+:deep(.va-sidebar-item[style*="background-color"]),
+:deep(.va-sidebar-item[style*="background"]),
+:deep(.va-sidebar-item[style*="color"]) {
+  background: transparent !important;
+  background-color: transparent !important;
+  color: #ffffff !important;
+}
+:deep(.va-sidebar-item:hover),
+:deep(.va-sidebar-item:hover[style]) {
+  background: rgba(255, 255, 255, 0.05) !important;
+  background-color: rgba(255, 255, 255, 0.05) !important;
+}
+:deep(.va-sidebar-item__content),
+:deep(.va-sidebar-item__content *) {
+  color: #ffffff !important;
+}
+:deep(.va-sidebar-item-title),
+:deep(.va-sidebar-item-title *) {
+  color: #ffffff !important;
+}
+.sidebar-header {
+  padding: 16px 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  margin-bottom: 16px;
+}
+.sidebar-logo {
+  display: flex;
+  align-items: center;
+  font-weight: bold;
+  font-size: 20px;
+  color: #fff;
+  cursor: pointer;
+  padding: 8px;
+  border-radius: 4px;
+  transition: background 0.2s;
+}
+.sidebar-logo:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+.sidebar-link {
+  display: block;
+  color: #fff;
+  text-decoration: none;
+  font-size: 15px;
+  font-weight: 500;
+  padding: 12px 16px;
+  border-radius: 4px;
+  transition: all 0.2s;
+  margin: 4px 0;
+}
+.sidebar-link:hover {
+  background: rgba(255, 115, 0, 0.15);
+  color: #ff7300;
+}
+.sidebar-register-btn {
+  width: 100%;
+  background: #ff7300;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  font-weight: bold;
+  font-size: 15px;
+  padding: 12px 20px;
+  cursor: pointer;
+  transition: background 0.2s;
+  margin-top: 8px;
+}
+.sidebar-register-btn:hover {
+  background: #ff8c1a;
 }
 </style>
 <style>
