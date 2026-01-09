@@ -153,5 +153,9 @@
     "plan_card_lifetime_warning": "Tylko dla pierwszych 500 użytkowników",
     "plan_card_lifetime_remaining": "120 pozostałych",
     "plan_card_badge_limited": "Oferta Limitowana",
-    "faq_title": "Często Zadawane Pytania"
+    "faq_title": "Często Zadawane Pytania",
+    "register_title_ready": "Gotowy do gry?",
+    "register_subtitle": "Zarejestruj się, aby być częścią przyszłości zarządzania sportem!",
+    "label_message_optional": "Wiadomość (opcjonalna)",
+    "select_placeholder": "Wybierz..."
 }

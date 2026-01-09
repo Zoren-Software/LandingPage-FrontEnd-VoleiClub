@@ -151,5 +151,9 @@
     "plan_card_lifetime_warning": "Только для первых 500 пользователей",
     "plan_card_lifetime_remaining": "120 осталось",
     "plan_card_badge_limited": "Ограниченное Предложение",
-    "faq_title": "Часто Задаваемые Вопросы"
+    "faq_title": "Часто Задаваемые Вопросы",
+    "register_title_ready": "Готовы начать игру?",
+    "register_subtitle": "Зарегистрируйтесь, чтобы стать частью будущего спортивного менеджмента!",
+    "label_message_optional": "Сообщение (необязательно)",
+    "select_placeholder": "Выбрать..."
 }

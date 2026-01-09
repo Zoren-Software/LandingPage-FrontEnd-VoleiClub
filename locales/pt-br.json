@@ -151,5 +151,11 @@
     "plan_card_lifetime_warning": "Só para os primeiros 500 usuários",
     "plan_card_lifetime_remaining": "120 restantes",
     "plan_card_badge_limited": "Oferta Limitada",
-    "faq_title": "Perguntas Frequentes"
+    "faq_title": "Perguntas Frequentes",
+    "register_title_ready": "Pronto para entrar na jogada?",
+    "register_subtitle": "Cadastre-se para fazer parte do futuro da gestão esportiva!",
+    "label_message_optional": "Mensagem (opcional)",
+    "select_placeholder": "Selecione...",
+    "title_join_the_volleyball_vanguard_with": "Junte-se à vanguarda do voleibol com",
+    "text_join_the_volleyball_vanguard_with": "Faça parte da revolução na gestão esportiva. Registre-se agora e tenha acesso antecipado às funcionalidades mais inovadoras do VolleyTrack."
 }
