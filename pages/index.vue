@@ -233,159 +233,169 @@
   </section>
 
   <section class="register-section" id="register">
-    <div class="register-container">
-      <div class="register-form-column">
-        <div class="register-header">
-          <h2 class="register-title">{{ $t("register_title_ready") }}</h2>
-          <p class="register-subtitle">{{ $t("register_subtitle") }}</p>
-        </div>
-        <va-form ref="formRef" class="register-form">
-          <div class="form-field">
-            <va-input
-              name="name"
-              class="register-input"
-              :placeholder="$t('placeholder_name')"
-              stateful
-              v-model="form.name"
-              :error="errors?.errors?.name != ''"
-              :error-messages="errors?.errors?.name"
-              :label="$t('label_name')"
-            />
-          </div>
-          <div class="form-field">
-            <va-input
-              name="email"
-              class="register-input"
-              :placeholder="$t('placeholder_email')"
-              v-model="form.email"
-              type="email"
-              :error="errors?.errors?.email != ''"
-              :error-messages="errors?.errors?.email"
-              :label="$t('label_email')"
-            />
-          </div>
-          <div class="form-field">
-            <div class="subdomain-field-wrapper">
-              <va-input
-                name="tenant_id"
-                class="register-input subdomain-input"
-                :placeholder="$t('placeholder_tenant_id')"
-                v-model="form.tenant_id"
-                :error="errors?.errors?.tenant_id != ''"
-                :error-messages="errors?.errors?.tenant_id"
-                :label="$t('label_tenant_id')"
-              />
-              <span class="subdomain-suffix">{{ apiTenantDomain }}</span>
-            </div>
-          </div>
-          <div class="form-field">
-            <va-select
-              name="option"
-              class="register-select"
-              v-model="form.experience_level"
-              :label="$t('label_experience_level')"
-              :placeholder="$t('select_placeholder')"
-              :options="[
-                {
-                  value: null,
-                  text: $t('option_experience_level_select'),
-                },
-                {
-                  value: 'beginner',
-                  text: $t('option_experience_level_beginner'),
-                },
-                {
-                  value: 'amateur',
-                  text: $t('option_experience_level_amateur'),
-                },
-                {
-                  value: 'student',
-                  text: $t('option_experience_level_student'),
-                },
-                {
-                  value: 'college',
-                  text: $t('option_experience_level_university_student'),
-                },
-                {
-                  value: 'semi-professional',
-                  text: $t('option_experience_level_semi_professional'),
-                },
-                {
-                  value: 'professional',
-                  text: $t('option_experience_level_professional'),
-                },
-                {
-                  value: 'intermediate',
-                  text: $t('option_experience_level_intermediate'),
-                },
-                {
-                  value: 'coach',
-                  text: $t('option_experience_level_coach'),
-                },
-                {
-                  value: 'instructor',
-                  text: $t('option_experience_level_instructor'),
-                },
-                {
-                  value: 'other',
-                  text: $t('option_experience_level_other'),
-                },
-              ]"
-              :rules="[
-                (value) =>
-                  (value.value && value.value.length > 0) ||
-                  $t('message_error_level_experience_required'),
-              ]"
-              :error="errors?.errors?.experience_level != ''"
-              :error-messages="errors?.errors?.experience_level"
-              clearable
-            />
-          </div>
-          <div class="form-field">
-            <va-textarea
-              name="message"
-              class="register-textarea"
-              v-model="form.message"
-              :label="$t('label_message_optional')"
-              :placeholder="$t('placeholder_message')"
-            />
-          </div>
-          <div class="form-field">
-            <button
-              class="register-submit-btn"
-              @click="submit"
-              :disabled="loading"
-            >
-              <span class="btn-content" v-if="!loading">
-                <va-icon
-                  name="check"
-                  size="20px"
-                  color="#fff"
-                  class="btn-icon"
-                />
-                <span class="btn-text">{{ $t("button_register") }}</span>
-              </span>
-              <span class="btn-loader" v-if="loading">
-                <va-icon
-                  name="sync"
-                  size="20px"
-                  color="#fff"
-                  class="rotating"
-                />
-                <span class="btn-text">{{ $t("button_register") }}</span>
-              </span>
-            </button>
-          </div>
-        </va-form>
+    <div class="register-section-wrapper">
+      <div class="register-section-header">
+        <h2 class="register-section-title">
+          {{ $t("register_section_title") }}
+        </h2>
+        <p class="register-section-subtitle">
+          {{ $t("register_section_subtitle") }}
+        </p>
       </div>
-      <div class="register-illustration-column">
-        <div class="register-illustration">
-          <div class="illustration-glow"></div>
-          <img
-            src="/images/image_form_volleytrack.png"
-            alt="VolleyTrack illustration"
-            class="illustration-image"
-          />
+      <div class="register-container">
+        <div class="register-form-column">
+          <div class="register-header">
+            <h2 class="register-title">{{ $t("register_title_ready") }}</h2>
+            <p class="register-subtitle">{{ $t("register_subtitle") }}</p>
+          </div>
+          <va-form ref="formRef" class="register-form">
+            <div class="form-field">
+              <va-input
+                name="name"
+                class="register-input"
+                :placeholder="$t('placeholder_name')"
+                stateful
+                v-model="form.name"
+                :error="errors?.errors?.name != ''"
+                :error-messages="errors?.errors?.name"
+                :label="$t('label_name')"
+              />
+            </div>
+            <div class="form-field">
+              <va-input
+                name="email"
+                class="register-input"
+                :placeholder="$t('placeholder_email')"
+                v-model="form.email"
+                type="email"
+                :error="errors?.errors?.email != ''"
+                :error-messages="errors?.errors?.email"
+                :label="$t('label_email')"
+              />
+            </div>
+            <div class="form-field">
+              <div class="subdomain-field-wrapper">
+                <va-input
+                  name="tenant_id"
+                  class="register-input subdomain-input"
+                  :placeholder="$t('placeholder_tenant_id')"
+                  v-model="form.tenant_id"
+                  :error="errors?.errors?.tenant_id != ''"
+                  :error-messages="errors?.errors?.tenant_id"
+                  :label="$t('label_tenant_id')"
+                />
+                <span class="subdomain-suffix">{{ apiTenantDomain }}</span>
+              </div>
+            </div>
+            <div class="form-field">
+              <va-select
+                name="option"
+                class="register-select"
+                v-model="form.experience_level"
+                :label="$t('label_experience_level')"
+                :placeholder="$t('select_placeholder')"
+                :options="[
+                  {
+                    value: null,
+                    text: $t('option_experience_level_select'),
+                  },
+                  {
+                    value: 'beginner',
+                    text: $t('option_experience_level_beginner'),
+                  },
+                  {
+                    value: 'amateur',
+                    text: $t('option_experience_level_amateur'),
+                  },
+                  {
+                    value: 'student',
+                    text: $t('option_experience_level_student'),
+                  },
+                  {
+                    value: 'college',
+                    text: $t('option_experience_level_university_student'),
+                  },
+                  {
+                    value: 'semi-professional',
+                    text: $t('option_experience_level_semi_professional'),
+                  },
+                  {
+                    value: 'professional',
+                    text: $t('option_experience_level_professional'),
+                  },
+                  {
+                    value: 'intermediate',
+                    text: $t('option_experience_level_intermediate'),
+                  },
+                  {
+                    value: 'coach',
+                    text: $t('option_experience_level_coach'),
+                  },
+                  {
+                    value: 'instructor',
+                    text: $t('option_experience_level_instructor'),
+                  },
+                  {
+                    value: 'other',
+                    text: $t('option_experience_level_other'),
+                  },
+                ]"
+                :rules="[
+                  (value) =>
+                    (value.value && value.value.length > 0) ||
+                    $t('message_error_level_experience_required'),
+                ]"
+                :error="errors?.errors?.experience_level != ''"
+                :error-messages="errors?.errors?.experience_level"
+                clearable
+              />
+            </div>
+            <div class="form-field">
+              <va-textarea
+                name="message"
+                class="register-textarea"
+                v-model="form.message"
+                :label="$t('label_message_optional')"
+                :placeholder="$t('placeholder_message')"
+              />
+            </div>
+            <div class="form-field">
+              <button
+                class="register-submit-btn"
+                @click="submit"
+                :disabled="loading"
+              >
+                <span class="btn-content" v-if="!loading">
+                  <va-icon
+                    name="check"
+                    size="20px"
+                    color="#fff"
+                    class="btn-icon"
+                  />
+                  <span class="btn-text">{{ $t("button_register") }}</span>
+                </span>
+                <span class="btn-loader" v-if="loading">
+                  <va-icon
+                    name="sync"
+                    size="20px"
+                    color="#fff"
+                    class="rotating"
+                  />
+                  <span class="btn-text">{{ $t("button_register") }}</span>
+                </span>
+              </button>
+            </div>
+          </va-form>
+        </div>
+        <div class="register-illustration-column">
+          <div class="register-illustration">
+            <div class="illustration-glow"></div>
+            <img
+              src="/images/image_form_volleytrack.png"
+              alt="VolleyTrack illustration"
+              class="illustration-image"
+            />
+          </div>
         </div>
       </div>
     </div>
@@ -1608,6 +1618,76 @@ const darkNavbarColors = computed(() => {
     transform: translate(-20px, 20px) scale(0.9);
   }
 }
+.register-section-wrapper {
+  max-width: 1200px;
+  width: 100%;
+  margin: 0 auto;
+  position: relative;
+  z-index: 1;
+}
+.register-section-header {
+  width: 100%;
+  padding: 0 32px 48px 32px;
+  text-align: center;
+  position: relative;
+  z-index: 1;
+  animation: fadeInUp 0.6s ease-out;
+}
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+.register-section-title {
+  font-size: 2.5rem;
+  font-weight: 900;
+  color: #02254a;
+  margin-bottom: 16px;
+  line-height: 1.2;
+  letter-spacing: -0.5px;
+  background: linear-gradient(135deg, #02254a 0%, #1a2940 50%, #02254a 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  position: relative;
+  display: inline-block;
+}
+.register-section-title::after {
+  content: "";
+  position: absolute;
+  bottom: -8px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 80px;
+  height: 4px;
+  background: linear-gradient(90deg, #ff7300, #ff8c1a, #ff7300);
+  border-radius: 2px;
+  animation: expandLine 0.8s ease-out 0.3s both;
+}
+@keyframes expandLine {
+  from {
+    width: 0;
+    opacity: 0;
+  }
+  to {
+    width: 80px;
+    opacity: 1;
+  }
+}
+.register-section-subtitle {
+  font-size: 1.2rem;
+  color: #64748b;
+  font-weight: 400;
+  line-height: 1.6;
+  max-width: 700px;
+  margin: 0 auto;
+  margin-top: 24px;
+}
 .register-container {
   max-width: 1200px;
   width: 100%;
@@ -2138,6 +2218,15 @@ const darkNavbarColors = computed(() => {
 @media (max-width: 900px) {
   .register-section {
     padding: 64px 0;
+  }
+  .register-section-header {
+    padding: 0 24px 32px 24px;
+  }
+  .register-section-title {
+    font-size: 2rem;
+  }
+  .register-section-subtitle {
+    font-size: 1.1rem;
   }
   .register-container {
     flex-direction: column;
