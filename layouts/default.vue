@@ -26,9 +26,12 @@
             @click.prevent="routeFAQ"
             >{{ $t("menu_title_faq") }}</a
           >
-          <a href="/register" class="navbar-link">{{
-            $t("menu_title_register")
-          }}</a>
+          <a
+            href="#register-section"
+            class="navbar-link"
+            @click.prevent="routeRegister"
+            >{{ $t("menu_title_register") }}</a
+          >
         </div>
         <div class="navbar-actions">
           <div class="navbar-language-selector">
@@ -232,7 +235,21 @@ const emailSupport = runtimeConfig.public.emailSupport;
 const cnpj = runtimeConfig.public.cnpj;
 
 const routeRegister = () => {
-  router.push("/register");
+  if (window.location.pathname !== "/") {
+    router.push("/").then(() => {
+      setTimeout(() => {
+        const registerSection = document.querySelector(".register-section");
+        if (registerSection) {
+          registerSection.scrollIntoView({ behavior: "smooth" });
+        }
+      }, 400);
+    });
+  } else {
+    const registerSection = document.querySelector(".register-section");
+    if (registerSection) {
+      registerSection.scrollIntoView({ behavior: "smooth" });
+    }
+  }
 };
 
 const routeFAQ = () => {

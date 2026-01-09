@@ -248,7 +248,7 @@
             <h2 class="register-title">{{ $t("register_title_ready") }}</h2>
             <p class="register-subtitle">{{ $t("register_subtitle") }}</p>
           </div>
-          <va-form ref="formRef" class="register-form">
+          <va-form ref="formRef" class="register-form" @submit.prevent="submit">
             <div class="form-field">
               <va-input
                 name="name"
@@ -256,8 +256,19 @@
                 :placeholder="$t('placeholder_name')"
                 stateful
                 v-model="form.name"
-                :error="errors?.errors?.name != ''"
-                :error-messages="errors?.errors?.name"
+                required
+                @input="clearFieldError('name')"
+                @blur="handleFieldBlur('name', form.name)"
+                :error="
+                  !!(errors?.errors?.name && errors.errors.name.length > 0)
+                "
+                :error-messages="
+                  Array.isArray(errors?.errors?.name)
+                    ? errors.errors.name
+                    : errors?.errors?.name
+                    ? [errors.errors.name]
+                    : []
+                "
                 :label="$t('label_name')"
               />
             </div>
@@ -268,8 +279,19 @@
                 :placeholder="$t('placeholder_email')"
                 v-model="form.email"
                 type="email"
-                :error="errors?.errors?.email != ''"
-                :error-messages="errors?.errors?.email"
+                required
+                @input="clearFieldError('email')"
+                @blur="handleFieldBlur('email', form.email)"
+                :error="
+                  !!(errors?.errors?.email && errors.errors.email.length > 0)
+                "
+                :error-messages="
+                  Array.isArray(errors?.errors?.email)
+                    ? errors.errors.email
+                    : errors?.errors?.email
+                    ? [errors.errors.email]
+                    : []
+                "
                 :label="$t('label_email')"
               />
             </div>
@@ -280,8 +302,22 @@
                   class="register-input subdomain-input"
                   :placeholder="$t('placeholder_tenant_id')"
                   v-model="form.tenant_id"
-                  :error="errors?.errors?.tenant_id != ''"
-                  :error-messages="errors?.errors?.tenant_id"
+                  required
+                  @input="clearFieldError('tenant_id')"
+                  @blur="handleFieldBlur('tenant_id', form.tenant_id)"
+                  :error="
+                    !!(
+                      errors?.errors?.tenant_id &&
+                      errors.errors.tenant_id.length > 0
+                    )
+                  "
+                  :error-messages="
+                    Array.isArray(errors?.errors?.tenant_id)
+                      ? errors.errors.tenant_id
+                      : errors?.errors?.tenant_id
+                      ? [errors.errors.tenant_id]
+                      : []
+                  "
                   :label="$t('label_tenant_id')"
                 />
                 <span class="subdomain-suffix">{{ apiTenantDomain }}</span>
@@ -292,6 +328,16 @@
                 name="option"
                 class="register-select"
                 v-model="form.experience_level"
+                required
+                @update:model-value="
+                  (value) => {
+                    clearFieldError('experience_level');
+                    handleFieldBlur('experience_level', value);
+                  }
+                "
+                @blur="
+                  handleFieldBlur('experience_level', form.experience_level)
+                "
                 :label="$t('label_experience_level')"
                 :placeholder="$t('select_placeholder')"
                 :options="[
@@ -345,8 +391,19 @@
                     (value.value && value.value.length > 0) ||
                     $t('message_error_level_experience_required'),
                 ]"
-                :error="errors?.errors?.experience_level != ''"
-                :error-messages="errors?.errors?.experience_level"
+                :error="
+                  !!(
+                    errors?.errors?.experience_level &&
+                    errors.errors.experience_level.length > 0
+                  )
+                "
+                :error-messages="
+                  Array.isArray(errors?.errors?.experience_level)
+                    ? errors.errors.experience_level
+                    : errors?.errors?.experience_level
+                    ? [errors.errors.experience_level]
+                    : []
+                "
                 clearable
               />
             </div>
@@ -357,12 +414,24 @@
                 v-model="form.message"
                 :label="$t('label_message_optional')"
                 :placeholder="$t('placeholder_message')"
+                :error="
+                  !!(
+                    errors?.errors?.message && errors.errors.message.length > 0
+                  )
+                "
+                :error-messages="
+                  Array.isArray(errors?.errors?.message)
+                    ? errors.errors.message
+                    : errors?.errors?.message
+                    ? [errors.errors.message]
+                    : []
+                "
               />
             </div>
             <div class="form-field">
               <button
+                type="submit"
                 class="register-submit-btn"
-                @click="submit"
                 :disabled="loading"
               >
                 <span class="btn-content" v-if="!loading">
@@ -418,7 +487,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed } from "vue";
+import { computed, nextTick } from "vue";
 import { useColors } from "vuestic-ui";
 import { ref } from "vue";
 import {
@@ -449,26 +518,83 @@ const form = ref({
   message: "",
 });
 
-let errors = ref({
+let errors = ref<{
   errors: {
-    tenant_id: "",
-    name: "",
-    email: "",
-    experience_level: "",
-    message: "",
+    tenant_id: string[];
+    name: string[];
+    email: string[];
+    experience_level: string[];
+    message: string[];
+  };
+  message: string;
+}>({
+  errors: {
+    tenant_id: [],
+    name: [],
+    email: [],
+    experience_level: [],
+    message: [],
   },
   message: "",
 });
 
 const submit = async () => {
   try {
-    loader();
-
     if (loading.value) return;
 
+    // Validar todos os campos obrigatórios para mostrar erros visuais
+    const nameValid = validateField("name", form.value.name);
+    const emailValid = validateField("email", form.value.email);
+    const tenantIdValid = validateField("tenant_id", form.value.tenant_id);
+    const experienceLevelValid = validateField(
+      "experience_level",
+      form.value.experience_level
+    );
+    const isValid =
+      nameValid && emailValid && tenantIdValid && experienceLevelValid;
+
+    // Forçar atualização reativa dos erros para garantir que sejam exibidos
+    errors.value = { ...errors.value };
+
+    if (!isValid) {
+      // Encontrar o primeiro campo com erro e focar nele
+      const firstErrorField = Object.entries(errors.value.errors).find(
+        ([_, errors]) => Array.isArray(errors) && errors.length > 0
+      );
+      if (firstErrorField) {
+        const fieldName = firstErrorField[0];
+        // Aguardar próximo tick para garantir que o DOM foi atualizado
+        await nextTick();
+        const fieldElement = document.querySelector(
+          `[name="${fieldName}"]`
+        ) as HTMLElement;
+        if (fieldElement) {
+          fieldElement.focus();
+          fieldElement.scrollIntoView({ behavior: "smooth", block: "center" });
+        }
+      }
+      // Mostrar mensagem de erro do primeiro campo
+      const firstError = Object.values(errors.value.errors).find(
+        (err) => Array.isArray(err) && err.length > 0
+      );
+      if (firstError && firstError.length > 0) {
+        confirmError(firstError[0]);
+      }
+      // Não retorna aqui - permite que a requisição seja feita mesmo com erros
+      // O backend vai validar e retornar os erros corretos
+    }
+
+    // Abre o loader e faz a requisição
+    loader();
     loading.value = true;
 
-    const token = await executeRecaptcha("create_new_lead");
+    let token = "";
+    try {
+      token = await executeRecaptcha("create_new_lead");
+    } catch (error) {
+      console.error("Erro ao executar reCAPTCHA:", error);
+      token = "error";
+    }
 
     await new Promise((resolve) => setTimeout(resolve, 1000));
 
@@ -493,12 +619,59 @@ const submit = async () => {
           message: "",
         };
       })
-      .catch(({ response }) => {
-        if (typeof response.email == "object") {
-          errors.value.errors.email = response.email[0];
-          confirmError(response.email[0]);
+      .catch((error: any) => {
+        // Processar erros do response
+        // O $customFetch pode retornar o erro de diferentes formas
+        const response = error?.response?.data || error?.response || error;
+
+        if (response) {
+          // Limpar erros anteriores
+          errors.value.errors = {
+            tenant_id: [],
+            name: [],
+            email: [],
+            experience_level: [],
+            message: [],
+          };
+
+          // Processar cada campo de erro do backend
+          const errorFields = [
+            "tenant_id",
+            "name",
+            "email",
+            "experience_level",
+            "message",
+          ];
+
+          errorFields.forEach((field) => {
+            if (response[field]) {
+              if (Array.isArray(response[field])) {
+                errors.value.errors[field as keyof typeof errors.value.errors] =
+                  response[field];
+              } else if (typeof response[field] === "string") {
+                errors.value.errors[field as keyof typeof errors.value.errors] =
+                  [response[field]];
+              }
+            }
+          });
+
+          // Forçar atualização reativa
+          errors.value = { ...errors.value };
+
+          // Mostrar mensagem de erro geral se houver
+          if (response.message) {
+            confirmError(response.message);
+          } else {
+            // Mostrar primeiro erro encontrado
+            const firstError = Object.values(errors.value.errors).find(
+              (err) => Array.isArray(err) && err.length > 0
+            );
+            if (firstError && firstError.length > 0) {
+              confirmError(firstError[0]);
+            }
+          }
         } else {
-          confirmError(response.message);
+          console.error("Erro ao enviar formulário:", error);
         }
       })
       .finally(() => {
@@ -507,13 +680,79 @@ const submit = async () => {
   } catch (error) {
     console.error("Erro ao enviar formulário:", error);
     loading.value = false;
+    confirmError("Ocorreu um erro ao enviar o formulário. Tente novamente.");
   }
 };
 
 const faqOpen = ref(Array(11).fill(false));
 
 const routeRegister = () => {
-  window.location.href = "/register";
+  const registerSection = document.querySelector(".register-section");
+  if (registerSection) {
+    registerSection.scrollIntoView({ behavior: "smooth" });
+  }
+};
+
+const clearFieldError = (field: string) => {
+  if (errors.value.errors[field as keyof typeof errors.value.errors]) {
+    errors.value.errors[field as keyof typeof errors.value.errors] = [];
+  }
+};
+
+const validateField = (
+  field: string,
+  value: any,
+  useBackendMessages = false
+) => {
+  const fieldErrors: string[] = [];
+
+  switch (field) {
+    case "name":
+      if (!value || (typeof value === "string" && value.trim() === "")) {
+        fieldErrors.push("O campo nome é obrigatório.");
+      }
+      break;
+    case "email":
+      if (!value || (typeof value === "string" && value.trim() === "")) {
+        fieldErrors.push("O campo email é obrigatório.");
+      } else if (value && typeof value === "string" && value.trim() !== "") {
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailRegex.test(value.trim())) {
+          fieldErrors.push(
+            "O campo email deve ser um endereço de e-mail válido."
+          );
+        }
+      }
+      break;
+    case "tenant_id":
+      if (!value || (typeof value === "string" && value.trim() === "")) {
+        fieldErrors.push("O campo nome do subdomínio é obrigatório.");
+      }
+      break;
+    case "experience_level":
+      const experienceValue =
+        typeof value === "object" && value !== null ? value.value : value;
+      if (
+        !experienceValue ||
+        experienceValue === "" ||
+        experienceValue === null
+      ) {
+        fieldErrors.push("O campo nível de experiência é obrigatório.");
+      }
+      break;
+  }
+
+  // Só atualiza os erros se não estiver usando mensagens do backend
+  // ou se houver erros de validação local
+  if (!useBackendMessages || fieldErrors.length > 0) {
+    errors.value.errors[field as keyof typeof errors.value.errors] =
+      fieldErrors;
+  }
+  return fieldErrors.length === 0;
+};
+
+const handleFieldBlur = (field: string, value: any) => {
+  validateField(field, value);
 };
 
 const showSidebar = ref(false);
@@ -1970,16 +2209,53 @@ const darkNavbarColors = computed(() => {
   outline: none;
   background: rgba(255, 255, 255, 1);
 }
+/* Estilos para campos com erro */
+.register-input :deep(.va-input-wrapper--error .va-input-wrapper__field),
+.register-select :deep(.va-input-wrapper--error .va-input-wrapper__field),
+.register-textarea :deep(.va-input-wrapper--error .va-input-wrapper__field) {
+  border-color: #ef4444 !important;
+  box-shadow: 0 0 0 4px rgba(239, 68, 68, 0.12),
+    0 4px 12px rgba(239, 68, 68, 0.08) !important;
+}
+.register-input :deep(.va-input-wrapper--error),
+.register-select :deep(.va-input-wrapper--error),
+.register-textarea :deep(.va-input-wrapper--error) {
+  border-color: #ef4444 !important;
+}
+.register-input :deep(.va-message-list),
+.register-select :deep(.va-message-list),
+.register-textarea :deep(.va-message-list) {
+  color: #ef4444 !important;
+  font-size: 13px;
+  font-weight: 500;
+  margin-top: 6px;
+}
+.register-input :deep(.va-message-list__message),
+.register-select :deep(.va-message-list__message),
+.register-textarea :deep(.va-message-list__message) {
+  color: #ef4444 !important;
+}
 .register-input :deep(label),
 .register-select :deep(label),
 .register-textarea :deep(label) {
-  color: #02254a;
+  color: #ff7300;
   font-weight: 700;
   font-size: 12px;
   margin-bottom: 8px;
   display: block;
   text-transform: uppercase;
   letter-spacing: 0.5px;
+}
+.register-input :deep(label),
+.register-select :deep(label) {
+  position: relative;
+}
+.register-input :deep(label)::after,
+.register-select :deep(label)::after {
+  content: " *";
+  color: #ef4444;
+  font-weight: 700;
+  margin-left: 2px;
 }
 .register-select :deep(.va-select__content) {
   background: #fff;
