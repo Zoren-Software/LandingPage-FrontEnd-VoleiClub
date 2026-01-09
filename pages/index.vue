@@ -1557,11 +1557,56 @@ const darkNavbarColors = computed(() => {
 /* REGISTER SECTION */
 .register-section {
   width: 100%;
-  background: #fff;
-  padding: 64px 0 64px 0;
+  background: linear-gradient(135deg, #f8fafc 0%, #ffffff 50%, #f1f5f9 100%);
+  padding: 80px 0;
   display: flex;
   justify-content: center;
-  border-bottom: 6px solid #f7f9fc;
+  position: relative;
+  overflow: hidden;
+}
+.register-section::before {
+  content: "";
+  position: absolute;
+  top: -50%;
+  right: -10%;
+  width: 600px;
+  height: 600px;
+  background: radial-gradient(
+    circle,
+    rgba(255, 115, 0, 0.08) 0%,
+    transparent 70%
+  );
+  border-radius: 50%;
+  animation: float 20s ease-in-out infinite;
+  z-index: 0;
+}
+.register-section::after {
+  content: "";
+  position: absolute;
+  bottom: -30%;
+  left: -5%;
+  width: 500px;
+  height: 500px;
+  background: radial-gradient(
+    circle,
+    rgba(0, 102, 255, 0.06) 0%,
+    transparent 70%
+  );
+  border-radius: 50%;
+  animation: float 25s ease-in-out infinite reverse;
+  z-index: 0;
+}
+@keyframes float {
+  0%,
+  100% {
+    transform: translate(0, 0) scale(1);
+  }
+  33% {
+    transform: translate(30px, -30px) scale(1.1);
+  }
+  66% {
+    transform: translate(-20px, 20px) scale(0.9);
+  }
 }
 .register-container {
   max-width: 1200px;
@@ -1571,16 +1616,51 @@ const darkNavbarColors = computed(() => {
   flex-direction: row;
   align-items: center;
   gap: 80px;
+  position: relative;
+  z-index: 1;
 }
 .register-form-column {
   flex: 1;
   display: flex;
   flex-direction: column;
-  background: #ffffff;
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
   padding: 40px 36px;
-  border-radius: 12px;
-  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
-  border: 1px solid #e2e8f0;
+  border-radius: 20px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08), 0 2px 8px rgba(0, 0, 0, 0.04),
+    inset 0 1px 0 rgba(255, 255, 255, 0.9);
+  border: 1px solid rgba(255, 255, 255, 0.8);
+  position: relative;
+  z-index: 1;
+  transition: all 0.3s ease;
+  animation: slideInLeft 0.6s ease-out;
+}
+.register-form-column::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 13px;
+  background: linear-gradient(90deg, #ff7300, #ff8c1a, #ffa64d);
+  border-radius: 20px 20px 0 0;
+  opacity: 0.8;
+}
+.register-form-column:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.12), 0 4px 12px rgba(0, 0, 0, 0.06),
+    inset 0 1px 0 rgba(255, 255, 255, 0.9);
+}
+@keyframes slideInLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
 }
 .register-header {
   margin-bottom: 28px;
@@ -1630,13 +1710,16 @@ const darkNavbarColors = computed(() => {
 .register-select :deep(.va-input-wrapper),
 .register-textarea :deep(.va-input-wrapper) {
   width: 100%;
-  background: #ffffff;
-  border: 1px solid #e2e8f0;
-  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.9);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(226, 232, 240, 0.8);
+  border-radius: 10px;
   margin-bottom: 0;
-  transition: all 0.2s ease;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   position: relative;
   pointer-events: auto;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.02);
 }
 .register-section .register-input :deep(.va-input-wrapper__text),
 .register-section .register-select :deep(.va-input-wrapper__text),
@@ -1658,7 +1741,9 @@ const darkNavbarColors = computed(() => {
 .register-input :deep(.va-input-wrapper:hover),
 .register-select :deep(.va-input-wrapper:hover),
 .register-textarea :deep(.va-input-wrapper:hover) {
-  border-color: #cbd5e1;
+  border-color: rgba(203, 213, 225, 0.9);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.04);
+  transform: translateY(-1px);
 }
 .register-input :deep(.va-input-wrapper__field),
 .register-select :deep(.va-input-wrapper__field),
@@ -1800,8 +1885,10 @@ const darkNavbarColors = computed(() => {
 .register-select :deep(.va-input-wrapper__field:focus),
 .register-textarea :deep(.va-input-wrapper__field:focus) {
   border-color: #ff7300;
-  box-shadow: 0 0 0 3px rgba(255, 115, 0, 0.1);
+  box-shadow: 0 0 0 4px rgba(255, 115, 0, 0.12),
+    0 4px 12px rgba(255, 115, 0, 0.08);
   outline: none;
+  background: rgba(255, 255, 255, 1);
 }
 .register-input :deep(label),
 .register-select :deep(label),
@@ -1849,26 +1936,48 @@ const darkNavbarColors = computed(() => {
 }
 .register-submit-btn {
   width: 100%;
-  background: #ff7300;
+  background: linear-gradient(135deg, #ff7300 0%, #ff8c1a 100%);
   color: #fff;
   border: none;
-  border-radius: 8px;
+  border-radius: 12px;
   font-size: 15px;
   font-weight: 700;
-  padding: 12px 24px;
+  padding: 14px 24px;
   cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 8px;
-  transition: all 0.2s ease;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   margin-top: 4px;
-  box-shadow: 0 2px 6px rgba(255, 115, 0, 0.2);
+  box-shadow: 0 4px 12px rgba(255, 115, 0, 0.3),
+    0 2px 4px rgba(255, 115, 0, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.2);
+  position: relative;
+  overflow: hidden;
+}
+.register-submit-btn::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.2),
+    transparent
+  );
+  transition: left 0.5s ease;
+}
+.register-submit-btn:hover:not(:disabled)::before {
+  left: 100%;
 }
 .register-submit-btn:hover:not(:disabled) {
-  background: #ff8c1a;
-  box-shadow: 0 4px 12px rgba(255, 115, 0, 0.35);
-  transform: translateY(-1px);
+  background: linear-gradient(135deg, #ff8c1a 0%, #ffa64d 100%);
+  box-shadow: 0 8px 20px rgba(255, 115, 0, 0.4),
+    0 4px 8px rgba(255, 115, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.3);
+  transform: translateY(-2px);
 }
 .register-submit-btn:active:not(:disabled) {
   transform: translateY(0);
@@ -1919,31 +2028,112 @@ const darkNavbarColors = computed(() => {
   align-items: center;
   position: relative;
   align-self: center;
+  z-index: 1;
 }
 .register-illustration {
   width: 100%;
   max-width: 500px;
-  border-radius: 16px;
+  border-radius: 24px;
   overflow: hidden;
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
-  background: #fff;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15), 0 8px 24px rgba(0, 0, 0, 0.1),
+    inset 0 1px 0 rgba(255, 255, 255, 0.9);
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
   position: relative;
-  transition: transform 0.3s ease;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
   margin: 0 auto;
   display: flex;
   align-items: center;
   justify-content: center;
+  border: 1px solid rgba(255, 255, 255, 0.8);
+  animation: slideInRight 0.6s ease-out;
+}
+.register-illustration::before {
+  content: "";
+  position: absolute;
+  top: -50%;
+  right: -50%;
+  width: 200%;
+  height: 200%;
+  background: radial-gradient(
+    circle,
+    rgba(255, 115, 0, 0.1) 0%,
+    transparent 70%
+  );
+  border-radius: 50%;
+  animation: rotate 20s linear infinite;
+  z-index: 0;
+  pointer-events: none;
 }
 .register-illustration:hover {
-  transform: scale(1.02);
+  transform: translateY(-8px) scale(1.02);
+  box-shadow: 0 28px 80px rgba(0, 0, 0, 0.2), 0 12px 32px rgba(0, 0, 0, 0.15),
+    inset 0 1px 0 rgba(255, 255, 255, 0.9);
+}
+@keyframes slideInRight {
+  from {
+    opacity: 0;
+    transform: translateX(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+@keyframes rotate {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+.illustration-glow {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 120%;
+  height: 120%;
+  background: radial-gradient(
+    circle,
+    rgba(255, 115, 0, 0.15) 0%,
+    transparent 70%
+  );
+  border-radius: 50%;
+  z-index: 1;
+  opacity: 0;
+  transition: opacity 0.4s ease;
+  pointer-events: none;
+  animation: pulse 3s ease-in-out infinite;
+}
+.register-illustration:hover .illustration-glow {
+  opacity: 1;
+}
+@keyframes pulse {
+  0%,
+  100% {
+    transform: translate(-50%, -50%) scale(1);
+    opacity: 0.3;
+  }
+  50% {
+    transform: translate(-50%, -50%) scale(1.1);
+    opacity: 0.5;
+  }
 }
 .illustration-image {
   width: 100%;
   height: auto;
   display: block;
   position: relative;
-  z-index: 1;
+  z-index: 2;
   margin: 0 auto;
+  filter: drop-shadow(0 4px 12px rgba(0, 0, 0, 0.1));
+  transition: filter 0.3s ease;
+}
+.register-illustration:hover .illustration-image {
+  filter: drop-shadow(0 8px 20px rgba(0, 0, 0, 0.15));
 }
 @media (max-width: 900px) {
   .register-section {
