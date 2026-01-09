@@ -1638,6 +1638,12 @@ const darkNavbarColors = computed(() => {
   position: relative;
   pointer-events: auto;
 }
+.register-section .register-input :deep(.va-input-wrapper__text),
+.register-section .register-select :deep(.va-input-wrapper__text),
+.register-section .register-textarea :deep(.va-input-wrapper__text) {
+  color: #0f172a !important;
+  --va-input-wrapper-text-color: #0f172a !important;
+}
 .register-input :deep(input),
 .register-select :deep(input),
 .register-textarea :deep(textarea) {
@@ -1680,23 +1686,105 @@ const darkNavbarColors = computed(() => {
 .register-textarea :deep(.va-input-wrapper__field textarea) {
   color: #0f172a !important;
 }
-.register-form-column .register-input :deep(input),
-.register-form-column .register-select :deep(input),
-.register-form-column .register-textarea :deep(textarea),
-.register-form-column .register-input :deep(.va-input-wrapper__field),
-.register-form-column .register-select :deep(.va-input-wrapper__field),
-.register-form-column .register-textarea :deep(.va-input-wrapper__field),
-.register-form-column .register-input :deep(.va-input-wrapper__text),
-.register-form-column .register-select :deep(.va-input-wrapper__text),
-.register-form-column .register-select :deep(.va-select__selected),
-.register-form-column .register-select :deep(.va-select__text) {
+.register-section .register-form-column .register-input :deep(input),
+.register-section .register-form-column .register-select :deep(input),
+.register-section .register-form-column .register-textarea :deep(textarea),
+.register-section
+  .register-form-column
+  .register-input
+  :deep(.va-input-wrapper__field),
+.register-section
+  .register-form-column
+  .register-select
+  :deep(.va-input-wrapper__field),
+.register-section
+  .register-form-column
+  .register-textarea
+  :deep(.va-input-wrapper__field),
+.register-section
+  .register-form-column
+  .register-input
+  :deep(.va-input-wrapper__text),
+.register-section
+  .register-form-column
+  .register-select
+  :deep(.va-input-wrapper__text),
+.register-section
+  .register-form-column
+  .register-select
+  :deep(.va-select__selected),
+.register-section
+  .register-form-column
+  .register-select
+  :deep(.va-select__text),
+.register-section
+  .register-form-column
+  .register-input
+  :deep(.va-input-wrapper__field input),
+.register-section
+  .register-form-column
+  .register-select
+  :deep(.va-input-wrapper__field input),
+.register-section
+  .register-form-column
+  .register-textarea
+  :deep(.va-input-wrapper__field textarea),
+.register-section
+  .register-form-column
+  .register-input
+  :deep(.va-input-wrapper__field span),
+.register-section
+  .register-form-column
+  .register-select
+  :deep(.va-input-wrapper__field span),
+.register-section
+  .register-form-column
+  .register-textarea
+  :deep(.va-input-wrapper__field span) {
   color: #0f172a !important;
   --va-input-wrapper-text-color: #0f172a !important;
   caret-color: #0f172a !important;
 }
-.register-form-column .register-input :deep(.va-input-wrapper__field *),
-.register-form-column .register-select :deep(.va-input-wrapper__field *),
-.register-form-column .register-textarea :deep(.va-input-wrapper__field *) {
+.register-section
+  .register-form-column
+  .register-input
+  :deep(.va-input-wrapper__field *),
+.register-section
+  .register-form-column
+  .register-select
+  :deep(.va-input-wrapper__field *),
+.register-section
+  .register-form-column
+  .register-textarea
+  :deep(.va-input-wrapper__field *) {
+  color: #0f172a !important;
+}
+.register-section
+  .register-form-column
+  .register-input
+  :deep(.va-input-wrapper),
+.register-section
+  .register-form-column
+  .register-select
+  :deep(.va-input-wrapper),
+.register-section
+  .register-form-column
+  .register-textarea
+  :deep(.va-input-wrapper) {
+  --va-input-wrapper-text-color: #0f172a !important;
+}
+.register-section .register-form-column :deep(.va-input-wrapper__text) {
+  color: #0f172a !important;
+  --va-input-wrapper-text-color: #0f172a !important;
+}
+.register-section .register-form-column :deep(input),
+.register-section .register-form-column :deep(textarea),
+.register-section .register-form-column :deep(.va-input-wrapper__field),
+.register-section .register-form-column :deep(.va-input-wrapper__field input),
+.register-section
+  .register-form-column
+  :deep(.va-input-wrapper__field textarea),
+.register-section .register-form-column :deep(.va-input-wrapper__field span) {
   color: #0f172a !important;
 }
 .register-textarea :deep(.va-input-wrapper__field) {
@@ -1906,5 +1994,9 @@ const darkNavbarColors = computed(() => {
     padding: 12px 20px;
     font-size: 15px;
   }
+}
+
+.va-select-content__option {
+  color: white !important;
 }
 </style>

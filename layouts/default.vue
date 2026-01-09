@@ -493,9 +493,6 @@ html {
   font-weight: 600;
 }
 
-.va-input-wrapper__text {
-  color: #ffffff !important;
-}
 .navbar-register-btn {
   background: #ff7300;
   color: #fff;
