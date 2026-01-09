@@ -1569,7 +1569,7 @@ const darkNavbarColors = computed(() => {
   padding: 0 32px;
   display: flex;
   flex-direction: row;
-  align-items: flex-start;
+  align-items: center;
   gap: 80px;
 }
 .register-form-column {
@@ -1918,6 +1918,7 @@ const darkNavbarColors = computed(() => {
   justify-content: center;
   align-items: center;
   position: relative;
+  align-self: center;
 }
 .register-illustration {
   width: 100%;
@@ -1928,6 +1929,10 @@ const darkNavbarColors = computed(() => {
   background: #fff;
   position: relative;
   transition: transform 0.3s ease;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 .register-illustration:hover {
   transform: scale(1.02);
@@ -1938,6 +1943,7 @@ const darkNavbarColors = computed(() => {
   display: block;
   position: relative;
   z-index: 1;
+  margin: 0 auto;
 }
 @media (max-width: 900px) {
   .register-section {
