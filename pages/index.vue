@@ -112,9 +112,6 @@
       <div class="plans-cards-row">
         <!-- Card 1: Trial -->
         <div class="plan-card border-orange plan-trial">
-          <div class="plan-card-badge plan-card-badge-active">
-            {{ $t("plan_card_badge_active") }}
-          </div>
           <va-icon
             name="card_giftcard"
             size="38px"
@@ -130,6 +127,7 @@
           <div class="plan-card-desc plan-card-desc-muted">
             {{ $t("plan_card_trial_duration") }}
           </div>
+
           <ul class="plan-card-benefits plan-card-benefits-check">
             <li>
               <va-icon name="check" size="18px" color="#02254a" />
@@ -151,81 +149,403 @@
           </div>
         </div>
         <!-- Card 2: Pro -->
-        <div class="plan-card border-orange recommended">
+        <div
+          v-if="isYearly ? products.pro.yearly : products.pro.monthly"
+          class="plan-card border-orange recommended"
+        >
           <div class="plan-card-badge">
             {{ $t("plan_card_badge_recommended") }}
           </div>
           <h3 class="plan-card-title">{{ $t("plan_card_pro_title") }}</h3>
           <div class="plan-card-price">
             {{
-              isYearly
-                ? $t("plan_card_pro_price_yearly")
+              isYearly && products.pro.yearly
+                ? products.pro.yearly.price.formatted + " / ano"
+                : products.pro.monthly
+                ? products.pro.monthly.price.formatted + " / mês"
                 : $t("plan_card_pro_price_monthly")
             }}
           </div>
-          <div class="plan-card-alt-price">
+          <div
+            v-if="
+              getAlternativePrice(
+                isYearly ? products.pro.yearly : products.pro.monthly,
+                isYearly,
+                'pro'
+              )
+            "
+            class="plan-card-alt-price"
+          >
             {{
-              isYearly
-                ? $t("plan_card_pro_alt_yearly")
-                : $t("plan_card_pro_alt_monthly")
+              getAlternativePrice(
+                isYearly ? products.pro.yearly : products.pro.monthly,
+                isYearly,
+                "pro"
+              )
             }}
           </div>
-          <ul class="plan-card-benefits">
-            <li>{{ $t("plan_card_pro_benefit_1") }}</li>
-            <li>{{ $t("plan_card_pro_benefit_2") }}</li>
-          </ul>
-          <div class="plan-card-highlight">
-            {{ $t("plan_card_pro_highlight") }}
+
+          <!-- Limitações do plano - Layout simples -->
+          <div
+            v-if="
+              (isYearly ? products.pro.yearly : products.pro.monthly)?.metadata
+            "
+            class="plan-card-limits-simple"
+          >
+            <div class="plan-limit-item-simple">
+              <va-icon name="groups" size="18px" color="#02254a" />
+              <span class="plan-limit-value-simple">
+                <span
+                  v-if="
+                    (isYearly ? products.pro.yearly : products.pro.monthly)
+                      .metadata.max_teams === '0' ||
+                    (isYearly ? products.pro.yearly : products.pro.monthly)
+                      .metadata.max_teams === 0
+                  "
+                >
+                  ∞
+                </span>
+                <span v-else>
+                  {{
+                    (isYearly ? products.pro.yearly : products.pro.monthly)
+                      .metadata.max_teams
+                  }}
+                </span>
+              </span>
+              <span class="plan-limit-label-simple">
+                {{
+                  (isYearly ? products.pro.yearly : products.pro.monthly)
+                    .metadata.max_teams === "0" ||
+                  (isYearly ? products.pro.yearly : products.pro.monthly)
+                    .metadata.max_teams === 0
+                    ? "Times"
+                    : parseInt(
+                        (isYearly ? products.pro.yearly : products.pro.monthly)
+                          .metadata.max_teams
+                      ) === 1
+                    ? "Time"
+                    : "Times"
+                }}
+              </span>
+            </div>
+            <div class="plan-limit-item-simple">
+              <va-icon name="person" size="18px" color="#02254a" />
+              <span class="plan-limit-value-simple">
+                <span
+                  v-if="
+                    (isYearly ? products.pro.yearly : products.pro.monthly)
+                      .metadata.max_players === '0' ||
+                    (isYearly ? products.pro.yearly : products.pro.monthly)
+                      .metadata.max_players === 0
+                  "
+                >
+                  ∞
+                </span>
+                <span v-else>
+                  {{
+                    (isYearly ? products.pro.yearly : products.pro.monthly)
+                      .metadata.max_players
+                  }}
+                </span>
+              </span>
+              <span class="plan-limit-label-simple">
+                {{
+                  (isYearly ? products.pro.yearly : products.pro.monthly)
+                    .metadata.max_players === "0" ||
+                  (isYearly ? products.pro.yearly : products.pro.monthly)
+                    .metadata.max_players === 0
+                    ? "Jogadores"
+                    : parseInt(
+                        (isYearly ? products.pro.yearly : products.pro.monthly)
+                          .metadata.max_players
+                      ) === 1
+                    ? "Jogador"
+                    : "Jogadores"
+                }}
+              </span>
+            </div>
           </div>
+
+          <ul class="plan-card-benefits">
+            <li
+              v-for="(feature, index) in (isYearly
+                ? products.pro.yearly?.displayFeatures
+                : products.pro.monthly?.displayFeatures) || []"
+              :key="index"
+            >
+              <va-icon name="check" size="18px" color="#02254a" />
+              {{ feature }}
+            </li>
+          </ul>
         </div>
-        <!-- Card 3: Clubers -->
-        <div class="plan-card border-blue">
+        <!-- Card 3: Clubes -->
+        <div
+          v-if="isYearly ? products.clubes.yearly : products.clubes.monthly"
+          class="plan-card border-blue"
+        >
           <div class="plan-card-badge">
             {{ $t("plan_card_badge_large_teams") }}
           </div>
           <h3 class="plan-card-title">{{ $t("plan_card_clubers_title") }}</h3>
           <div class="plan-card-price">
             {{
-              isYearly
-                ? $t("plan_card_clubers_price_yearly")
+              isYearly && products.clubes.yearly
+                ? products.clubes.yearly.price.formatted + " / ano"
+                : products.clubes.monthly
+                ? products.clubes.monthly.price.formatted + " / mês"
                 : $t("plan_card_clubers_price_monthly")
             }}
           </div>
-          <div class="plan-card-alt-price">
+          <div
+            v-if="
+              getAlternativePrice(
+                isYearly ? products.clubes.yearly : products.clubes.monthly,
+                isYearly,
+                'clubes'
+              )
+            "
+            class="plan-card-alt-price"
+          >
             {{
-              isYearly
-                ? $t("plan_card_clubers_alt_yearly")
-                : $t("plan_card_clubers_alt_monthly")
+              getAlternativePrice(
+                isYearly ? products.clubes.yearly : products.clubes.monthly,
+                isYearly,
+                "clubes"
+              )
             }}
           </div>
+
+          <!-- Limitações do plano - Layout simples -->
+          <div
+            v-if="
+              (isYearly ? products.clubes.yearly : products.clubes.monthly)
+                ?.metadata
+            "
+            class="plan-card-limits-simple"
+          >
+            <div class="plan-limit-item-simple">
+              <va-icon name="groups" size="18px" color="#02254a" />
+              <span class="plan-limit-value-simple">
+                <span
+                  v-if="
+                    (isYearly
+                      ? products.clubes.yearly
+                      : products.clubes.monthly
+                    ).metadata.max_teams === '0' ||
+                    (isYearly
+                      ? products.clubes.yearly
+                      : products.clubes.monthly
+                    ).metadata.max_teams === 0
+                  "
+                >
+                  ∞
+                </span>
+                <span v-else>
+                  {{
+                    (isYearly
+                      ? products.clubes.yearly
+                      : products.clubes.monthly
+                    ).metadata.max_teams
+                  }}
+                </span>
+              </span>
+              <span class="plan-limit-label-simple">
+                {{
+                  (isYearly ? products.clubes.yearly : products.clubes.monthly)
+                    .metadata.max_teams === "0" ||
+                  (isYearly ? products.clubes.yearly : products.clubes.monthly)
+                    .metadata.max_teams === 0
+                    ? "Times"
+                    : parseInt(
+                        (isYearly
+                          ? products.clubes.yearly
+                          : products.clubes.monthly
+                        ).metadata.max_teams
+                      ) === 1
+                    ? "Time"
+                    : "Times"
+                }}
+              </span>
+            </div>
+            <div class="plan-limit-item-simple">
+              <va-icon name="person" size="18px" color="#02254a" />
+              <span class="plan-limit-value-simple">
+                <span
+                  v-if="
+                    (isYearly
+                      ? products.clubes.yearly
+                      : products.clubes.monthly
+                    ).metadata.max_players === '0' ||
+                    (isYearly
+                      ? products.clubes.yearly
+                      : products.clubes.monthly
+                    ).metadata.max_players === 0
+                  "
+                >
+                  ∞
+                </span>
+                <span v-else>
+                  {{
+                    (isYearly
+                      ? products.clubes.yearly
+                      : products.clubes.monthly
+                    ).metadata.max_players
+                  }}
+                </span>
+              </span>
+              <span class="plan-limit-label-simple">
+                {{
+                  (isYearly ? products.clubes.yearly : products.clubes.monthly)
+                    .metadata.max_players === "0" ||
+                  (isYearly ? products.clubes.yearly : products.clubes.monthly)
+                    .metadata.max_players === 0
+                    ? "Jogadores"
+                    : parseInt(
+                        (isYearly
+                          ? products.clubes.yearly
+                          : products.clubes.monthly
+                        ).metadata.max_players
+                      ) === 1
+                    ? "Jogador"
+                    : "Jogadores"
+                }}
+              </span>
+            </div>
+          </div>
+
           <ul class="plan-card-benefits">
-            <li>{{ $t("plan_card_clubers_benefit_1") }}</li>
-            <li>{{ $t("plan_card_clubers_benefit_2") }}</li>
-            <li>{{ $t("plan_card_clubers_benefit_3") }}</li>
+            <li
+              v-for="(feature, index) in (isYearly
+                ? products.clubes.yearly?.displayFeatures
+                : products.clubes.monthly?.displayFeatures) || []"
+              :key="index"
+            >
+              <va-icon name="check" size="18px" color="#02254a" />
+              {{ feature }}
+            </li>
           </ul>
         </div>
         <!-- Card 4: Vitalício -->
-        <div class="plan-card border-dark">
+        <div v-if="products.lifetime" class="plan-card border-dark">
           <div class="plan-card-badge">{{ $t("plan_card_badge_limited") }}</div>
-          <h3 class="plan-card-title">{{ $t("plan_card_lifetime_title") }}</h3>
+          <h3 class="plan-card-title">
+            {{ products.lifetime.name || $t("plan_card_lifetime_title") }}
+          </h3>
           <div class="plan-card-price">
-            {{ $t("plan_card_lifetime_price") }}
+            {{ products.lifetime.price.formatted }}
           </div>
           <div class="plan-card-desc">
             {{ $t("plan_card_lifetime_payment") }}
           </div>
+
+          <!-- Limitações do plano - Layout simples -->
+          <div
+            v-if="products.lifetime?.metadata"
+            class="plan-card-limits-simple"
+          >
+            <div class="plan-limit-item-simple">
+              <va-icon name="groups" size="18px" color="#02254a" />
+              <span class="plan-limit-value-simple">
+                <span
+                  v-if="
+                    products.lifetime.metadata.max_teams === '0' ||
+                    products.lifetime.metadata.max_teams === 0
+                  "
+                >
+                  ∞
+                </span>
+                <span v-else>
+                  {{ products.lifetime.metadata.max_teams }}
+                </span>
+              </span>
+              <span class="plan-limit-label-simple">
+                {{
+                  products.lifetime.metadata.max_teams === "0" ||
+                  products.lifetime.metadata.max_teams === 0
+                    ? "Times"
+                    : parseInt(products.lifetime.metadata.max_teams) === 1
+                    ? "Time"
+                    : "Times"
+                }}
+              </span>
+            </div>
+            <div class="plan-limit-item-simple">
+              <va-icon name="person" size="18px" color="#02254a" />
+              <span class="plan-limit-value-simple">
+                <span
+                  v-if="
+                    products.lifetime.metadata.max_players === '0' ||
+                    products.lifetime.metadata.max_players === 0
+                  "
+                >
+                  ∞
+                </span>
+                <span v-else>
+                  {{ products.lifetime.metadata.max_players }}
+                </span>
+              </span>
+              <span class="plan-limit-label-simple">
+                {{
+                  products.lifetime.metadata.max_players === "0" ||
+                  products.lifetime.metadata.max_players === 0
+                    ? "Jogadores"
+                    : parseInt(products.lifetime.metadata.max_players) === 1
+                    ? "Jogador"
+                    : "Jogadores"
+                }}
+              </span>
+            </div>
+          </div>
+
           <ul class="plan-card-benefits">
-            <li>{{ $t("plan_card_lifetime_benefit_1") }}</li>
-            <li>{{ $t("plan_card_lifetime_benefit_2") }}</li>
+            <li
+              v-for="(feature, index) in products.lifetime.displayFeatures ||
+              []"
+              :key="index"
+            >
+              <va-icon name="check" size="18px" color="#02254a" />
+              {{ feature }}
+            </li>
           </ul>
           <div class="plan-card-warning">
             {{ $t("plan_card_lifetime_warning") }}
           </div>
-          <div class="plan-card-progress-bar">
-            <div class="plan-card-progress" :style="{ width: '24%' }"></div>
-          </div>
-          <div class="plan-card-progress-label">
-            {{ $t("plan_card_lifetime_remaining") }}
+          <div v-if="lifetimePlanInfo" class="plan-card-lifetime-stats">
+            <div class="plan-card-lifetime-progress-wrapper">
+              <div class="plan-card-progress-bar">
+                <div
+                  class="plan-card-progress"
+                  :style="{ width: `${lifetimePlanInfo.percentage || 0}%` }"
+                ></div>
+              </div>
+              <div class="plan-card-progress-info">
+                <span class="plan-card-progress-sold">
+                  {{ lifetimePlanInfo.total_sold || 0 }} /
+                  {{ lifetimePlanInfo.limit || 500 }}
+                </span>
+                <span class="plan-card-progress-text">vendidos</span>
+              </div>
+            </div>
+            <div
+              v-if="!lifetimePlanInfo.is_sold_out"
+              class="plan-card-remaining-info"
+            >
+              <va-icon
+                name="local_fire_department"
+                size="20px"
+                color="#ff7300"
+              />
+              <span class="plan-card-remaining-value">{{
+                lifetimePlanInfo.remaining || 0
+              }}</span>
+              <span class="plan-card-remaining-label">{{
+                $t("plan_card_lifetime_remaining")
+              }}</span>
+            </div>
+            <div v-if="lifetimePlanInfo.is_sold_out" class="plan-card-sold-out">
+              <va-icon name="block" size="20px" color="#dc2626" />
+              {{ $t("plan_card_lifetime_sold_out") || "Esgotado" }}
+            </div>
           </div>
         </div>
       </div>
@@ -482,7 +802,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed, nextTick } from "vue";
+import { computed, nextTick, onMounted, onUnmounted } from "vue";
 import { useColors } from "vuestic-ui";
 import { ref } from "vue";
 import {
@@ -491,6 +811,11 @@ import {
   loader,
 } from "~/utils/sweetAlert2/swalHelper";
 import { useReCaptcha } from "vue-recaptcha-v3";
+import {
+  getActivePlan,
+  getProducts,
+  getLifetimePlansCount,
+} from "~/services/planService.js";
 
 const isYearly = ref(false);
 const { $customFetch } = useNuxtApp();
@@ -865,6 +1190,220 @@ const page = ref(1);
 
 const { currentPresetName } = useColors();
 
+// Estado do trial
+const trialInfo = ref(null);
+const timeRemaining = ref(null);
+const loadingTrial = ref(false);
+
+// Estado dos produtos
+const products = ref({
+  pro: {
+    monthly: null,
+    yearly: null,
+  },
+  clubes: {
+    monthly: null,
+    yearly: null,
+  },
+  lifetime: null,
+});
+const loadingProducts = ref(false);
+const lifetimePlanInfo = ref(null);
+const loadingLifetimePlanInfo = ref(false);
+
+// Função para formatar data
+const formatDate = (dateString: string | null) => {
+  if (!dateString) return "N/A";
+  try {
+    return new Date(dateString).toLocaleDateString("pt-BR", {
+      day: "2-digit",
+      month: "2-digit",
+      year: "numeric",
+    });
+  } catch (e) {
+    return "N/A";
+  }
+};
+
+// Contagem regressiva do trial
+const startTrialCountdown = () => {
+  if (
+    !trialInfo.value ||
+    !trialInfo.value.in_trial ||
+    !trialInfo.value.trial_ends_at
+  ) {
+    return;
+  }
+
+  const updateCountdown = () => {
+    const now = new Date();
+    const trialEnd = new Date(trialInfo.value.trial_ends_at);
+    const diff = trialEnd.getTime() - now.getTime();
+
+    if (diff <= 0) {
+      timeRemaining.value = null;
+      return;
+    }
+
+    const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+    const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+    const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+
+    timeRemaining.value = {
+      days,
+      hours,
+      minutes,
+      seconds,
+    };
+  };
+
+  // Atualizar imediatamente
+  updateCountdown();
+
+  // Atualizar a cada segundo
+  const countdownInterval = setInterval(() => {
+    updateCountdown();
+    if (!timeRemaining.value) {
+      clearInterval(countdownInterval);
+    }
+  }, 1000);
+
+  // Limpar intervalo ao desmontar
+  onUnmounted(() => {
+    clearInterval(countdownInterval);
+  });
+};
+
+// Buscar informações do trial
+const fetchTrialInfo = async () => {
+  if (!process.client) return;
+
+  loadingTrial.value = true;
+  try {
+    // Tentar obter tenant_id do localStorage ou do form
+    const tenantId =
+      form.value.tenant_id?.trim() || localStorage.getItem("tenant_id") || null;
+
+    const response = await getActivePlan(tenantId);
+
+    if (response.success && response.data) {
+      // Extrair informações de trial se disponível
+      if (response.data.trial_info) {
+        trialInfo.value = response.data.trial_info;
+
+        // Iniciar contagem regressiva se trial está ativo
+        if (trialInfo.value.in_trial && trialInfo.value.trial_ends_at) {
+          startTrialCountdown();
+        }
+      } else {
+        // Se não houver informações de trial, usar dados padrão
+        trialInfo.value = {
+          in_trial: true,
+          trial_ends_at: null,
+          days_remaining: 14,
+          total_trial_days: 14,
+          message: "Trial gratuito de 14 dias",
+        };
+      }
+    }
+  } catch (error) {
+    console.error("Erro ao buscar informações do trial:", error);
+    // Em caso de erro, usar dados padrão
+    trialInfo.value = {
+      in_trial: true,
+      trial_ends_at: null,
+      days_remaining: 14,
+      total_trial_days: 14,
+      message: "Trial gratuito de 14 dias",
+    };
+  } finally {
+    loadingTrial.value = false;
+  }
+};
+
+// Buscar produtos disponíveis
+const fetchProducts = async () => {
+  if (!process.client) return;
+
+  loadingProducts.value = true;
+  try {
+    const response = await getProducts();
+
+    if (response.success && response.data) {
+      products.value = response.data;
+    }
+  } catch (error) {
+    console.error("Erro ao buscar produtos:", error);
+  } finally {
+    loadingProducts.value = false;
+  }
+};
+
+// Função para buscar informações do plano vitalício
+const fetchLifetimePlansCount = async () => {
+  if (!process.client) return;
+
+  loadingLifetimePlanInfo.value = true;
+  try {
+    const response = await getLifetimePlansCount();
+
+    if (response.success && response.data) {
+      lifetimePlanInfo.value = response.data;
+    }
+  } catch (error) {
+    console.error("Erro ao buscar informações do plano vitalício:", error);
+  } finally {
+    loadingLifetimePlanInfo.value = false;
+  }
+};
+
+// Função para calcular preço alternativo (mensal/anual)
+const getAlternativePrice = (
+  currentPlan: any,
+  isYearly: boolean,
+  planType: "pro" | "clubes"
+) => {
+  if (!currentPlan) return "";
+
+  if (isYearly) {
+    // Se está mostrando anual, mostrar equivalente mensal
+    const monthlyPlan =
+      planType === "pro"
+        ? products.value.pro.monthly
+        : products.value.clubes.monthly;
+    if (monthlyPlan) {
+      return `ou ${monthlyPlan.price.formatted} / mês`;
+    }
+  } else {
+    // Se está mostrando mensal, mostrar anual
+    const yearlyPlan =
+      planType === "pro"
+        ? products.value.pro.yearly
+        : products.value.clubes.yearly;
+    if (yearlyPlan) {
+      return `ou ${yearlyPlan.price.formatted} / ano`;
+    }
+  }
+  return "";
+};
+
+// Função auxiliar para formatar preço
+const formatPrice = (amount: number) => {
+  if (!amount) return "R$ 0,00";
+  return new Intl.NumberFormat("pt-BR", {
+    style: "currency",
+    currency: "BRL",
+  }).format(amount / 100);
+};
+
+// Buscar informações do trial e produtos ao montar o componente
+onMounted(() => {
+  fetchTrialInfo();
+  fetchProducts();
+  fetchLifetimePlansCount();
+});
+
 const darkNavbarColors = computed(() => {
   if (currentPresetName.value === "light") {
     return {
@@ -901,8 +1440,8 @@ const darkNavbarColors = computed(() => {
   box-shadow: 0 2px 8px rgba(255, 115, 0, 0.1);
 }
 .plan-card-icon {
-  margin-top: 18px;
-  margin-bottom: 8px;
+  margin-top: 0;
+  margin-bottom: 16px;
 }
 .plan-card-title-bold {
   font-size: 1.25rem;
@@ -925,7 +1464,8 @@ const darkNavbarColors = computed(() => {
   text-align: center;
 }
 .plan-card-benefits-check {
-  margin-bottom: 10px;
+  margin: 16px 0 10px 0;
+  width: 100%;
 }
 .plan-card-benefits-check li {
   display: flex;
@@ -935,6 +1475,12 @@ const darkNavbarColors = computed(() => {
   font-weight: 600;
   margin-bottom: 8px;
   padding-left: 0;
+  width: 100%;
+  justify-content: flex-start;
+}
+.plan-card-benefits-check li va-icon {
+  margin-right: 8px;
+  flex-shrink: 0;
 }
 .plan-card-warning-box {
   background: #ffe3d1;
@@ -1010,6 +1556,15 @@ const darkNavbarColors = computed(() => {
   justify-content: center;
   flex-wrap: wrap;
 }
+
+.plans-cards-row-single {
+  justify-content: center;
+}
+
+.plans-cards-row-single .plan-card {
+  max-width: 500px;
+  width: 100%;
+}
 .plan-card {
   background: #fff;
   border-radius: 18px;
@@ -1023,6 +1578,43 @@ const darkNavbarColors = computed(() => {
   align-items: center;
   position: relative;
   transition: box-shadow 0.2s;
+  justify-content: space-between;
+}
+
+/* Cards maiores em resoluções grandes */
+@media (min-width: 1400px) {
+  .plan-card {
+    width: 260px;
+    padding: 40px 32px 36px 32px;
+    min-height: 420px;
+  }
+
+  .plan-card-benefits {
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 8px 16px;
+    align-items: center;
+  }
+
+  .plan-card-benefits li {
+    margin-bottom: 0;
+    padding-left: 0;
+    padding-right: 0;
+    white-space: nowrap;
+    flex: 0 0 auto;
+    display: flex;
+    align-items: center;
+  }
+
+  .plan-card-benefits li:before {
+    display: none;
+  }
+
+  .plan-card-benefits li va-icon {
+    margin-right: 6px;
+    flex-shrink: 0;
+  }
 }
 .plan-card.border-orange {
   border-top: 5px solid #02254a;
@@ -1056,8 +1648,11 @@ const darkNavbarColors = computed(() => {
   font-weight: 900;
   color: #02254a;
   margin-bottom: 8px;
-  margin-top: 18px;
+  margin-top: 0;
   text-align: center;
+}
+.plan-card-title-bold {
+  margin-top: 0;
 }
 .plan-card-price {
   font-size: 2rem;
@@ -1081,23 +1676,33 @@ const darkNavbarColors = computed(() => {
 .plan-card-benefits {
   list-style: none;
   padding: 0;
-  margin: 0 0 10px 0;
+  margin: 16px 0 auto 0;
   width: 100%;
   color: #02254a;
   font-size: 1rem;
   font-weight: 500;
   text-align: left;
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
 }
 .plan-card-benefits li {
-  margin-bottom: 6px;
-  padding-left: 18px;
+  margin-bottom: 8px;
+  padding-left: 0;
   position: relative;
+  display: flex;
+  align-items: center;
+  width: 100%;
+  justify-content: flex-start;
 }
 .plan-card-benefits li:before {
-  content: "•";
-  color: #ff7300;
-  position: absolute;
-  left: 0;
+  display: none;
+}
+.plan-card-benefits li va-icon {
+  margin-right: 8px;
+  flex-shrink: 0;
 }
 .plan-card-warning {
   background: #fff3ea;
@@ -1106,7 +1711,7 @@ const darkNavbarColors = computed(() => {
   font-weight: 700;
   border-radius: 8px;
   padding: 6px 12px;
-  margin-top: 8px;
+  margin-top: auto;
   text-align: center;
 }
 .plan-card-highlight {
@@ -1116,28 +1721,233 @@ const darkNavbarColors = computed(() => {
   font-weight: 700;
   border-radius: 8px;
   padding: 6px 12px;
-  margin-top: 8px;
+  margin-top: auto;
   text-align: center;
 }
+.plan-card-lifetime-stats {
+  width: 100%;
+  margin-top: 12px;
+}
+
+.plan-card-lifetime-progress-wrapper {
+  width: 100%;
+  margin-bottom: 12px;
+}
+
 .plan-card-progress-bar {
   width: 100%;
-  height: 10px;
+  height: 12px;
   background: #f7f9fc;
-  border-radius: 8px;
-  margin: 10px 0 2px 0;
+  border-radius: 10px;
+  margin-bottom: 8px;
   overflow: hidden;
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.06);
 }
+
 .plan-card-progress {
   height: 100%;
-  background: #ff7300;
-  border-radius: 8px 0 0 8px;
-  transition: width 0.4s;
+  background: linear-gradient(90deg, #ff7300 0%, #ff8c1a 100%);
+  border-radius: 10px;
+  transition: width 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 2px 4px rgba(255, 115, 0, 0.3);
 }
-.plan-card-progress-label {
-  font-size: 0.95rem;
+
+.plan-card-progress-info {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  margin-top: 4px;
+}
+
+.plan-card-progress-sold {
+  font-size: 1rem;
+  font-weight: 800;
+  color: #02254a;
+}
+
+.plan-card-progress-text {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #6b7280;
+  text-transform: lowercase;
+}
+
+.plan-card-remaining-info {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 10px 16px;
+  background: linear-gradient(135deg, #fff5e6 0%, #ffe3d1 100%);
+  border-radius: 12px;
+  border: 2px solid #ff7300;
+  box-shadow: 0 2px 8px rgba(255, 115, 0, 0.15);
+}
+
+.plan-card-remaining-value {
+  font-size: 1.5rem;
+  font-weight: 900;
   color: #ff7300;
+  line-height: 1;
+}
+
+.plan-card-remaining-label {
+  font-size: 0.95rem;
   font-weight: 700;
+  color: #02254a;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.plan-card-sold-out {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  font-size: 1.1rem;
+  color: #dc2626;
+  font-weight: 800;
   text-align: center;
+  padding: 12px 16px;
+  background: linear-gradient(135deg, #fee2e2 0%, #fecaca 100%);
+  border-radius: 12px;
+  border: 2px solid #dc2626;
+  box-shadow: 0 2px 8px rgba(220, 38, 38, 0.15);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+/* Estilos para limitações dos planos - Layout simples */
+.plan-card-limits-simple {
+  margin: 20px 0;
+  padding: 0;
+  display: flex;
+  gap: 20px;
+  justify-content: center;
+  width: 100%;
+  align-items: flex-start;
+}
+
+.plan-limit-item-simple {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  flex: 1;
+  min-width: 0;
+}
+
+.plan-limit-item-simple va-icon {
+  margin-bottom: 0;
+  flex-shrink: 0;
+}
+
+.plan-limit-value-simple {
+  font-size: 1.8rem;
+  font-weight: 900;
+  color: #02254a;
+  line-height: 1;
+  font-family: "Poppins", sans-serif;
+}
+
+.plan-limit-value-simple span:first-child {
+  font-size: 2.2rem;
+  font-weight: 900;
+}
+
+.plan-limit-label-simple {
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: #6b7280;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  text-align: center;
+}
+
+/* Estilos para informações dinâmicas do trial */
+.plan-card-trial-info {
+  margin: 16px 0;
+  padding: 16px;
+  background: #f9fafb;
+  border-radius: 12px;
+  border: 1px solid #e5e7eb;
+}
+
+.trial-countdown {
+  margin-bottom: 12px;
+}
+
+.trial-countdown-label {
+  font-size: 0.9rem;
+  color: #6b7280;
+  font-weight: 500;
+  margin-bottom: 4px;
+}
+
+.trial-countdown-value {
+  font-size: 1.2rem;
+  color: #02254a;
+  font-weight: 700;
+  font-family: "Courier New", monospace;
+  letter-spacing: 1px;
+}
+
+.trial-end-date {
+  margin-bottom: 12px;
+}
+
+.trial-end-label {
+  font-size: 0.9rem;
+  color: #6b7280;
+  font-weight: 500;
+  margin-bottom: 4px;
+}
+
+.trial-end-value {
+  font-size: 1rem;
+  color: #3b82f6;
+  font-weight: 600;
+}
+
+.trial-progress-bar {
+  width: 100%;
+  height: 8px;
+  background: #e5e7eb;
+  border-radius: 10px;
+  overflow: hidden;
+  margin: 12px 0 8px 0;
+}
+
+.trial-progress-fill {
+  height: 100%;
+  background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+  border-radius: 10px;
+  transition: width 0.3s ease;
+  box-shadow: 0 2px 8px rgba(16, 185, 129, 0.3);
+}
+
+.trial-progress-text {
+  font-size: 0.85rem;
+  color: #6b7280;
+  font-weight: 600;
+  text-align: center;
+}
+
+.trial-expired {
+  text-align: center;
+  padding: 12px;
+}
+
+.trial-expired-badge {
+  display: inline-block;
+  background: #fee2e2;
+  color: #dc2626;
+  font-size: 0.95rem;
+  font-weight: 700;
+  padding: 8px 16px;
+  border-radius: 8px;
+  border: 2px solid #dc2626;
 }
 @media (max-width: 900px) {
   .plans-cards-row {
