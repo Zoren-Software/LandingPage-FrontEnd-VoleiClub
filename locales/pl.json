@@ -44,7 +44,7 @@
     "question_2": "Jak mogę się zarejestrować w VolleyTrack?",
     "answer_2": "- Podczas tej początkowej fazy rozwoju możesz się zarejestrować, podając podstawowe informacje. Nasz zespół wsparcia skontaktuje się z Tobą, aby zapewnić pierwszy dostęp do Twojego konta.",
     "question_3": "Jakie są ograniczenia wersji podstawowej?",
-    "answer_3": "- Wersja podstawowa systemu jest ograniczona przez liczbę graczy i drużyn, które możesz zarejestrować. Ta zasada może ulec zmianie, gdy będziemy walidować produkt z naszymi klientami.",
+    "answer_3": "- Ograniczenia systemu są oparte na regułach zwracanych przez API, w tym maksymalnej liczbie graczy i drużyn, które możesz zarejestrować. Te ograniczenia różnią się w zależności od wybranego planu i mogą być aktualizowane w miarę walidacji produktu z naszymi klientami.",
     "question_4": "Jak mogę przekazać opinię na temat produktu?",
     "answer_4": "- Bardzo cenimy opinie użytkowników. Mamy kanał na Discordzie, na którym możesz omawiać pomysły i problemy bezpośrednio z zespołem deweloperskim i innymi użytkownikami.",
     "question_5": "Ile czasu zajmuje uzyskanie wsparcia?",

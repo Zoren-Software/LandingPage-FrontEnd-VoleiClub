@@ -44,7 +44,7 @@
     "question_2": "Come posso registrarmi a VolleyTrack?",
     "answer_2": "- Durante questa fase iniziale di sviluppo, puoi registrarti fornendo informazioni di base. Il nostro team di supporto ti contatterà per fornirti il primo accesso al tuo account.",
     "question_3": "Quali sono le limitazioni della versione base?",
-    "answer_3": "- La versione base del sistema è limitata dal numero di giocatori e squadre che puoi registrare. Questa regola potrebbe cambiare man mano che validiamo il prodotto con i nostri clienti.",
+    "answer_3": "- Le limitazioni del sistema sono basate sulle regole restituite dall'API, incluso il numero massimo di giocatori e squadre che puoi registrare. Queste limitazioni variano in base al piano scelto e possono essere aggiornate man mano che convalidiamo il prodotto con i nostri clienti.",
     "question_4": "Come posso fornire feedback sul prodotto?",
     "answer_4": "- Apprezziamo molto il feedback degli utenti. Abbiamo un canale Discord dove puoi discutere idee e problemi direttamente con il team di sviluppo e altri utenti.",
     "question_5": "Quanto tempo ci vuole per ricevere supporto?",
