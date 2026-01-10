@@ -303,7 +303,7 @@
                   :placeholder="$t('placeholder_tenant_id')"
                   v-model="form.tenant_id"
                   required
-                  @input="clearFieldError('tenant_id')"
+                  @input="handleTenantIdInput"
                   @blur="handleFieldBlur('tenant_id', form.tenant_id)"
                   :error="
                     !!(
@@ -545,6 +545,23 @@ const submit = async () => {
       "experience_level",
       form.value.experience_level
     );
+
+    // Validar tenant_id adicionalmente se houver erros de validação
+    if (tenantIdValid && form.value.tenant_id?.trim()) {
+      const tenantId = form.value.tenant_id.trim();
+      // Verificar se há erros de validação do tenant_id
+      if (errors.value.errors.tenant_id.length > 0) {
+        // Se houver erros, não permitir o envio
+        const firstError = Object.values(errors.value.errors).find(
+          (err) => Array.isArray(err) && err.length > 0
+        );
+        if (firstError && firstError.length > 0) {
+          confirmError(firstError[0]);
+        }
+        return;
+      }
+    }
+
     const isValid =
       nameValid && emailValid && tenantIdValid && experienceLevelValid;
 
@@ -692,6 +709,90 @@ const clearFieldError = (field: string) => {
   if (errors.value.errors[field as keyof typeof errors.value.errors]) {
     errors.value.errors[field as keyof typeof errors.value.errors] = [];
   }
+};
+
+let tenantIdValidationTimeout: NodeJS.Timeout | null = null;
+const validatingTenantId = ref(false);
+
+const handleTenantIdInput = () => {
+  // Limpar timeout anterior
+  if (tenantIdValidationTimeout) {
+    clearTimeout(tenantIdValidationTimeout);
+  }
+
+  // Limpar erro anterior
+  clearFieldError("tenant_id");
+
+  const tenantId = form.value.tenant_id?.trim();
+
+  // Se estiver vazio, não validar
+  if (!tenantId || tenantId === "") {
+    return;
+  }
+
+  // Validar formato básico antes de fazer a requisição
+  if (!/^[a-z0-9-]+$/.test(tenantId)) {
+    errors.value.errors.tenant_id = [
+      "O nome do subdomínio deve conter apenas letras minúsculas, números e hífens, sem espaços.",
+    ];
+    errors.value = { ...errors.value };
+    return;
+  }
+
+  // Validar comprimento mínimo
+  if (tenantId.length < 3) {
+    errors.value.errors.tenant_id = [
+      "O nome do subdomínio deve ter pelo menos 3 caracteres.",
+    ];
+    errors.value = { ...errors.value };
+    return;
+  }
+
+  // Validar comprimento máximo
+  if (tenantId.length > 63) {
+    errors.value.errors.tenant_id = [
+      "O nome do subdomínio deve ter no máximo 63 caracteres.",
+    ];
+    errors.value = { ...errors.value };
+    return;
+  }
+
+  // Validar se não começa ou termina com hífen
+  if (tenantId.startsWith("-") || tenantId.endsWith("-")) {
+    errors.value.errors.tenant_id = [
+      "O nome do subdomínio não pode começar ou terminar com hífen.",
+    ];
+    errors.value = { ...errors.value };
+    return;
+  }
+
+  // Debounce: aguardar 500ms antes de fazer a requisição
+  tenantIdValidationTimeout = setTimeout(async () => {
+    validatingTenantId.value = true;
+    try {
+      const response = await $customFetch("/leads/validate-tenant-id", "POST", {
+        body: JSON.stringify({
+          tenant_id: tenantId,
+        }),
+      });
+
+      if (response.valid === false) {
+        errors.value.errors.tenant_id = [response.message];
+        errors.value = { ...errors.value };
+      } else {
+        // Se for válido, limpar erros
+        clearFieldError("tenant_id");
+      }
+    } catch (error: any) {
+      const response = error?.response?.data || error?.response || error;
+      if (response?.message) {
+        errors.value.errors.tenant_id = [response.message];
+        errors.value = { ...errors.value };
+      }
+    } finally {
+      validatingTenantId.value = false;
+    }
+  }, 500);
 };
 
 const validateField = (
