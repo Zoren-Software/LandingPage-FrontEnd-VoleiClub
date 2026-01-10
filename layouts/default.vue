@@ -233,16 +233,18 @@
         </div>
         <div class="footer-links">
           <a href="/sobre" class="footer-link">{{ $t("menu_title_about") }}</a>
-          <a href="/planos" class="footer-link">{{ $t("menu_title_plans") }}</a>
+          <a
+            href="#plans-section"
+            class="footer-link"
+            @click.prevent="routePlans"
+            >{{ $t("menu_title_plans") }}</a
+          >
           <a
             href="#faq-section"
             class="footer-link"
             @click.prevent="routeFAQ"
             >{{ $t("menu_title_faq") }}</a
           >
-          <a href="#" @click.prevent="routeDiscord" class="footer-link">{{
-            $t("menu_title_discord")
-          }}</a>
         </div>
       </div>
       <div class="footer-col">
@@ -292,10 +294,16 @@
     </div>
     <div class="footer-divider"></div>
     <div class="footer-bottom">
-      <span
-        >© {{ currentYear() }} VolleyTrack –
-        {{ $t("all_rights_reserved") }}.</span
-      >
+      <div class="footer-bottom-content">
+        <span
+          >© {{ currentYear() }} VolleyTrack –
+          {{ $t("all_rights_reserved") }}.</span
+        >
+        <div class="footer-legal-info">
+          <span class="footer-company-name">Zoren Software</span>
+          <span class="footer-cnpj">CNPJ: 39.542.416/0001-77</span>
+        </div>
+      </div>
     </div>
   </footer>
 </template>
@@ -899,10 +907,31 @@ html {
 }
 .footer-bottom {
   width: 100%;
-  text-align: center;
   padding: 12px 0 10px 0;
   font-size: 15px;
   color: #fff;
+}
+.footer-bottom-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  text-align: center;
+}
+.footer-legal-info {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  font-size: 13px;
+  color: rgba(255, 255, 255, 0.8);
+}
+.footer-company-name {
+  font-weight: 600;
+}
+.footer-cnpj {
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.7);
 }
 @media (max-width: 900px) {
   .footer-content {
