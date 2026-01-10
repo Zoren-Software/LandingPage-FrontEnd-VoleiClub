@@ -816,6 +816,37 @@ import { computed, nextTick, onMounted, onUnmounted, watch } from "vue";
 import { useI18n } from "#imports";
 import { useColors } from "vuestic-ui";
 import { ref } from "vue";
+
+// SEO Meta Tags
+useHead({
+  title: "VolleyTrack - Plataforma Inteligente para Gestão de Voleibol",
+  meta: [
+    {
+      name: "description",
+      content:
+        "Plataforma inteligente para gestão de treinos, atletas e desempenho de voleibol. Organize sua equipe, planeje treinamentos e acompanhe o desempenho com dados e tecnologia em um só lugar.",
+    },
+    {
+      property: "og:title",
+      content: "VolleyTrack - Plataforma Inteligente para Gestão de Voleibol",
+    },
+    {
+      property: "og:description",
+      content:
+        "Plataforma inteligente para gestão de treinos, atletas e desempenho de voleibol. Organize sua equipe, planeje treinamentos e acompanhe o desempenho com dados e tecnologia em um só lugar.",
+    },
+    { name: "twitter:card", content: "summary_large_image" },
+    {
+      name: "twitter:title",
+      content: "VolleyTrack - Plataforma Inteligente para Gestão de Voleibol",
+    },
+    {
+      name: "twitter:description",
+      content:
+        "Plataforma inteligente para gestão de treinos, atletas e desempenho de voleibol. Organize sua equipe, planeje treinamentos e acompanhe o desempenho com dados e tecnologia em um só lugar.",
+    },
+  ],
+});
 import {
   confirmSuccess,
   confirmError,

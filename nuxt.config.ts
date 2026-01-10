@@ -48,7 +48,34 @@ export default defineNuxtConfig({
       css: true
   },
 
-  head: {
+  app: {
+    head: {
+      title: 'VolleyTrack - Plataforma Inteligente para Gestão de Voleibol',
+      titleTemplate: '%s - VolleyTrack',
+      htmlAttrs: {
+        lang: 'pt-BR'
+      },
+      meta: [
+        { charset: 'utf-8' },
+        { name: 'viewport', content: 'width=device-width, initial-scale=1' },
+        { 
+          name: 'description', 
+          content: 'Plataforma inteligente para gestão de treinos, atletas e desempenho de voleibol. Organize sua equipe, planeje treinamentos e acompanhe o desempenho com dados e tecnologia em um só lugar.' 
+        },
+        { name: 'format-detection', content: 'telephone=no' },
+        { property: 'og:type', content: 'website' },
+        { property: 'og:title', content: 'VolleyTrack - Plataforma Inteligente para Gestão de Voleibol' },
+        { 
+          property: 'og:description', 
+          content: 'Plataforma inteligente para gestão de treinos, atletas e desempenho de voleibol. Organize sua equipe, planeje treinamentos e acompanhe o desempenho com dados e tecnologia em um só lugar.' 
+        },
+        { name: 'twitter:card', content: 'summary_large_image' },
+        { name: 'twitter:title', content: 'VolleyTrack - Plataforma Inteligente para Gestão de Voleibol' },
+        { 
+          name: 'twitter:description', 
+          content: 'Plataforma inteligente para gestão de treinos, atletas e desempenho de voleibol. Organize sua equipe, planeje treinamentos e acompanhe o desempenho com dados e tecnologia em um só lugar.' 
+        }
+      ],
       link: [
         //NOTE - List Icons https://fonts.google.com/icons?selected=Material+Icons
         { rel: 'stylesheet', href: 'https://fonts.googleapis.com/icon?family=Material+Icons' },
@@ -56,11 +83,10 @@ export default defineNuxtConfig({
         { rel: 'stylesheet', href: "https://fonts.googleapis.com/icon?family=Material+Icons" },
         { rel: 'stylesheet', href: "https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;700;900&display=swap" }
       ]
-    },
+    }
+  },
 
   css: [
     '~/node_modules/material-design-icons-iconfont/dist/material-design-icons.css',
   ],
-
-  compatibilityDate: '2025-12-23',
 })
