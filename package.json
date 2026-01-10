@@ -13,7 +13,8 @@
   "devDependencies": {
     "@nuxt/devtools": "latest",
     "@nuxtjs/i18n": "8.0.0-rc.5",
-    "nuxt": "^3.11.2"
+    "nuxt": "^3.11.2",
+    "sharp": "^0.34.5"
   },
   "dependencies": {
     "@vuestic/nuxt": "^1.0.20",

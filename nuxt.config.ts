@@ -77,10 +77,14 @@ export default defineNuxtConfig({
         }
       ],
       link: [
-        //NOTE - List Icons https://fonts.google.com/icons?selected=Material+Icons
-        { rel: 'stylesheet', href: 'https://fonts.googleapis.com/icon?family=Material+Icons' },
+        // Preconnect apenas para as origens mais críticas (máximo 4)
+        { rel: 'preconnect', href: 'https://fonts.googleapis.com' },
+        { rel: 'preconnect', href: 'https://fonts.gstatic.com', crossorigin: '' },
+        // Preload da imagem LCP (WebP com fallback)
+        { rel: 'preload', as: 'image', href: '/images/volei-banner.webp', fetchpriority: 'high' },
+        // Fontes com display=swap para melhor performance
+        { rel: 'stylesheet', href: 'https://fonts.googleapis.com/icon?family=Material+Icons&display=swap' },
         { rel: 'stylesheet', href: "https://fonts.googleapis.com/css2?family=Source+Sans+Pro:ital,wght@0,400;1,700&display=swap" },
-        { rel: 'stylesheet', href: "https://fonts.googleapis.com/icon?family=Material+Icons" },
         { rel: 'stylesheet', href: "https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;700;900&display=swap" }
       ]
     }
@@ -89,4 +93,27 @@ export default defineNuxtConfig({
   css: [
     '~/node_modules/material-design-icons-iconfont/dist/material-design-icons.css',
   ],
+
+  // Configurações de build para otimização
+  vite: {
+    build: {
+      minify: 'terser',
+      terserOptions: {
+        compress: {
+          drop_console: true,
+          drop_debugger: true,
+        },
+      },
+      cssMinify: true,
+      rollupOptions: {
+        output: {
+          manualChunks: {
+            'vuestic-ui': ['vuestic-ui'],
+            'vue-i18n': ['vue-i18n'],
+            'vue-router': ['vue-router'],
+          },
+        },
+      },
+    },
+  },
 })

@@ -1,5 +1,16 @@
 <template>
   <section class="hero-banner">
+    <!-- Imagem LCP otimizada com fetchpriority -->
+    <picture class="hero-banner-image">
+      <source srcset="/images/volei-banner.webp" type="image/webp" />
+      <img
+        src="/images/volei-banner.jpg"
+        alt=""
+        fetchpriority="high"
+        aria-hidden="true"
+        class="hero-banner-img"
+      />
+    </picture>
     <div class="hero-overlay"></div>
     <div class="hero-content">
       <p class="hero-top-text">{{ $t("hero_top_text") }}</p>
@@ -784,11 +795,20 @@
         <div class="register-illustration-column">
           <div class="register-illustration">
             <div class="illustration-glow"></div>
-            <img
-              src="/images/image_form_volleytrack.png"
-              alt="VolleyTrack illustration"
-              class="illustration-image"
-            />
+            <picture>
+              <source
+                srcset="/images/image_form_volleytrack.webp"
+                type="image/webp"
+              />
+              <img
+                src="/images/image_form_volleytrack.png"
+                alt="VolleyTrack illustration"
+                class="illustration-image"
+                width="456"
+                height="456"
+                loading="lazy"
+              />
+            </picture>
           </div>
         </div>
       </div>
@@ -817,7 +837,7 @@ import { useI18n } from "#imports";
 import { useColors } from "vuestic-ui";
 import { ref } from "vue";
 
-// SEO Meta Tags
+// SEO Meta Tags e Performance
 useHead({
   title: "VolleyTrack - Plataforma Inteligente para Gestão de Voleibol",
   meta: [
@@ -844,6 +864,15 @@ useHead({
       name: "twitter:description",
       content:
         "Plataforma inteligente para gestão de treinos, atletas e desempenho de voleibol. Organize sua equipe, planeje treinamentos e acompanhe o desempenho com dados e tecnologia em um só lugar.",
+    },
+  ],
+  link: [
+    // Preload da imagem LCP (WebP) para melhor performance
+    {
+      rel: "preload",
+      as: "image",
+      href: "/images/volei-banner.webp",
+      fetchpriority: "high",
     },
   ],
 });
@@ -1485,6 +1514,8 @@ watch(locale, () => {
   }
 });
 
+// Detecção de WebP não é mais necessária - o <picture> faz isso automaticamente
+
 onMounted(() => {
   fetchTrialInfo();
   fetchProducts();
@@ -2071,12 +2102,32 @@ const darkNavbarColors = computed(() => {
   position: relative;
   width: 100%;
   min-height: 90vh;
-  background: url("/images/volei-banner.jpg") center center/cover no-repeat;
   display: flex;
   align-items: center;
   justify-content: center;
   margin-bottom: 0;
+  overflow: hidden;
+  /* Otimização de performance */
+  will-change: transform;
+  contain: layout style paint;
 }
+
+.hero-banner-image {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+}
+
+.hero-banner-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+}
+
 .hero-overlay {
   position: absolute;
   top: 0;
@@ -2395,11 +2446,11 @@ const darkNavbarColors = computed(() => {
     position: relative;
     width: 100%;
     min-height: 70vh;
-    background: url("/images/volei-banner.jpg") center center/cover no-repeat;
     display: flex;
     align-items: center;
     justify-content: center;
     margin-bottom: 0;
+    overflow: hidden;
   }
   .hero-overlay {
     position: absolute;
@@ -2409,6 +2460,20 @@ const darkNavbarColors = computed(() => {
     height: 100%;
     background: rgba(10, 32, 60, 0.6);
     z-index: 1;
+  }
+  .hero-banner-image {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+  }
+  .hero-banner-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
   }
   .hero-content {
     position: relative;
@@ -3481,14 +3546,16 @@ const darkNavbarColors = computed(() => {
   }
 }
 .illustration-image {
-  width: 100%;
-  height: auto;
+  width: 456px;
+  height: 456px;
+  max-width: 100%;
   display: block;
   position: relative;
   z-index: 2;
   margin: 0 auto;
   filter: drop-shadow(0 4px 12px rgba(0, 0, 0, 0.1));
   transition: filter 0.3s ease;
+  object-fit: contain;
 }
 .register-illustration:hover .illustration-image {
   filter: drop-shadow(0 8px 20px rgba(0, 0, 0, 0.15));
