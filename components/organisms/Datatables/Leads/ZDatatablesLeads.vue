@@ -32,14 +32,7 @@
     <!-- ACTIONS -->
     <template
       #cell(actions)="{
-        rowKey: {
-          id,
-          name,
-          email,
-          tenant_id,
-          status,
-          message,
-        },
+        rowKey: { id, name, email, tenant_id, status, message },
       }"
     >
       <ZDataTableActions
@@ -214,7 +207,7 @@ const columns = ref([
   {
     key: "created_at",
     name: "created_at",
-    label: "Se registro em",
+    label: "Data Registro",
     sortable: true,
   },
 ]);
@@ -394,6 +387,8 @@ function clearSearch() {
   variablesGetLeads.value.filter = {
     search: "%%",
   };
+  statusLeadFilter.value = null;
+  getLeads();
 }
 
 async function getLeads({ page = 1 } = {}) {
