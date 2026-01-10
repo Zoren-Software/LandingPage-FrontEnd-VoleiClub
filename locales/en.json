@@ -58,7 +58,7 @@
     "question_9": "How can I report bugs or technical issues?",
     "answer_9": "- If you encounter any bugs or face technical issues, the quickest way to report is through our Discord support channel. We also accept bug reports via our support email suporte@volleytrack.com. For faster service, you can open an issue directly on the project's GitHub, which will likely be addressed more immediately by our development team.",
     "question_10": "How will VolleyTrack be developed in the future?",
-    "answer_10": "- VolleyTrack is an open-source project, and we are always open to new ideas and suggestions. You can follow the project's development on our GitHub. If you are a developer, you can contribute to the project by submitting a pull request.",
+    "answer_10": "- VolleyTrack is maintained by a small team of developers. So far, it's a side project that is in its early stages.",
     "option_experience_level_select": "Select",
     "option_experience_level_beginner": "Beginner",
     "option_experience_level_amateur": "Amateur",
