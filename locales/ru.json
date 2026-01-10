@@ -158,5 +158,20 @@
     "register_title_ready": "Готовы начать игру?",
     "register_subtitle": "Зарегистрируйтесь, чтобы стать частью будущего спортивного менеджмента!",
     "label_message_optional": "Сообщение (необязательно)",
-    "select_placeholder": "Выбрать..."
+    "select_placeholder": "Выбрать...",
+    "plan_feature_complete_player_management": "Полное управление игроками",
+    "plan_feature_limited_player_management": "Ограниченное управление игроками",
+    "plan_feature_attendance_control": "Контроль посещаемости",
+    "plan_feature_reports_statistics": "Отчеты и статистика",
+    "plan_feature_email_support": "Поддержка по электронной почте",
+    "plan_feature_premium_support": "Премиум поддержка",
+    "plan_feature_lifetime_access": "Пожизненный доступ",
+    "plan_feature_free_updates": "Бесплатные обновления",
+    "plan_limit_team": "Команда",
+    "plan_limit_teams": "Команды",
+    "plan_limit_player": "Игрок",
+    "plan_limit_players": "Игроки",
+    "plan_sold": "продано",
+    "plan_period_month": "месяц",
+    "plan_period_year": "год"
 }

@@ -160,5 +160,20 @@
     "register_title_ready": "¿Listo para entrar en el juego?",
     "register_subtitle": "¡Regístrate para ser parte del futuro de la gestión deportiva!",
     "label_message_optional": "Mensaje (opcional)",
-    "select_placeholder": "Seleccionar..."
+    "select_placeholder": "Seleccionar...",
+    "plan_feature_complete_player_management": "Gestión completa de jugadores",
+    "plan_feature_limited_player_management": "Gestión limitada de jugadores",
+    "plan_feature_attendance_control": "Control de asistencia",
+    "plan_feature_reports_statistics": "Informes y estadísticas",
+    "plan_feature_email_support": "Soporte por correo electrónico",
+    "plan_feature_premium_support": "Soporte premium",
+    "plan_feature_lifetime_access": "Acceso de por vida",
+    "plan_feature_free_updates": "Actualizaciones gratuitas",
+    "plan_limit_team": "Equipo",
+    "plan_limit_teams": "Equipos",
+    "plan_limit_player": "Jugador",
+    "plan_limit_players": "Jugadores",
+    "plan_sold": "vendidos",
+    "plan_period_month": "mes",
+    "plan_period_year": "año"
 }

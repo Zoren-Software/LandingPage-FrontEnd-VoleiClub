@@ -158,5 +158,20 @@
     "register_title_ready": "Ready to join the game?",
     "register_subtitle": "Register to be part of the future of sports management!",
     "label_message_optional": "Message (optional)",
-    "select_placeholder": "Select..."
+    "select_placeholder": "Select...",
+    "plan_feature_complete_player_management": "Complete player management",
+    "plan_feature_limited_player_management": "Limited player management",
+    "plan_feature_attendance_control": "Attendance control",
+    "plan_feature_reports_statistics": "Reports and statistics",
+    "plan_feature_email_support": "Email support",
+    "plan_feature_premium_support": "Premium support",
+    "plan_feature_lifetime_access": "Lifetime access",
+    "plan_feature_free_updates": "Free updates",
+    "plan_limit_team": "Team",
+    "plan_limit_teams": "Teams",
+    "plan_limit_player": "Player",
+    "plan_limit_players": "Players",
+    "plan_sold": "sold",
+    "plan_period_month": "month",
+    "plan_period_year": "year"
 }

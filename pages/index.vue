@@ -160,9 +160,13 @@
           <div class="plan-card-price">
             {{
               isYearly && products.pro.yearly
-                ? products.pro.yearly.price.formatted + " / ano"
+                ? products.pro.yearly.price.formatted +
+                  " / " +
+                  $t("plan_period_year")
                 : products.pro.monthly
-                ? products.pro.monthly.price.formatted + " / mês"
+                ? products.pro.monthly.price.formatted +
+                  " / " +
+                  $t("plan_period_month")
                 : $t("plan_card_pro_price_monthly")
             }}
           </div>
@@ -218,13 +222,13 @@
                     .metadata.max_teams === "0" ||
                   (isYearly ? products.pro.yearly : products.pro.monthly)
                     .metadata.max_teams === 0
-                    ? "Times"
+                    ? $t("plan_limit_teams")
                     : parseInt(
                         (isYearly ? products.pro.yearly : products.pro.monthly)
                           .metadata.max_teams
                       ) === 1
-                    ? "Time"
-                    : "Times"
+                    ? $t("plan_limit_team")
+                    : $t("plan_limit_teams")
                 }}
               </span>
             </div>
@@ -254,13 +258,13 @@
                     .metadata.max_players === "0" ||
                   (isYearly ? products.pro.yearly : products.pro.monthly)
                     .metadata.max_players === 0
-                    ? "Jogadores"
+                    ? $t("plan_limit_players")
                     : parseInt(
                         (isYearly ? products.pro.yearly : products.pro.monthly)
                           .metadata.max_players
                       ) === 1
-                    ? "Jogador"
-                    : "Jogadores"
+                    ? $t("plan_limit_player")
+                    : $t("plan_limit_players")
                 }}
               </span>
             </div>
@@ -290,9 +294,13 @@
           <div class="plan-card-price">
             {{
               isYearly && products.clubes.yearly
-                ? products.clubes.yearly.price.formatted + " / ano"
+                ? products.clubes.yearly.price.formatted +
+                  " / " +
+                  $t("plan_period_year")
                 : products.clubes.monthly
-                ? products.clubes.monthly.price.formatted + " / mês"
+                ? products.clubes.monthly.price.formatted +
+                  " / " +
+                  $t("plan_period_month")
                 : $t("plan_card_clubers_price_monthly")
             }}
           </div>
@@ -355,15 +363,15 @@
                     .metadata.max_teams === "0" ||
                   (isYearly ? products.clubes.yearly : products.clubes.monthly)
                     .metadata.max_teams === 0
-                    ? "Times"
+                    ? $t("plan_limit_teams")
                     : parseInt(
                         (isYearly
                           ? products.clubes.yearly
                           : products.clubes.monthly
                         ).metadata.max_teams
                       ) === 1
-                    ? "Time"
-                    : "Times"
+                    ? $t("plan_limit_team")
+                    : $t("plan_limit_teams")
                 }}
               </span>
             </div>
@@ -399,15 +407,15 @@
                     .metadata.max_players === "0" ||
                   (isYearly ? products.clubes.yearly : products.clubes.monthly)
                     .metadata.max_players === 0
-                    ? "Jogadores"
+                    ? $t("plan_limit_players")
                     : parseInt(
                         (isYearly
                           ? products.clubes.yearly
                           : products.clubes.monthly
                         ).metadata.max_players
                       ) === 1
-                    ? "Jogador"
-                    : "Jogadores"
+                    ? $t("plan_limit_player")
+                    : $t("plan_limit_players")
                 }}
               </span>
             </div>
@@ -462,10 +470,10 @@
                 {{
                   products.lifetime.metadata.max_teams === "0" ||
                   products.lifetime.metadata.max_teams === 0
-                    ? "Times"
+                    ? $t("plan_limit_teams")
                     : parseInt(products.lifetime.metadata.max_teams) === 1
-                    ? "Time"
-                    : "Times"
+                    ? $t("plan_limit_team")
+                    : $t("plan_limit_teams")
                 }}
               </span>
             </div>
@@ -488,10 +496,10 @@
                 {{
                   products.lifetime.metadata.max_players === "0" ||
                   products.lifetime.metadata.max_players === 0
-                    ? "Jogadores"
+                    ? $t("plan_limit_players")
                     : parseInt(products.lifetime.metadata.max_players) === 1
-                    ? "Jogador"
-                    : "Jogadores"
+                    ? $t("plan_limit_player")
+                    : $t("plan_limit_players")
                 }}
               </span>
             </div>
@@ -523,7 +531,9 @@
                   {{ lifetimePlanInfo.total_sold || 0 }} /
                   {{ lifetimePlanInfo.limit || 500 }}
                 </span>
-                <span class="plan-card-progress-text">vendidos</span>
+                <span class="plan-card-progress-text">{{
+                  $t("plan_sold")
+                }}</span>
               </div>
             </div>
             <div
@@ -802,7 +812,8 @@
 </template>
 
 <script setup lang="ts">
-import { computed, nextTick, onMounted, onUnmounted } from "vue";
+import { computed, nextTick, onMounted, onUnmounted, watch } from "vue";
+import { useI18n } from "#imports";
 import { useColors } from "vuestic-ui";
 import { ref } from "vue";
 import {
@@ -816,10 +827,13 @@ import {
   getProducts,
   getLifetimePlansCount,
 } from "~/services/planService.js";
+import { usePlanTranslations } from "~/composables/usePlanTranslations.js";
 
 const isYearly = ref(false);
 const { $customFetch } = useNuxtApp();
 const { executeRecaptcha } = useReCaptcha();
+const { translateProduct } = usePlanTranslations();
+const { locale, t } = useI18n();
 
 const runtimeConfig = useRuntimeConfig();
 const applicationName = runtimeConfig.public.nameApplication;
@@ -1211,6 +1225,37 @@ const loadingProducts = ref(false);
 const lifetimePlanInfo = ref(null);
 const loadingLifetimePlanInfo = ref(false);
 
+// Armazenar produtos originais da API (sem tradução)
+const rawProducts = ref(null);
+
+// Função para traduzir produtos já carregados
+const retranslateProducts = () => {
+  if (!rawProducts.value) return;
+
+  const translatedProducts = {
+    pro: {
+      monthly: rawProducts.value.pro.monthly
+        ? translateProduct(rawProducts.value.pro.monthly)
+        : null,
+      yearly: rawProducts.value.pro.yearly
+        ? translateProduct(rawProducts.value.pro.yearly)
+        : null,
+    },
+    clubes: {
+      monthly: rawProducts.value.clubes.monthly
+        ? translateProduct(rawProducts.value.clubes.monthly)
+        : null,
+      yearly: rawProducts.value.clubes.yearly
+        ? translateProduct(rawProducts.value.clubes.yearly)
+        : null,
+    },
+    lifetime: rawProducts.value.lifetime
+      ? translateProduct(rawProducts.value.lifetime)
+      : null,
+  };
+  products.value = translatedProducts;
+};
+
 // Função para formatar data
 const formatDate = (dateString: string | null) => {
   if (!dateString) return "N/A";
@@ -1331,7 +1376,11 @@ const fetchProducts = async () => {
     const response = await getProducts();
 
     if (response.success && response.data) {
-      products.value = response.data;
+      // Armazenar produtos originais
+      rawProducts.value = response.data;
+
+      // Traduzir os produtos recebidos da API
+      retranslateProducts();
     }
   } catch (error) {
     console.error("Erro ao buscar produtos:", error);
@@ -1373,7 +1422,7 @@ const getAlternativePrice = (
         ? products.value.pro.monthly
         : products.value.clubes.monthly;
     if (monthlyPlan) {
-      return `ou ${monthlyPlan.price.formatted} / mês`;
+      return `ou ${monthlyPlan.price.formatted} / ${t("plan_period_month")}`;
     }
   } else {
     // Se está mostrando mensal, mostrar anual
@@ -1382,7 +1431,7 @@ const getAlternativePrice = (
         ? products.value.pro.yearly
         : products.value.clubes.yearly;
     if (yearlyPlan) {
-      return `ou ${yearlyPlan.price.formatted} / ano`;
+      return `ou ${yearlyPlan.price.formatted} / ${t("plan_period_year")}`;
     }
   }
   return "";
@@ -1398,6 +1447,13 @@ const formatPrice = (amount: number) => {
 };
 
 // Buscar informações do trial e produtos ao montar o componente
+// Watcher para retraduzir produtos quando o idioma mudar
+watch(locale, () => {
+  if (rawProducts.value) {
+    retranslateProducts();
+  }
+});
+
 onMounted(() => {
   fetchTrialInfo();
   fetchProducts();
