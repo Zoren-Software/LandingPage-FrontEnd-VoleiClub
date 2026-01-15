@@ -58,7 +58,7 @@
     "question_9": "Como posso reportar bugs ou problemas técnicos?",
     "answer_9": "- Se você encontrar algum bug ou enfrentar problemas técnicos, a maneira mais rápida de reportar é através do nosso canal de suporte no Discord. Também aceitamos relatos de bugs através do nosso e-mail de suporte suporte@volleytrack.com. Para um atendimento mais rápido, você pode abrir uma issue diretamente no GitHub do projeto, que provavelmente será atendido de forma mais imediata pela nossa equipe de desenvolvedores.",
     "question_10": "Como o VolleyTrack será desenvolvido no futuro?",
-    "answer_10": "- O VolleyTrack é mantido por uma equipe pequena de desenvolvedores. Até o momento, é um side project que está no início.",
+    "answer_10": "- O VolleyTrack é um SaaS que está iniciando sua jornada de validação. Estamos em constante evolução, ouvindo feedback dos usuários e desenvolvendo novas funcionalidades para atender melhor às necessidades dos treinadores e gestores de times de voleibol.",
     "option_experience_level_select": "Selecione",
     "option_experience_level_beginner": "Iniciante",
     "option_experience_level_amateur": "Amador",
