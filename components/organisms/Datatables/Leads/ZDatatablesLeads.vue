@@ -32,19 +32,12 @@
     <!-- ACTIONS -->
     <template
       #cell(actions)="{
-        rowKey: {
-          id,
-          name,
-          email,
-          tenant_id,
-          status: { name: statusName },
-          message,
-        },
+        rowKey: { id, name, email, tenant_id, status, message },
       }"
     >
       <ZDataTableActions
         :id="Number(id)"
-        :optionObject="{ id, name, email, statusName, message }"
+        :optionObject="{ id, name, email, statusName: status?.name, message }"
         includeActionEditList
         @edit="actionEdit"
       />
@@ -52,13 +45,13 @@
         class="ml-3"
         preset="plain"
         icon="forum"
-        @click="actionInterationLead(id, name, email, tenant_id, statusName)"
+        @click="actionInterationLead(id, name, email, tenant_id, status?.name)"
       />
       <va-button
         class="ml-3"
         preset="plain"
         icon="public"
-        @click="actionCreateTenant(id, name, email, tenant_id, statusName)"
+        @click="actionCreateTenant(id, name, email, tenant_id, status)"
       />
     </template>
 
@@ -163,6 +156,7 @@ let tenantIdForm = ref("");
 let name = ref("");
 let email = ref("");
 let status = ref("");
+let statusId = ref(null);
 let message = ref("");
 let messageAlterStatus = ref("");
 let notes = ref("");
@@ -213,7 +207,7 @@ const columns = ref([
   {
     key: "created_at",
     name: "created_at",
-    label: "Se registro em",
+    label: "Data Registro",
     sortable: true,
   },
 ]);
@@ -258,12 +252,13 @@ onMounted(async () => {
   await getLeads();
 });
 
-function actionCreateTenant(id, nameLead, emailLead, tenantIdLead, statusLead) {
+function actionCreateTenant(id, nameLead, emailLead, tenantIdLead, statusObj) {
   leadId.value = id;
   showModalCreateTenant.value = true;
   name.value = nameLead;
   email.value = emailLead;
-  status.value = statusLead;
+  status.value = statusObj?.name || "";
+  statusId.value = statusObj?.id || null;
   tenantId.value = tenantIdLead;
 
   if (tenantIdLead === null) {
@@ -357,7 +352,7 @@ async function createTenant() {
 
   await $customFetch(`/leads/${leadId.value}`, "PUT", {
     body: JSON.stringify({
-      status: status.value,
+      status_id: statusId.value,
       tenantId: tenantIdForm.value,
       id: leadId.value,
     }),
@@ -392,6 +387,8 @@ function clearSearch() {
   variablesGetLeads.value.filter = {
     search: "%%",
   };
+  statusLeadFilter.value = null;
+  getLeads();
 }
 
 async function getLeads({ page = 1 } = {}) {
