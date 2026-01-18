@@ -83,7 +83,6 @@ import { useNuxtApp } from "#app";
 import ZDatatableGeneric from "~/components/molecules/Datatable/ZDatatableGeneric";
 import { confirmSuccess } from "~/utils/sweetAlert2/swalHelper";
 import ZDataTableActions from "~/components/molecules/Datatable/ZDataTableActions";
-import { defineProps } from "vue";
 import ZInput from "~/components/atoms/Inputs/ZInput";
 import ZSelectStatusLead from "~/components/molecules/Selects/ZSelectStatusLead";
 

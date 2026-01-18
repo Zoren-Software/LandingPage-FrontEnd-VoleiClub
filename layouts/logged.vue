@@ -135,7 +135,21 @@ const emailSupport = runtimeConfig.public.emailSupport;
 const cnpj = runtimeConfig.public.cnpj;
 
 const routeRegister = () => {
-  router.push("/register");
+  if (window.location.pathname !== "/") {
+    router.push("/").then(() => {
+      setTimeout(() => {
+        const registerSection = document.querySelector(".register-section");
+        if (registerSection) {
+          registerSection.scrollIntoView({ behavior: "smooth" });
+        }
+      }, 400);
+    });
+  } else {
+    const registerSection = document.querySelector(".register-section");
+    if (registerSection) {
+      registerSection.scrollIntoView({ behavior: "smooth" });
+    }
+  }
 };
 
 const routeFAQ = () => {
