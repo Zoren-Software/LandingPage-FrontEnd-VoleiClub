@@ -5,24 +5,25 @@
   "type": "module",
   "scripts": {
     "build": "nuxt build",
-    "dev": "nuxt dev",
+    "dev": "NODE_OPTIONS='--no-warnings=DEP0180' nuxt dev",
     "generate": "nuxt generate",
     "preview": "nuxt preview",
-    "postinstall": "nuxt prepare"
+    "postinstall": "nuxt prepare",
+    "update-browserslist": "npx update-browserslist-db@latest"
   },
   "devDependencies": {
-    "@nuxt/devtools": "latest",
-    "@nuxtjs/i18n": "8.0.0-rc.5",
-    "nuxt": "^3.11.2",
+    "@nuxt/devtools": "^1.2.0",
+    "@nuxtjs/i18n": "^8.0.0",
+    "nuxt": "3.13.0",
     "sharp": "^0.34.5"
   },
   "dependencies": {
-    "@vuestic/nuxt": "^1.0.20",
-    "dotenv": "^16.4.5",
+    "@vuestic/nuxt": "^1.0.21",
+    "dotenv": "^17.2.3",
     "material-design-icons-iconfont": "^6.7.0",
     "moment": "^2.30.1",
     "vue-recaptcha-v3": "^2.0.1",
-    "vue-sweetalert2": "^5.0.5",
-    "vuestic-ui": "^1.9.9"
+    "vue-sweetalert2": "^5.0.11",
+    "vuestic-ui": "^1.10.3"
   }
 }

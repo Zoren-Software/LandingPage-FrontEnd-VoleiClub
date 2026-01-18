@@ -1,5 +1,7 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
+  compatibilityDate: '2026-01-18',
+  
   ssr: false,
 
   devServer: {
@@ -107,10 +109,16 @@ export default defineNuxtConfig({
       cssMinify: true,
       rollupOptions: {
         output: {
-          manualChunks: {
-            'vuestic-ui': ['vuestic-ui'],
-            'vue-i18n': ['vue-i18n'],
-            'vue-router': ['vue-router'],
+          manualChunks(id) {
+            // Aplicar manualChunks apenas para o build do cliente
+            if (id.includes('node_modules')) {
+              if (id.includes('vuestic-ui')) {
+                return 'vuestic-ui';
+              }
+              if (id.includes('vue-i18n')) {
+                return 'vue-i18n';
+              }
+            }
           },
         },
       },
