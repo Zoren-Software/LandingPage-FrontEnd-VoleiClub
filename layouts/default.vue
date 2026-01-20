@@ -41,6 +41,13 @@
             @click.prevent="routeFAQ"
             >{{ $t("menu_title_faq") }}</a
           >
+          <a
+            href="https://docs.volleytrack.com"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="navbar-link"
+            >Docs</a
+          >
         </div>
         <div class="navbar-actions">
           <button class="navbar-register-btn" @click="routeRegister()">
@@ -139,6 +146,21 @@
                 "
               >
                 {{ $t("menu_title_faq") }}
+              </a>
+            </VaSidebarItemTitle>
+          </VaSidebarItemContent>
+        </VaSidebarItem>
+        <VaSidebarItem>
+          <VaSidebarItemContent>
+            <VaSidebarItemTitle>
+              <a
+                href="https://docs.volleytrack.com"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="sidebar-link"
+                @click="showSidebar = false"
+              >
+                Docs
               </a>
             </VaSidebarItemTitle>
           </VaSidebarItemContent>
