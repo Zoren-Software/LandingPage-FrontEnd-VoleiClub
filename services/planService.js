@@ -9,16 +9,16 @@
  */
 const getVoleiClubApiUrl = () => {
   if (process.client) {
-    // Tentar obter do runtime config
-    if (typeof window !== 'undefined' && window.__NUXT__?.config?.public?.voleiClubApiUrl) {
-      return window.__NUXT__.config.public.voleiClubApiUrl
+    // Tentar obter do runtime config do Nuxt (NUXT_PUBLIC_API_TENANTS)
+    if (typeof window !== 'undefined' && window.__NUXT__?.config?.public?.apiTenants) {
+      return window.__NUXT__.config.public.apiTenants
     }
-    // Tentar obter do process.env
-    if (process.env.VOLEICLUB_API_URL) {
-      return process.env.VOLEICLUB_API_URL
+    // Tentar obter do process.env como fallback
+    if (process.env.NUXT_PUBLIC_API_TENANTS) {
+      return process.env.NUXT_PUBLIC_API_TENANTS
     }
   }
-  // Valor padrão como fallback
+  // Valor padrão como fallback (apenas para desenvolvimento local)
   return 'http://api.volleytrack.local/v1'
 }
 
