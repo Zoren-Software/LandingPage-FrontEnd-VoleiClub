@@ -79,20 +79,21 @@ const login = async () => {
       }),
     });
 
-    // Sucesso na autenticação
-    confirmSuccess(response.message, () => {});
+    // Salva os dados de autenticação primeiro
     localStorage.setItem("userToken", response.token);
     localStorage.setItem("email", email.value);
     success.value = true;
     successMessage.value = ["Login efetuado com sucesso!"];
 
-    // Redireciona para a página de leads
-    navigateTo("/leads");
+    // Mostra mensagem de sucesso e redireciona após o usuário fechar o alerta
+    confirmSuccess(response.message || "Login efetuado com sucesso!", () => {
+      navigateTo("/leads");
+    });
   } catch (errorLog) {
     error.value = true;
     errorMessage.value = ["E-mail ou senha inválidos!"];
     console.error("Erro no login:", errorLog);
+    loading.value = false;
   }
-  loading.value = false;
 };
 </script>

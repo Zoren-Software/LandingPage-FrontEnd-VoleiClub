@@ -60,21 +60,25 @@ const performLogout = async () => {
       }),
     });
 
-    confirmSuccess(response.message, () => {});
+    // Limpa o localStorage
+    localStorage.removeItem("userToken");
+    localStorage.removeItem("email");
+    isLoggingOut.value = false;
+
+    // Mostra mensagem e redireciona após fechar
+    confirmSuccess(response.message || "Logout efetuado com sucesso!", () => {
+      router.push("/");
+    });
   } catch (error) {
-    confirmError(error.message || "Erro ao fazer logout", () => {});
+    // Em caso de erro, ainda limpa localmente
+    localStorage.removeItem("userToken");
+    localStorage.removeItem("email");
+    isLoggingOut.value = false;
+
+    confirmError(error.message || "Erro ao fazer logout", () => {
+      router.push("/");
+    });
   }
-
-  // Limpa o localStorage
-  localStorage.removeItem("userToken");
-  localStorage.removeItem("email");
-
-  isLoggingOut.value = false;
-
-  // Redireciona para a home após 1.5 segundos
-  setTimeout(() => {
-    router.push("/");
-  }, 1500);
 };
 
 onMounted(() => {

@@ -510,17 +510,26 @@ const routeLogout = () => {
     }),
   })
     .then((response) => {
-      confirmSuccess(response.message, () => {});
+      // Limpa dados e atualiza estado primeiro
+      localStorage.removeItem("userToken");
+      localStorage.removeItem("email");
+      isUserLoggedIn.value = false;
+      
+      // Mostra mensagem e redireciona após fechar
+      confirmSuccess(response.message || "Logout efetuado com sucesso!", () => {
+        router.push("/");
+      });
     })
     .catch((error) => {
-      confirmError(error.message, () => {});
+      // Em caso de erro na API, ainda limpa localmente
+      localStorage.removeItem("userToken");
+      localStorage.removeItem("email");
+      isUserLoggedIn.value = false;
+      
+      confirmError(error.message || "Erro ao fazer logout", () => {
+        router.push("/");
+      });
     });
-
-  localStorage.removeItem("userToken");
-  localStorage.removeItem("email");
-  isUserLoggedIn.value = false;
-
-  router.push("/");
 };
 </script>
 
