@@ -57,7 +57,9 @@
             :title="$t('menu_title_logout')"
           >
             <va-icon name="logout" size="18px" />
-            <span class="navbar-logout-text">{{ $t("menu_title_logout") }}</span>
+            <span class="navbar-logout-text">{{
+              $t("menu_title_logout")
+            }}</span>
           </button>
           <button class="navbar-register-btn" @click="routeRegister()">
             {{ $t("button_register_free") }}
@@ -375,16 +377,16 @@ const { locale } = useI18n();
 
 // Verificar se o usuário está logado
 onMounted(() => {
-  if (typeof localStorage !== 'undefined') {
-    isUserLoggedIn.value = !!localStorage.getItem('userToken');
+  if (typeof localStorage !== "undefined") {
+    isUserLoggedIn.value = !!localStorage.getItem("userToken");
   }
 });
 
 // Observar mudanças no localStorage para atualizar o estado de login
-if (typeof window !== 'undefined') {
-  window.addEventListener('storage', () => {
-    if (typeof localStorage !== 'undefined') {
-      isUserLoggedIn.value = !!localStorage.getItem('userToken');
+if (typeof window !== "undefined") {
+  window.addEventListener("storage", () => {
+    if (typeof localStorage !== "undefined") {
+      isUserLoggedIn.value = !!localStorage.getItem("userToken");
     }
   });
 }
@@ -499,8 +501,8 @@ const routeDiscord = () => {
 };
 
 const routeLogout = () => {
-  if (typeof localStorage === 'undefined') return;
-  
+  if (typeof localStorage === "undefined") return;
+
   $customFetch("/logout", "POST", {
     body: JSON.stringify({
       email: localStorage.getItem("email"),
