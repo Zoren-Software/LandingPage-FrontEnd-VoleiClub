@@ -50,6 +50,17 @@
           >
         </div>
         <div class="navbar-actions">
+          <button
+            v-if="isUserLoggedIn"
+            class="navbar-logout-btn"
+            @click="routeLogout()"
+            :title="$t('menu_title_logout')"
+          >
+            <va-icon name="logout" size="18px" />
+            <span class="navbar-logout-text">{{
+              $t("menu_title_logout")
+            }}</span>
+          </button>
           <button class="navbar-register-btn" @click="routeRegister()">
             {{ $t("button_register_free") }}
           </button>
@@ -207,6 +218,23 @@
             </VaSidebarItemTitle>
           </VaSidebarItemContent>
         </VaSidebarItem>
+        <VaSidebarItem v-if="isUserLoggedIn">
+          <VaSidebarItemContent>
+            <VaSidebarItemTitle>
+              <a
+                href="#"
+                class="sidebar-link sidebar-logout-link"
+                @click.prevent="
+                  routeLogout();
+                  showSidebar = false;
+                "
+              >
+                <va-icon name="logout" size="18px" class="mr-2" />
+                {{ $t("menu_title_logout") }}
+              </a>
+            </VaSidebarItemTitle>
+          </VaSidebarItemContent>
+        </VaSidebarItem>
       </VaSidebar>
     </template>
 
@@ -336,13 +364,32 @@ import { useI18n } from "#imports";
 import { useKonamiCode } from "~/composables/useKonamiCode";
 
 const router = useRouter();
+const { $customFetch } = useNuxtApp();
+import { confirmSuccess, confirmError } from "~/utils/sweetAlert2/swalHelper";
 
 useKonamiCode(() => {
   router.push("/login");
 });
 const showSidebar = ref(false);
+const isUserLoggedIn = ref(false);
 
 const { locale } = useI18n();
+
+// Verificar se o usuário está logado
+onMounted(() => {
+  if (typeof localStorage !== "undefined") {
+    isUserLoggedIn.value = !!localStorage.getItem("userToken");
+  }
+});
+
+// Observar mudanças no localStorage para atualizar o estado de login
+if (typeof window !== "undefined") {
+  window.addEventListener("storage", () => {
+    if (typeof localStorage !== "undefined") {
+      isUserLoggedIn.value = !!localStorage.getItem("userToken");
+    }
+  });
+}
 
 // Carregar o idioma do localStorage ou usar 'en' como padrão
 if (!localStorage.getItem("selectedLanguage")) {
@@ -451,6 +498,38 @@ const routeDiscord = () => {
 
   const discordLink = runtimeConfig.public.discordLink;
   window.open(discordLink, "_blank");
+};
+
+const routeLogout = () => {
+  if (typeof localStorage === "undefined") return;
+
+  $customFetch("/logout", "POST", {
+    body: JSON.stringify({
+      email: localStorage.getItem("email"),
+      token: localStorage.getItem("userToken"),
+    }),
+  })
+    .then((response) => {
+      // Limpa dados e atualiza estado primeiro
+      localStorage.removeItem("userToken");
+      localStorage.removeItem("email");
+      isUserLoggedIn.value = false;
+
+      // Mostra mensagem e redireciona após fechar
+      confirmSuccess(response.message || "Logout efetuado com sucesso!", () => {
+        router.push("/");
+      });
+    })
+    .catch((error) => {
+      // Em caso de erro na API, ainda limpa localmente
+      localStorage.removeItem("userToken");
+      localStorage.removeItem("email");
+      isUserLoggedIn.value = false;
+
+      confirmError(error.message || "Erro ao fazer logout", () => {
+        router.push("/");
+      });
+    });
 };
 </script>
 
@@ -677,6 +756,29 @@ html {
 .navbar-register-btn:hover {
   background: #ff8c1a;
 }
+
+.navbar-logout-btn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: transparent;
+  color: #fff;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: 6px;
+  font-weight: 500;
+  font-size: 15px;
+  padding: 8px 16px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.navbar-logout-btn:hover {
+  background: rgba(255, 255, 255, 0.1);
+  border-color: rgba(255, 255, 255, 0.5);
+}
+.navbar-logout-text {
+  display: inline;
+}
+
 /* Tablet */
 @media (max-width: 1024px) {
   .custom-navbar {
@@ -729,6 +831,12 @@ html {
     font-size: 13px;
     padding: 6px 14px;
     white-space: nowrap;
+  }
+  .navbar-logout-btn {
+    padding: 6px 10px;
+  }
+  .navbar-logout-text {
+    display: none;
   }
   .navbar-logo {
     font-size: 18px;
@@ -848,6 +956,22 @@ html {
 }
 .sidebar-register-btn:hover {
   background: #ff8c1a;
+}
+
+.sidebar-logout-link {
+  display: flex;
+  align-items: center;
+  background: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  padding: 12px 16px;
+  margin: 8px 0;
+  color: #fff !important;
+}
+
+.sidebar-logout-link:hover {
+  background: rgba(255, 115, 0, 0.15) !important;
+  border-color: rgba(255, 115, 0, 0.3);
+  color: #ff7300 !important;
 }
 </style>
 <style>
