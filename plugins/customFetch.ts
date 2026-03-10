@@ -11,6 +11,11 @@ export default defineNuxtPlugin({
 
         async function customFetch(endpoint, method, options = {}) {
             const url = `${baseUrl}${endpoint}`;
+            
+            // Obtém valores do localStorage com verificação
+            const selectedLanguage = typeof localStorage !== 'undefined' ? localStorage.getItem("selectedLanguage") : null;
+            const userToken = typeof localStorage !== 'undefined' ? localStorage.getItem("userToken") : null;
+            
             const response = await fetch(url, {
                 method,
                 mode: 'cors',
@@ -19,8 +24,8 @@ export default defineNuxtPlugin({
                     'Accept': 'application/json',
                     'Access-Control-Allow-Origin': '*',
                     // adicionar language
-                    'Accept-Language': localStorage.getItem("selectedLanguage"),
-                    Authorization: `Bearer ${localStorage.getItem("userToken")}`,
+                    ...(selectedLanguage && { 'Accept-Language': selectedLanguage }),
+                    ...(userToken && { Authorization: `Bearer ${userToken}` }),
                     ...options.headers,
                 },
                 ...options,

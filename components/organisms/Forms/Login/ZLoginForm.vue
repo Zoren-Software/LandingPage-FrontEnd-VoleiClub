@@ -77,26 +77,23 @@ const login = async () => {
         // device_name deve ser o nome do dispositivo ou navegador
         device_name: navigator.userAgent,
       }),
-    }).then((response) => {
-      confirmSuccess(response.message, () => {});
-      localStorage.setItem("userToken", response.token);
-      localStorage.setItem("email", email.value);
+    });
+
+    // Salva os dados de autenticação primeiro
+    localStorage.setItem("userToken", response.token);
+    localStorage.setItem("email", email.value);
+    success.value = true;
+    successMessage.value = ["Login efetuado com sucesso!"];
+
+    // Mostra mensagem de sucesso e redireciona após o usuário fechar o alerta
+    confirmSuccess(response.message || "Login efetuado com sucesso!", () => {
       navigateTo("/leads");
     });
-    if (response.status === 200) {
-      success.value = true;
-      successMessage.value = ["Login efetuado com sucesso!"];
-    }
-    if (response.status === 422) {
-      success.value = false;
-      successMessage.value = [""];
-      error.value = true;
-      errorMessage.value = ["E-mail ou senha inválidous!"];
-    }
   } catch (errorLog) {
     error.value = true;
-    errorMessage.value = ["E-mail ou senha inválidous!"];
+    errorMessage.value = ["E-mail ou senha inválidos!"];
+    console.error("Erro no login:", errorLog);
+    loading.value = false;
   }
-  loading.value = false;
 };
 </script>
