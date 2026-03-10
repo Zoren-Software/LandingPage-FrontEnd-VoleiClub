@@ -173,7 +173,7 @@ const routeDiscord = () => {
 
 const routeLogout = () => {
   if (typeof localStorage === "undefined") return;
-  
+
   $customFetch("/logout", "POST", {
     body: JSON.stringify({
       email: localStorage.getItem("email"),
@@ -184,7 +184,7 @@ const routeLogout = () => {
       // Limpa dados primeiro
       localStorage.removeItem("userToken");
       localStorage.removeItem("email");
-      
+
       // Mostra mensagem e redireciona após fechar
       confirmSuccess(response.message || "Logout efetuado com sucesso!", () => {
         router.push("/");
@@ -194,7 +194,7 @@ const routeLogout = () => {
       // Em caso de erro na API, ainda limpa localmente
       localStorage.removeItem("userToken");
       localStorage.removeItem("email");
-      
+
       confirmError(error.message || "Erro ao fazer logout", () => {
         router.push("/");
       });

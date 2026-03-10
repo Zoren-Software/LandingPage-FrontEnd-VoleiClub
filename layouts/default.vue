@@ -514,7 +514,7 @@ const routeLogout = () => {
       localStorage.removeItem("userToken");
       localStorage.removeItem("email");
       isUserLoggedIn.value = false;
-      
+
       // Mostra mensagem e redireciona após fechar
       confirmSuccess(response.message || "Logout efetuado com sucesso!", () => {
         router.push("/");
@@ -525,7 +525,7 @@ const routeLogout = () => {
       localStorage.removeItem("userToken");
       localStorage.removeItem("email");
       isUserLoggedIn.value = false;
-      
+
       confirmError(error.message || "Erro ao fazer logout", () => {
         router.push("/");
       });
