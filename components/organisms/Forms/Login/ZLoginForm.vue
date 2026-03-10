@@ -78,14 +78,14 @@ const login = async () => {
         device_name: navigator.userAgent,
       }),
     });
-    
+
     // Sucesso na autenticação
     confirmSuccess(response.message, () => {});
     localStorage.setItem("userToken", response.token);
     localStorage.setItem("email", email.value);
     success.value = true;
     successMessage.value = ["Login efetuado com sucesso!"];
-    
+
     // Redireciona para a página de leads
     navigateTo("/leads");
   } catch (errorLog) {
