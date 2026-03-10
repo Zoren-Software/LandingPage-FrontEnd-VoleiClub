@@ -77,25 +77,21 @@ const login = async () => {
         // device_name deve ser o nome do dispositivo ou navegador
         device_name: navigator.userAgent,
       }),
-    }).then((response) => {
-      confirmSuccess(response.message, () => {});
-      localStorage.setItem("userToken", response.token);
-      localStorage.setItem("email", email.value);
-      navigateTo("/leads");
     });
-    if (response.status === 200) {
-      success.value = true;
-      successMessage.value = ["Login efetuado com sucesso!"];
-    }
-    if (response.status === 422) {
-      success.value = false;
-      successMessage.value = [""];
-      error.value = true;
-      errorMessage.value = ["E-mail ou senha inválidous!"];
-    }
+    
+    // Sucesso na autenticação
+    confirmSuccess(response.message, () => {});
+    localStorage.setItem("userToken", response.token);
+    localStorage.setItem("email", email.value);
+    success.value = true;
+    successMessage.value = ["Login efetuado com sucesso!"];
+    
+    // Redireciona para a página de leads
+    navigateTo("/leads");
   } catch (errorLog) {
     error.value = true;
-    errorMessage.value = ["E-mail ou senha inválidous!"];
+    errorMessage.value = ["E-mail ou senha inválidos!"];
+    console.error("Erro no login:", errorLog);
   }
   loading.value = false;
 };
