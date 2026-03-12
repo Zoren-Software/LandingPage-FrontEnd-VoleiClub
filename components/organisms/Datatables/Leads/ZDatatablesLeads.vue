@@ -69,7 +69,8 @@
   <VaModal
     v-model="showModalAlterStatus"
     :beforeOk="alterStatusLead"
-    ok-text="Apply"
+    :ok-text="$t('button_apply')"
+    :cancel-text="$t('button_cancel')"
   >
     <h3 class="va-h3">Alterar Status Lead</h3>
     {{ $t("label_lead_id") }}: <span class="px-2 py-3">{{ leadId }}</span>
@@ -94,7 +95,8 @@
   <VaModal
     v-model="showModalCreateTenant"
     :beforeOk="createTenant"
-    ok-text="Create"
+    :ok-text="$t('button_create')"
+    :cancel-text="$t('button_cancel')"
   >
     <h3 class="va-h3">Criar Tenant para Cliente</h3>
     {{ $t("label_lead_id") }}: <span class="px-2 py-3">{{ leadId }}</span>
@@ -119,7 +121,11 @@
       </div>
     </div>
   </VaModal>
-  <VaModal v-model="showModalInteractionLead" ok-text="Create">
+  <VaModal
+    v-model="showModalInteractionLead"
+    :ok-text="$t('button_create')"
+    :cancel-text="$t('button_cancel')"
+  >
     <h3 class="va-h3">Interações com Lead</h3>
     {{ $t("label_lead_id") }}: <span class="px-2 py-3">{{ leadId }}</span>
     <br />

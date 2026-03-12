@@ -175,5 +175,8 @@
     "plan_limit_players": "Gracze",
     "plan_sold": "sprzedanych",
     "plan_period_month": "miesiąc",
-    "plan_period_year": "rok"
+    "plan_period_year": "rok",
+    "button_cancel": "Anuluj",
+    "button_create": "Utwórz",
+    "button_apply": "Zastosuj"
 }

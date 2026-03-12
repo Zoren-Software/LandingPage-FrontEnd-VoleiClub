@@ -175,5 +175,8 @@
     "plan_limit_players": "Joueurs",
     "plan_sold": "vendus",
     "plan_period_month": "mois",
-    "plan_period_year": "an"
+    "plan_period_year": "an",
+    "button_cancel": "Annuler",
+    "button_create": "Créer",
+    "button_apply": "Appliquer"
 }

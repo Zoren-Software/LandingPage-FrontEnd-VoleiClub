@@ -173,5 +173,8 @@
     "plan_limit_players": "Players",
     "plan_sold": "sold",
     "plan_period_month": "month",
-    "plan_period_year": "year"
+    "plan_period_year": "year",
+    "button_cancel": "Cancel",
+    "button_create": "Create",
+    "button_apply": "Apply"
 }

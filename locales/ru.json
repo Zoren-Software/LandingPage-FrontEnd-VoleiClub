@@ -173,5 +173,8 @@
     "plan_limit_players": "Игроки",
     "plan_sold": "продано",
     "plan_period_month": "месяц",
-    "plan_period_year": "год"
+    "plan_period_year": "год",
+    "button_cancel": "Отмена",
+    "button_create": "Создать",
+    "button_apply": "Применить"
 }

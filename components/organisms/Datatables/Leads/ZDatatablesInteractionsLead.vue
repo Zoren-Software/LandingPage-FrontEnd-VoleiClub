@@ -46,7 +46,8 @@
   <VaModal
     v-model="showModalInteractionLead"
     :beforeOk="alterInteraction"
-    ok-text="Create"
+    :ok-text="$t('button_create')"
+    :cancel-text="$t('button_cancel')"
   >
     <h3 class="va-h3">Fazer nova interação</h3>
     {{ $t("label_lead_id") }}: <span class="px-2 py-3">{{ leadId }}</span>
