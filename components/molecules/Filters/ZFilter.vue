@@ -2,7 +2,7 @@
   <va-card class="mt-2 mr-3">
     <va-collapse
       v-model="value[0]"
-      header="Filtrar"
+      :header="$t('filter_header')"
       solid
       color="secondary"
       class="mb-6"

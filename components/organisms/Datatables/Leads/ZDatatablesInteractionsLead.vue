@@ -49,7 +49,7 @@
     :ok-text="$t('button_create')"
     :cancel-text="$t('button_cancel')"
   >
-    <h3 class="va-h3">Fazer nova interação</h3>
+    <h3 class="va-h3">{{ $t('title_new_interaction') }}</h3>
     {{ $t("label_lead_id") }}: <span class="px-2 py-3">{{ leadId }}</span>
     <br />
     {{ $t("label_status") }}: <span class="px-2 py-3">{{ status }}</span> <br />
@@ -57,16 +57,16 @@
       <div class="flex flex-col md7 sm7 xs7">
         <div class="item">
           <ZSelectStatusLead
-            label="Status Leads"
+            :label="$t('leads_filter_status')"
             class="mt-3 mb-3"
             v-model="status"
           />
         </div>
         <div class="item">
-          <ZInput class="mt-4" label="Mensagem" v-model="message" />
+          <ZInput class="mt-4" :label="$t('label_message')" v-model="message" />
         </div>
         <div class="item">
-          <ZInput class="mt-4" label="Anotações" v-model="notes" />
+          <ZInput class="mt-4" :label="$t('label_notes')" v-model="notes" />
         </div>
       </div>
       <div class="flex flex-col md3 sm3 xs3">
@@ -79,7 +79,8 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from "vue";
+import { ref, computed, onMounted } from "vue";
+import { useI18n } from "#imports";
 import { useNuxtApp } from "#app";
 import ZDatatableGeneric from "~/components/molecules/Datatable/ZDatatableGeneric";
 import { confirmSuccess } from "~/utils/sweetAlert2/swalHelper";
@@ -87,6 +88,7 @@ import ZDataTableActions from "~/components/molecules/Datatable/ZDataTableAction
 import ZInput from "~/components/atoms/Inputs/ZInput";
 import ZSelectStatusLead from "~/components/molecules/Selects/ZSelectStatusLead";
 
+const { t } = useI18n();
 const { $customFetch, $customFetchTenant } = useNuxtApp();
 
 let id = ref("");
@@ -107,29 +109,29 @@ const props = defineProps({
   },
 });
 
-const columns = ref([
+const columns = computed(() => [
   {
     key: "id",
     name: "id",
-    label: "Id",
+    label: t("table_header_id"),
     sortable: true,
   },
   {
     key: "notes",
     name: "notes",
-    label: "Notas",
+    label: t("table_header_notes"),
     sortable: true,
   },
   {
     key: "message",
     name: "message",
-    label: "Mensagem",
+    label: t("label_message"),
     sortable: true,
   },
   {
     key: "status.name",
     name: "status",
-    label: "Status",
+    label: t("label_status"),
     sortable: true,
   },
 ]);
