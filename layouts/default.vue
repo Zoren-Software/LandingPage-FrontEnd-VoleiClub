@@ -368,7 +368,8 @@ const { $customFetch } = useNuxtApp();
 import { confirmSuccess, confirmError } from "~/utils/sweetAlert2/swalHelper";
 
 useKonamiCode(() => {
-  router.push("/login");
+  const isLoggedIn = typeof localStorage !== "undefined" && !!localStorage.getItem("userToken");
+  router.push(isLoggedIn ? "/leads" : "/login");
 });
 const showSidebar = ref(false);
 const isUserLoggedIn = ref(false);

@@ -23,13 +23,14 @@
         <div class="item">
           <ZDataTableInputSearch
             v-model="search"
+            :placeholder="$t('placeholder_search')"
             @actionSearch="actionSearch"
           />
         </div>
       </div>
       <div class="flex flex-col md12 py-1">
         <div v-if="textAdvancedFilters" class="item my-2">
-          <span class="mr my-2 va-text-bold">Filtros avançados:</span>
+          <span class="mr my-2 va-text-bold">{{ $t('filter_advanced') }}</span>
         </div>
         <div class="item mb-2">
           <slot name="filter"></slot>
@@ -39,10 +40,10 @@
     <div class="row">
       <div class="flex flex-col md6 py-1">
         <div class="item">
-          <ZButton label="Limpar" color="info" class="mr-3" @click="actionClear"
-            >Limpar</ZButton
+          <ZButton :label="$t('button_clear')" color="info" class="mr-3" @click="actionClear"
+            >{{ $t('button_clear') }}</ZButton
           >
-          <ZButton label="Pesquisar" @click="actionSearch">Pesquisar</ZButton>
+          <ZButton :label="$t('button_search')" @click="actionSearch">{{ $t('button_search') }}</ZButton>
         </div>
       </div>
     </div>
@@ -82,8 +83,7 @@
               class="mb-2"
             />
             <p class="mb-3">
-              Itens de {{ paginatorInfo.firstItem }} a
-              {{ paginatorInfo.lastItem }} de {{ paginatorInfo.total }}
+              {{ $t('pagination_items', { first: paginatorInfo.firstItem, last: paginatorInfo.lastItem, total: paginatorInfo.total }) }}
             </p>
           </div>
         </td>

@@ -2,7 +2,7 @@
   <ZInput
     id="search"
     v-model="internalValue"
-    placeholder="Pesquisar..."
+    :placeholder="placeholder"
     prepend-icon="search"
     @keyup.enter="actionSearch"
   >
@@ -23,6 +23,10 @@ export default {
     modelValue: {
       type: String,
       default: "",
+    },
+    placeholder: {
+      type: String,
+      default: "Pesquisar...",
     },
   },
   emits: ["update:modelValue", "actionSearch"],
