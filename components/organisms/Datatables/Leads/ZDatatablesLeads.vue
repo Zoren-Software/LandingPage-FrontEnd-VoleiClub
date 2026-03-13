@@ -330,7 +330,7 @@ async function alterStatusLead() {
       loading.value = false;
       showModalAlterStatus.value = false;
       statusLead.value = null;
-      getLeads();
+      getLeads({ page: paginatorInfo.value.currentPage });
     });
 }
 
@@ -338,48 +338,59 @@ async function createTenant() {
   showModalCreateTenant.value = false;
   loading.value = true;
 
-  await $customFetchTenant(`/tenant`, "POST", {
-    body: JSON.stringify({
-      token: apiTenantsToken,
-      tenantId: tenantIdForm.value,
-      email: email.value,
-      name: name.value,
-    }),
-  })
-    .then((response) => {
-      confirmSuccess(response.message, () => {});
-    })
-    .catch((error) => {
-      confirmError(error.message, () => {});
-      console.error(error);
-    })
-    .finally(() => {
-      loading.value = false;
-      showModalCreateTenant.value = false;
+  try {
+    const tenantResponse = await $customFetchTenant(`/tenant`, "POST", {
+      body: JSON.stringify({
+        token: apiTenantsToken,
+        tenantId: tenantIdForm.value,
+        email: email.value,
+        name: name.value,
+      }),
     });
-
-  await $customFetch(`/leads/${leadId.value}`, "PUT", {
-    body: JSON.stringify({
-      status_id: statusId.value,
-      tenantId: tenantIdForm.value,
-      id: leadId.value,
-    }),
-  })
-    .then((response) => {
-      confirmSuccess(response.message, () => {});
-    })
-    .catch((error) => {
-      confirmError(error.message, () => {
-        console.error("Erro ao executar a ação");
-      });
-      console.error(error);
-    })
-    .finally(() => {
-      loading.value = false;
-      showModalAlterStatus.value = false;
-      statusLead.value = null;
-      getLeads();
+    const successMessage =
+      tenantResponse?.message ||
+      tenantResponse?.data?.createTenant?.message ||
+      tenantResponse?.data?.message ||
+      t("message_tenant_api_success");
+    loading.value = false;
+    confirmSuccess(successMessage, async () => {
+      try {
+        loading.value = true;
+        await $customFetch(`/leads/${leadId.value}`, "PUT", {
+          body: JSON.stringify({
+            status_id: statusId.value,
+            tenantId: tenantIdForm.value,
+            id: leadId.value,
+          }),
+        });
+        confirmSuccess(t("message_lead_updated"), () => {
+          showModalAlterStatus.value = false;
+          statusLead.value = null;
+          getLeads({ page: paginatorInfo.value.currentPage });
+        });
+      } catch (error) {
+        const errorMessage =
+          error?.message || error?.response?.message || "Erro ao atualizar o lead.";
+        confirmError(errorMessage, () => {});
+        console.error(error);
+      } finally {
+        loading.value = false;
+        showModalAlterStatus.value = false;
+        statusLead.value = null;
+        getLeads({ page: paginatorInfo.value.currentPage });
+      }
     });
+  } catch (error) {
+    const errorMessage =
+      error?.message ||
+      error?.response?.message ||
+      (Array.isArray(error?.response?.errors) && error?.response?.errors[0]?.message) ||
+      t("message_tenant_api_error");
+    confirmError(errorMessage, () => {});
+    console.error(error);
+    loading.value = false;
+    showModalCreateTenant.value = false;
+  }
 }
 
 function updateCurrentPageActive(page) {
@@ -418,7 +429,7 @@ async function getLeads({ page = 1 } = {}) {
     .then((response) => {
       items.value = response.data;
       paginatorInfo.value = {
-        currentPage: 1,
+        currentPage: page,
         lastPage: response.last_page,
         perPage: 15,
         total: response.total,
