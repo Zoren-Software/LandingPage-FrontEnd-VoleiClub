@@ -86,10 +86,10 @@
       v-model="statusLead"
     />
     <div class="item">
-      <ZInput class="mt-4" :label="$t('label_message')" v-model="messageAlterStatus" />
+      <ZInput id="message-alter-status" class="mt-4" :label="$t('label_message')" v-model="messageAlterStatus" />
     </div>
     <div class="item">
-      <ZInput class="mt-4" :label="$t('label_notes')" v-model="notes" />
+      <ZInput id="notes" class="mt-4" :label="$t('label_notes')" v-model="notes" />
     </div>
   </VaModal>
   <VaModal
@@ -111,7 +111,7 @@
     <div class="row mb-2">
       <div class="flex flex-col md7 sm7 xs7">
         <div class="item">
-          <ZInput class="mt-4" :label="$t('label_domain')" v-model="tenantIdForm" />
+          <ZInput id="tenant-domain" class="mt-4" :label="$t('label_domain')" v-model="tenantIdForm" />
         </div>
       </div>
       <div class="flex flex-col md3 sm3 xs3">
