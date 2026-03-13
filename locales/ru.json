@@ -196,5 +196,8 @@
     "title_interactions_with_lead": "Взаимодействия с лидом",
     "title_new_interaction": "Новое взаимодействие",
     "title_alter_status_lead": "Изменить статус лида",
-    "title_create_tenant": "Создать тенанта для клиента"
+    "title_create_tenant": "Создать тенанта для клиента",
+    "message_tenant_api_success": "Тенант успешно создан в API тенантов!",
+    "message_tenant_api_error": "Ошибка при создании тенанта в API. Попробуйте снова.",
+    "message_lead_updated": "Лид успешно обновлен."
 }

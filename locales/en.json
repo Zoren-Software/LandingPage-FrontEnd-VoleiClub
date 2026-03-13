@@ -196,5 +196,8 @@
     "title_interactions_with_lead": "Interactions with Lead",
     "title_new_interaction": "New interaction",
     "title_alter_status_lead": "Change Lead Status",
-    "title_create_tenant": "Create Tenant for Client"
+    "title_create_tenant": "Create Tenant for Client",
+    "message_tenant_api_success": "Tenant created successfully in the tenants API!",
+    "message_tenant_api_error": "Error creating tenant in the API. Please try again.",
+    "message_lead_updated": "Lead updated successfully."
 }

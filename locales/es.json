@@ -198,5 +198,8 @@
     "title_interactions_with_lead": "Interacciones con Lead",
     "title_new_interaction": "Nueva interacción",
     "title_alter_status_lead": "Cambiar estado del Lead",
-    "title_create_tenant": "Crear Tenant para cliente"
+    "title_create_tenant": "Crear Tenant para cliente",
+    "message_tenant_api_success": "¡Tenant creado con éxito en la API de tenants!",
+    "message_tenant_api_error": "Error al crear el tenant en la API. Inténtelo de nuevo.",
+    "message_lead_updated": "Lead actualizado con éxito."
 }
