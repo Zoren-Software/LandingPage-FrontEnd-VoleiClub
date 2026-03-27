@@ -52,7 +52,7 @@ export default {
           ...this.columns,
           {
             key: "actions",
-            label: "Ações",
+            label: this.$t("table_header_actions"),
             width: 80,
           },
         ];
