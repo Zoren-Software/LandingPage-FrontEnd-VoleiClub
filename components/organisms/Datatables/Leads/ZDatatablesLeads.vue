@@ -120,6 +120,16 @@
         </div>
       </div>
     </div>
+
+    <label class="create-tenant-terms mt-4">
+      <input v-model="termsAcceptedForTenant" type="checkbox" />
+      <span>
+        Li e concordo com os
+        <a :href="termsOfUseUrl" target="_blank" rel="noopener noreferrer">Termos de Uso</a>
+        e
+        <a :href="privacyPolicyUrl" target="_blank" rel="noopener noreferrer">Política de Privacidade</a>
+      </span>
+    </label>
   </VaModal>
   <VaModal
     v-model="showModalInteractionLead"
@@ -174,6 +184,17 @@ const loading = ref(false);
 const runtimeConfig = useRuntimeConfig();
 const apiTenantDomain = `.${runtimeConfig.public.apiTenantDomain}`;
 const apiTenantsToken = runtimeConfig.public.apiTenantsToken;
+const termsAcceptedForTenant = ref(false);
+
+const privacyPolicyUrl = computed(() => {
+  const url = String(runtimeConfig.public.privacyPolicyUrl ?? "").trim();
+  return url || "https://volleytrack.com/privacy-policy";
+});
+
+const termsOfUseUrl = computed(() => {
+  const url = String(runtimeConfig.public.termsOfUseUrl ?? "").trim();
+  return url || "https://volleytrack.com/terms-of-use";
+});
 
 const columns = computed(() => [
   {
@@ -262,6 +283,7 @@ onMounted(async () => {
 
 function actionCreateTenant(id, nameLead, emailLead, tenantIdLead, statusObj) {
   leadId.value = id;
+  termsAcceptedForTenant.value = false;
   showModalCreateTenant.value = true;
   name.value = nameLead;
   email.value = emailLead;
@@ -335,6 +357,14 @@ async function alterStatusLead() {
 }
 
 async function createTenant() {
+  if (!termsAcceptedForTenant.value) {
+    confirmError(
+      "É necessário aceitar os Termos de Uso e a Política de Privacidade.",
+      () => {}
+    );
+    return false;
+  }
+
   showModalCreateTenant.value = false;
   loading.value = true;
 
@@ -345,6 +375,7 @@ async function createTenant() {
         tenantId: tenantIdForm.value,
         email: email.value,
         name: name.value,
+        termsAccepted: true,
       }),
     });
     const successMessage =
@@ -445,3 +476,19 @@ async function getLeads({ page = 1 } = {}) {
     });
 }
 </script>
+
+<style scoped>
+.create-tenant-terms {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  font-size: 14px;
+  line-height: 1.45;
+  color: #374151;
+}
+
+.create-tenant-terms a {
+  color: #ff4e1b;
+  text-decoration: underline;
+}
+</style>
