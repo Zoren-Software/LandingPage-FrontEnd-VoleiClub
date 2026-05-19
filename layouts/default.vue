@@ -49,6 +49,9 @@
           <NuxtLink to="/privacy-policy" class="navbar-link">{{
             $t("footer_privacy_policy")
           }}</NuxtLink>
+          <NuxtLink to="/terms-of-use" class="navbar-link">{{
+            $t("footer_terms_of_use")
+          }}</NuxtLink>
           <a
             href="https://docs.volleytrack.com"
             target="_blank"
@@ -192,6 +195,19 @@
         <VaSidebarItem>
           <VaSidebarItemContent>
             <VaSidebarItemTitle>
+              <NuxtLink
+                to="/terms-of-use"
+                class="sidebar-link"
+                @click="showSidebar = false"
+              >
+                {{ $t("footer_terms_of_use") }}
+              </NuxtLink>
+            </VaSidebarItemTitle>
+          </VaSidebarItemContent>
+        </VaSidebarItem>
+        <VaSidebarItem>
+          <VaSidebarItemContent>
+            <VaSidebarItemTitle>
               <a
                 href="https://docs.volleytrack.com"
                 target="_blank"
@@ -312,6 +328,9 @@
         <div class="footer-links">
           <NuxtLink to="/privacy-policy" class="footer-link">{{
             $t("footer_privacy_policy")
+          }}</NuxtLink>
+          <NuxtLink to="/terms-of-use" class="footer-link">{{
+            $t("footer_terms_of_use")
           }}</NuxtLink>
           <a
             href="#about-section"

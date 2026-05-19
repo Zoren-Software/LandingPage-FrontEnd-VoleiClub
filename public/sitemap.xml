@@ -45,5 +45,20 @@
     <xhtml:link rel="alternate" hreflang="pl" href="https://volleytrack.com/privacy-policy" />
     <xhtml:link rel="alternate" hreflang="ru" href="https://volleytrack.com/privacy-policy" />
   </url>
+
+  <!-- Termos de Uso -->
+  <url>
+    <loc>https://volleytrack.com/terms-of-use</loc>
+    <lastmod>2026-05-18</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.5</priority>
+    <xhtml:link rel="alternate" hreflang="pt-br" href="https://volleytrack.com/terms-of-use" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://volleytrack.com/terms-of-use" />
+    <xhtml:link rel="alternate" hreflang="es" href="https://volleytrack.com/terms-of-use" />
+    <xhtml:link rel="alternate" hreflang="fr" href="https://volleytrack.com/terms-of-use" />
+    <xhtml:link rel="alternate" hreflang="it" href="https://volleytrack.com/terms-of-use" />
+    <xhtml:link rel="alternate" hreflang="pl" href="https://volleytrack.com/terms-of-use" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://volleytrack.com/terms-of-use" />
+  </url>
 </urlset>
 
