@@ -100,6 +100,7 @@ export default defineNuxtConfig({
 
   css: [
     '~/node_modules/material-design-icons-iconfont/dist/material-design-icons.css',
+    '~/assets/css/navbar-language.css',
   ],
 
   // Configurações de build para otimização

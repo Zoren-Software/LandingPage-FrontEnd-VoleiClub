@@ -16,7 +16,12 @@
           </div>
         </div>
         <div class="navbar-links">
-          <a href="/" class="navbar-link">{{ $t("menu_title_about") }}</a>
+          <a
+            href="#about-section"
+            class="navbar-link"
+            @click.prevent="routeAbout"
+            >{{ $t("menu_title_about") }}</a
+          >
           <a
             href="#benefits-section"
             class="navbar-link"
@@ -41,6 +46,9 @@
             @click.prevent="routeFAQ"
             >{{ $t("menu_title_faq") }}</a
           >
+          <NuxtLink to="/privacy-policy" class="navbar-link">{{
+            $t("footer_privacy_policy")
+          }}</NuxtLink>
           <a
             href="https://docs.volleytrack.com"
             target="_blank"
@@ -91,7 +99,14 @@
         <VaSidebarItem>
           <VaSidebarItemContent>
             <VaSidebarItemTitle>
-              <a href="/" class="sidebar-link" @click="showSidebar = false">
+              <a
+                href="#about-section"
+                class="sidebar-link"
+                @click.prevent="
+                  routeAbout();
+                  showSidebar = false;
+                "
+              >
                 {{ $t("menu_title_about") }}
               </a>
             </VaSidebarItemTitle>
@@ -158,6 +173,19 @@
               >
                 {{ $t("menu_title_faq") }}
               </a>
+            </VaSidebarItemTitle>
+          </VaSidebarItemContent>
+        </VaSidebarItem>
+        <VaSidebarItem>
+          <VaSidebarItemContent>
+            <VaSidebarItemTitle>
+              <NuxtLink
+                to="/privacy-policy"
+                class="sidebar-link"
+                @click="showSidebar = false"
+              >
+                {{ $t("footer_privacy_policy") }}
+              </NuxtLink>
             </VaSidebarItemTitle>
           </VaSidebarItemContent>
         </VaSidebarItem>
@@ -282,7 +310,15 @@
           }}</span>
         </div>
         <div class="footer-links">
-          <a href="/sobre" class="footer-link">{{ $t("menu_title_about") }}</a>
+          <NuxtLink to="/privacy-policy" class="footer-link">{{
+            $t("footer_privacy_policy")
+          }}</NuxtLink>
+          <a
+            href="#about-section"
+            class="footer-link"
+            @click.prevent="routeAbout"
+            >{{ $t("menu_title_about") }}</a
+          >
           <a
             href="#plans-section"
             class="footer-link"
@@ -413,6 +449,24 @@ const applicationName = runtimeConfig.public.nameApplication;
 const nameCompany = runtimeConfig.public.nameCompany;
 const emailSupport = runtimeConfig.public.emailSupport;
 const cnpj = runtimeConfig.public.cnpj;
+
+const routeAbout = () => {
+  if (window.location.pathname !== "/") {
+    router.push("/").then(() => {
+      setTimeout(() => {
+        const aboutSection = document.querySelector(".about-section");
+        if (aboutSection) {
+          aboutSection.scrollIntoView({ behavior: "smooth" });
+        }
+      }, 400);
+    });
+  } else {
+    const aboutSection = document.querySelector(".about-section");
+    if (aboutSection) {
+      aboutSection.scrollIntoView({ behavior: "smooth" });
+    }
+  }
+};
 
 const routeRegister = () => {
   if (window.location.pathname !== "/") {

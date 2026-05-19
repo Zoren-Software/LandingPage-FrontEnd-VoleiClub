@@ -86,7 +86,7 @@
     </div>
   </section>
 
-  <section class="about-section">
+  <section class="about-section" id="about-section">
     <div class="about-container">
       <div class="about-icon-col">
         <div class="about-icon-bg">
