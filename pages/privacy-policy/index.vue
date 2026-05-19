@@ -1,160 +1,109 @@
 <template>
   <article class="privacy-page">
     <header class="privacy-page__header">
-      <h1 class="privacy-page__title custom-titles">Política de Privacidade</h1>
+      <h1 class="privacy-page__title custom-titles">
+        {{ t("privacy_policy.title") }}
+      </h1>
       <p class="privacy-page__lead">
-        Esta política descreve como o VolleyTrack trata dados pessoais na
-        plataforma de gestão esportiva para treinadores e equipes de vôlei.
+        {{ t("privacy_policy.lead") }}
       </p>
     </header>
 
     <section class="privacy-section">
-      <h2>1. Quem somos</h2>
-      <p>
-        O VolleyTrack é um software como serviço (SaaS) voltado à organização de
-        treinos, elencos e desempenho esportivo. O tratamento de dados descrito
-        aqui é realizado em benefício dos usuários da plataforma e das pessoas
-        cujos dados são cadastrados por eles, como atletas e membros de equipes.
-      </p>
+      <h2>{{ t("privacy_policy.s1_title") }}</h2>
+      <p>{{ t("privacy_policy.s1_p1") }}</p>
     </section>
 
     <section class="privacy-section">
-      <h2>2. Dados que coletamos</h2>
-      <p>Podemos tratar as seguintes categorias de dados:</p>
+      <h2>{{ t("privacy_policy.s2_title") }}</h2>
+      <p>{{ t("privacy_policy.s2_intro") }}</p>
       <ul class="privacy-list">
         <li>
-          <strong>Dados do usuário da plataforma</strong> — Nome, e-mail,
-          credenciais de acesso, informações de conta, assinatura e preferências
-          de uso.
+          <strong>{{ t("privacy_policy.s2_li1_label") }}</strong>
+          — {{ t("privacy_policy.s2_li1_text") }}
         </li>
         <li>
-          <strong>Dados de jogadores e membros cadastrados</strong> —
-          Informações inseridas pelos usuários sobre atletas e equipes (por
-          exemplo: nome, posição, presença em treinos, estatísticas e registros
-          esportivos).
+          <strong>{{ t("privacy_policy.s2_li2_label") }}</strong>
+          — {{ t("privacy_policy.s2_li2_text") }}
         </li>
         <li>
-          <strong>Dados técnicos de acesso</strong> — Endereço IP, tipo de
-          navegador, dispositivo, data e hora de acesso e registros necessários
-          para segurança e funcionamento do sistema.
+          <strong>{{ t("privacy_policy.s2_li3_label") }}</strong>
+          — {{ t("privacy_policy.s2_li3_text") }}
         </li>
         <li>
-          <strong>Dados operacionais</strong> — Registros de uso da plataforma,
-          logs de erro e informações necessárias para manter o serviço estável e
-          seguro.
+          <strong>{{ t("privacy_policy.s2_li4_label") }}</strong>
+          — {{ t("privacy_policy.s2_li4_text") }}
         </li>
       </ul>
     </section>
 
     <section class="privacy-section">
-      <h2>3. Para que usamos os dados</h2>
-      <p>Utilizamos os dados para:</p>
+      <h2>{{ t("privacy_policy.s3_title") }}</h2>
+      <p>{{ t("privacy_policy.s3_intro") }}</p>
       <ul class="privacy-list">
-        <li>Operar e melhorar a plataforma VolleyTrack;</li>
-        <li>
-          Permitir o gerenciamento esportivo de equipes, treinos e jogadores;
-        </li>
-        <li>Autenticar usuários e proteger contas contra acessos indevidos;</li>
-        <li>
-          Prestar suporte e comunicar informações relevantes sobre o serviço;
-        </li>
-        <li>Cumprir obrigações legais e resolver incidentes de segurança.</li>
+        <li>{{ t("privacy_policy.s3_li1") }}</li>
+        <li>{{ t("privacy_policy.s3_li2") }}</li>
+        <li>{{ t("privacy_policy.s3_li3") }}</li>
+        <li>{{ t("privacy_policy.s3_li4") }}</li>
+        <li>{{ t("privacy_policy.s3_li5") }}</li>
       </ul>
     </section>
 
     <section class="privacy-section">
-      <h2>4. Base legal (LGPD)</h2>
-      <p>
-        O tratamento de dados pessoais no VolleyTrack observa a Lei Geral de
-        Proteção de Dados (Lei nº 13.709/2018), em especial:
-      </p>
+      <h2>{{ t("privacy_policy.s4_title") }}</h2>
+      <p>{{ t("privacy_policy.s4_intro") }}</p>
       <ul class="privacy-list">
         <li>
-          <strong>Execução de contrato</strong> — Quando o tratamento é
-          necessário para fornecer o serviço contratado ou solicitado por você.
+          <strong>{{ t("privacy_policy.s4_li1_label") }}</strong>
+          — {{ t("privacy_policy.s4_li1_text") }}
         </li>
         <li>
-          <strong>Legítimo interesse</strong> — Quando precisamos garantir
-          segurança, prevenir fraudes, manter a estabilidade do sistema ou
-          aprimorar funcionalidades, sempre com equilíbrio em relação aos seus
-          direitos.
+          <strong>{{ t("privacy_policy.s4_li2_label") }}</strong>
+          — {{ t("privacy_policy.s4_li2_text") }}
         </li>
       </ul>
-      <p>
-        Quando outra base legal for aplicável em situações específicas, você
-        será informado de forma clara.
-      </p>
+      <p>{{ t("privacy_policy.s4_p2") }}</p>
     </section>
 
     <section class="privacy-section">
-      <h2>5. Armazenamento e segurança</h2>
-      <p>
-        Os dados podem ser armazenados em serviços de computação em nuvem,
-        incluindo infraestrutura na Amazon Web Services (AWS). Adotamos medidas
-        técnicas e organizacionais razoáveis para proteger as informações, como
-        controle de acesso e comunicação protegida quando aplicável.
-      </p>
-      <p>
-        Nenhum sistema na internet é totalmente invulnerável. Por isso,
-        incentivamos o uso de senhas fortes e a proteção das credenciais de
-        acesso à sua conta.
-      </p>
+      <h2>{{ t("privacy_policy.s5_title") }}</h2>
+      <p>{{ t("privacy_policy.s5_p1") }}</p>
+      <p>{{ t("privacy_policy.s5_p2") }}</p>
     </section>
 
     <section class="privacy-section">
-      <h2>6. Compartilhamento de dados</h2>
+      <h2>{{ t("privacy_policy.s6_title") }}</h2>
       <p>
-        <strong>Não vendemos</strong> seus dados pessoais. O compartilhamento
-        ocorre apenas quando necessário para:
+        <strong>{{ t("privacy_policy.s6_intro_strong") }}</strong>
+        {{ t("privacy_policy.s6_intro_after") }}
       </p>
       <ul class="privacy-list">
-        <li>
-          Operação técnica da plataforma (por exemplo, provedores de hospedagem
-          e infraestrutura em nuvem);
-        </li>
-        <li>
-          Cumprimento de obrigação legal, ordem judicial ou requisição de
-          autoridade competente.
-        </li>
+        <li>{{ t("privacy_policy.s6_li1") }}</li>
+        <li>{{ t("privacy_policy.s6_li2") }}</li>
       </ul>
     </section>
 
     <section class="privacy-section">
-      <h2>7. Retenção de dados</h2>
-      <p>
-        Mantemos os dados pelo tempo necessário para a operação da plataforma,
-        cumprimento de obrigações legais e resolução de disputas. Quando não
-        forem mais necessários, buscamos eliminá-los ou anonimizá-los de forma
-        segura.
-      </p>
-      <p>
-        Você pode solicitar a exclusão de dados, observadas as limitações legais
-        e contratuais que exijam retenção por período determinado.
-      </p>
+      <h2>{{ t("privacy_policy.s7_title") }}</h2>
+      <p>{{ t("privacy_policy.s7_p1") }}</p>
+      <p>{{ t("privacy_policy.s7_p2") }}</p>
     </section>
 
     <section class="privacy-section">
-      <h2>8. Seus direitos</h2>
-      <p>Nos termos da LGPD, você pode solicitar, entre outros:</p>
+      <h2>{{ t("privacy_policy.s8_title") }}</h2>
+      <p>{{ t("privacy_policy.s8_intro") }}</p>
       <ul class="privacy-list">
-        <li>Confirmação e acesso aos dados tratados;</li>
-        <li>Correção de dados incompletos, inexatos ou desatualizados;</li>
-        <li>
-          Eliminação de dados desnecessários ou tratados em desconformidade;
-        </li>
-        <li>Informações sobre o compartilhamento e o tratamento realizado.</li>
+        <li>{{ t("privacy_policy.s8_li1") }}</li>
+        <li>{{ t("privacy_policy.s8_li2") }}</li>
+        <li>{{ t("privacy_policy.s8_li3") }}</li>
+        <li>{{ t("privacy_policy.s8_li4") }}</li>
       </ul>
-      <p>
-        Para exercer seus direitos, entre em contato pelo e-mail indicado
-        abaixo. Responderemos em prazo razoável.
-      </p>
+      <p>{{ t("privacy_policy.s8_p2") }}</p>
     </section>
 
     <section class="privacy-section">
-      <h2>9. Contato</h2>
-      <p>
-        Dúvidas sobre privacidade ou solicitações relacionadas a dados pessoais:
-      </p>
+      <h2>{{ t("privacy_policy.s9_title") }}</h2>
+      <p>{{ t("privacy_policy.s9_p1") }}</p>
       <p>
         <a href="mailto:support@volleytrack.com" class="privacy-page__email">
           support@volleytrack.com
@@ -163,19 +112,20 @@
     </section>
 
     <section class="privacy-section">
-      <h2>10. Alterações nesta política</h2>
-      <p>
-        Podemos atualizar esta política para refletir mudanças no serviço ou na
-        legislação. Recomendamos revisar esta página periodicamente.
-      </p>
-      <p class="privacy-page__updated">Última atualização: Maio de 2026</p>
+      <h2>{{ t("privacy_policy.s10_title") }}</h2>
+      <p>{{ t("privacy_policy.s10_p1") }}</p>
+      <p class="privacy-page__updated">{{ t("privacy_policy.s10_updated") }}</p>
     </section>
   </article>
 </template>
 
 <script setup>
+import { useI18n } from "#imports";
+
+const { t } = useI18n();
+
 useHead({
-  title: "Política de Privacidade",
+  title: () => t("privacy_policy.meta_title"),
 });
 </script>
 
