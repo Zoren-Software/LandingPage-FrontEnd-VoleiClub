@@ -50,6 +50,25 @@
             <div class="row mb-2">
               <div class="flex flex-col md12 sm12 xs12">
                 <div class="item">
+                  <va-input
+                    name="phone"
+                    class="display-block"
+                    :placeholder="$t('placeholder_phone')"
+                    :model-value="form.phone"
+                    type="tel"
+                    inputmode="tel"
+                    autocomplete="tel"
+                    :error="errors?.errors?.phone != ''"
+                    :error-messages="errors?.errors?.phone"
+                    :label="$t('label_phone')"
+                    @update:model-value="onPhoneInput"
+                  />
+                </div>
+              </div>
+            </div>
+            <div class="row mb-2">
+              <div class="flex flex-col md12 sm12 xs12">
+                <div class="item">
                   <va-select
                     name="option"
                     class="display-block"
@@ -185,6 +204,10 @@ import {
   confirmError,
   loader,
 } from "~/utils/sweetAlert2/swalHelper";
+import {
+  DEFAULT_WHATSAPP_PHONE,
+  formatWhatsappPhoneMask,
+} from "~/utils/formatting/phoneMask";
 import { useReCaptcha } from "vue-recaptcha-v3";
 
 const { $customFetch } = useNuxtApp();
@@ -199,6 +222,7 @@ const form = ref({
   tenant_id: "",
   name: "",
   email: "",
+  phone: DEFAULT_WHATSAPP_PHONE,
   experience_level: "",
   message: "",
 });
@@ -208,6 +232,7 @@ let errors = ref({
     tenant_id: "",
     name: "",
     email: "",
+    phone: "",
     experience_level: "",
     message: "",
   },
@@ -223,6 +248,7 @@ const errorsDefault = () => {
     errors: {
       name: "",
       email: "",
+      phone: "",
       experience_level: "",
       message: "",
       tenant_id: "",
@@ -231,6 +257,10 @@ const errorsDefault = () => {
   };
 };
 const { executeRecaptcha } = useReCaptcha();
+
+const onPhoneInput = (value) => {
+  form.value.phone = formatWhatsappPhoneMask(value == null ? "" : String(value));
+};
 
 const submit = async () => {
   try {
@@ -249,6 +279,7 @@ const submit = async () => {
         tenant_id: form.value.tenant_id,
         name: form.value.name,
         email: form.value.email,
+        phone: form.value.phone.trim(),
         experience_level: form.value.experience_level.value,
         message: form.value.message,
         recaptchaToken: token,
@@ -262,6 +293,7 @@ const submit = async () => {
           tenant_id: "",
           name: "",
           email: "",
+          phone: DEFAULT_WHATSAPP_PHONE,
           experience_level: "",
           message: "",
         };

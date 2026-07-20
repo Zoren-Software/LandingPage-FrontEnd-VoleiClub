@@ -9,13 +9,16 @@
     "generate": "nuxt generate",
     "preview": "nuxt preview",
     "postinstall": "nuxt prepare",
-    "update-browserslist": "npx update-browserslist-db@latest"
+    "update-browserslist": "npx update-browserslist-db@latest",
+    "test": "vitest run",
+    "test:watch": "vitest"
   },
   "devDependencies": {
     "@nuxt/devtools": "^1.2.0",
     "@nuxtjs/i18n": "^8.0.0",
     "nuxt": "3.13.0",
-    "sharp": "^0.34.5"
+    "sharp": "^0.34.5",
+    "vitest": "^3.2.7"
   },
   "dependencies": {
     "@vuestic/nuxt": "^1.0.21",
