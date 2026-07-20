@@ -1,0 +1,30 @@
+/**
+ * Navbar language selector — carregado globalmente para todas as rotas
+ * (home, /privacy-policy, /faq, etc.). Sem isso, o Vuestic aplica cor primária
+ * escura/laranja ilegível sobre o fundo #02254a fora da index.
+ */
+.custom-navbar .navbar-language-selector {
+  color: #ffffff !important;
+}
+
+.custom-navbar .navbar-language-selector .va-select,
+.custom-navbar .navbar-language-selector .va-input-wrapper,
+.custom-navbar .navbar-language-selector .va-input-wrapper__field,
+.custom-navbar .navbar-language-selector .va-input-wrapper__text,
+.custom-navbar .navbar-language-selector .va-select__content,
+.custom-navbar .navbar-language-selector .va-select__text,
+.custom-navbar .navbar-language-selector .va-select__selected,
+.custom-navbar .navbar-language-selector input,
+.custom-navbar .navbar-language-selector span {
+  color: #ffffff !important;
+  --va-input-wrapper-text-color: #ffffff !important;
+  caret-color: #ffffff !important;
+}
+
+.custom-navbar .navbar-language-selector .va-icon {
+  color: rgba(255, 255, 255, 0.7) !important;
+}
+
+.custom-navbar .navbar-language-selector .va-input-wrapper__field::placeholder {
+  color: rgba(255, 255, 255, 0.7) !important;
+}

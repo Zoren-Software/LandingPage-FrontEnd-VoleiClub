@@ -1,17 +1,25 @@
 <template>
   <ZInput
-    v-model="displayedValue"
+    :model-value="displayedValue"
     name="phone"
-    label="Celular"
+    :label="label"
+    :placeholder="placeholder"
     id="phone"
     class="mb-3"
-    maxlength="15"
+    type="tel"
+    inputmode="tel"
+    autocomplete="tel"
+    maxlength="22"
+    @update:model-value="onInput"
   />
 </template>
 
 <script>
 import ZInput from "~/components/atoms/Inputs/ZInput";
-import { formatPhoneOnType } from "~/utils/formatting/formatHelper";
+import {
+  DEFAULT_WHATSAPP_PHONE,
+  formatWhatsappPhoneMask,
+} from "~/utils/formatting/phoneMask";
 
 export default {
   components: {
@@ -20,27 +28,25 @@ export default {
   props: {
     modelValue: {
       type: String,
-      default: "",
+      default: DEFAULT_WHATSAPP_PHONE,
+    },
+    label: {
+      type: String,
+      default: "WhatsApp",
+    },
+    placeholder: {
+      type: String,
+      default: "+55 (47) 9xxxx-xxxx",
     },
   },
   computed: {
-    displayedValue: {
-      get() {
-        return this.formatPhone(this.modelValue);
-      },
-      set(value) {
-        const phoneWithoutMask = this.removeNonNumericCharacters(value);
-        this.$emit("update:modelValue", phoneWithoutMask);
-      },
+    displayedValue() {
+      return formatWhatsappPhoneMask(this.modelValue || DEFAULT_WHATSAPP_PHONE);
     },
   },
   methods: {
-    removeNonNumericCharacters(value) {
-      return value.replace(/\D/g, "");
-    },
-    formatPhone(value) {
-      const onlyNumbers = this.removeNonNumericCharacters(value);
-      return formatPhoneOnType(onlyNumbers);
+    onInput(value) {
+      this.$emit("update:modelValue", formatWhatsappPhoneMask(value ?? ""));
     },
   },
 };
