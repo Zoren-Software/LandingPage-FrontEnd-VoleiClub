@@ -637,6 +637,31 @@
               />
             </div>
             <div class="form-field">
+              <va-input
+                name="phone"
+                class="register-input"
+                :placeholder="$t('placeholder_phone')"
+                :model-value="form.phone"
+                type="tel"
+                inputmode="tel"
+                autocomplete="tel"
+                required
+                @update:model-value="onPhoneInput"
+                @blur="handleFieldBlur('phone', form.phone)"
+                :error="
+                  !!(errors?.errors?.phone && errors.errors.phone.length > 0)
+                "
+                :error-messages="
+                  Array.isArray(errors?.errors?.phone)
+                    ? errors.errors.phone
+                    : errors?.errors?.phone
+                    ? [errors.errors.phone]
+                    : []
+                "
+                :label="$t('label_phone')"
+              />
+            </div>
+            <div class="form-field">
               <div class="subdomain-field-wrapper">
                 <va-input
                   name="tenant_id"
@@ -881,6 +906,11 @@ import {
   confirmError,
   loader,
 } from "~/utils/sweetAlert2/swalHelper";
+import {
+  DEFAULT_WHATSAPP_PHONE,
+  formatWhatsappPhoneMask,
+  isValidWhatsappPhoneMask,
+} from "~/utils/formatting/phoneMask";
 import { useReCaptcha } from "vue-recaptcha-v3";
 import {
   getActivePlan,
@@ -908,6 +938,7 @@ const form = ref({
   tenant_id: "",
   name: "",
   email: "",
+  phone: DEFAULT_WHATSAPP_PHONE,
   experience_level: "",
   message: "",
 });
@@ -917,6 +948,7 @@ let errors = ref<{
     tenant_id: string[];
     name: string[];
     email: string[];
+    phone: string[];
     experience_level: string[];
     message: string[];
   };
@@ -926,6 +958,7 @@ let errors = ref<{
     tenant_id: [],
     name: [],
     email: [],
+    phone: [],
     experience_level: [],
     message: [],
   },
@@ -939,6 +972,7 @@ const submit = async () => {
     // Validar todos os campos obrigatórios para mostrar erros visuais
     const nameValid = validateField("name", form.value.name);
     const emailValid = validateField("email", form.value.email);
+    const phoneValid = validateField("phone", form.value.phone);
     const tenantIdValid = validateField("tenant_id", form.value.tenant_id);
     const experienceLevelValid = validateField(
       "experience_level",
@@ -962,7 +996,11 @@ const submit = async () => {
     }
 
     const isValid =
-      nameValid && emailValid && tenantIdValid && experienceLevelValid;
+      nameValid &&
+      emailValid &&
+      phoneValid &&
+      tenantIdValid &&
+      experienceLevelValid;
 
     // Forçar atualização reativa dos erros para garantir que sejam exibidos
     errors.value = { ...errors.value };
@@ -1014,6 +1052,7 @@ const submit = async () => {
         tenant_id: form.value.tenant_id,
         name: form.value.name,
         email: form.value.email,
+        phone: form.value.phone.trim(),
         experience_level:
           form.value.experience_level?.value || form.value.experience_level,
         message: form.value.message,
@@ -1026,6 +1065,7 @@ const submit = async () => {
           tenant_id: "",
           name: "",
           email: "",
+          phone: DEFAULT_WHATSAPP_PHONE,
           experience_level: "",
           message: "",
         };
@@ -1041,6 +1081,7 @@ const submit = async () => {
             tenant_id: [],
             name: [],
             email: [],
+            phone: [],
             experience_level: [],
             message: [],
           };
@@ -1050,6 +1091,7 @@ const submit = async () => {
             "tenant_id",
             "name",
             "email",
+            "phone",
             "experience_level",
             "message",
           ];
@@ -1219,6 +1261,22 @@ const validateField = (
         }
       }
       break;
+    case "phone":
+      if (
+        !value ||
+        (typeof value === "string" &&
+          (value.trim() === "" ||
+            value.trim() === "+" ||
+            value.trim() === "+55"))
+      ) {
+        fieldErrors.push(t("message_error_phone_required"));
+      } else if (
+        typeof value === "string" &&
+        !isValidWhatsappPhoneMask(value)
+      ) {
+        fieldErrors.push(t("message_error_phone_invalid"));
+      }
+      break;
     case "tenant_id":
       if (!value || (typeof value === "string" && value.trim() === "")) {
         fieldErrors.push("O campo nome do subdomínio é obrigatório.");
@@ -1257,6 +1315,13 @@ const validateField = (
 
 const handleFieldBlur = (field: string, value: any) => {
   validateField(field, value);
+};
+
+const onPhoneInput = (value: string | number | null) => {
+  form.value.phone = formatWhatsappPhoneMask(
+    value == null ? "" : String(value)
+  );
+  clearFieldError("phone");
 };
 
 const showSidebar = ref(false);
