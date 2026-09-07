@@ -417,6 +417,7 @@ import { ref } from "vue";
 import { useRouter } from "vue-router";
 import { useI18n } from "#imports";
 import { useKonamiCode } from "~/composables/useKonamiCode";
+import { clearLandingSession, homePath } from "~/utils/landingSession.js";
 
 const router = useRouter();
 const { $customFetch } = useNuxtApp();
@@ -424,7 +425,7 @@ import { confirmSuccess, confirmError } from "~/utils/sweetAlert2/swalHelper";
 
 useKonamiCode(() => {
   const isLoggedIn = typeof localStorage !== "undefined" && !!localStorage.getItem("userToken");
-  router.push(isLoggedIn ? "/leads" : "/login");
+  router.push(isLoggedIn ? homePath() : "/login");
 });
 const showSidebar = ref(false);
 const isUserLoggedIn = ref(false);
@@ -585,8 +586,7 @@ const routeLogout = () => {
   })
     .then((response) => {
       // Limpa dados e atualiza estado primeiro
-      localStorage.removeItem("userToken");
-      localStorage.removeItem("email");
+      clearLandingSession();
       isUserLoggedIn.value = false;
 
       // Mostra mensagem e redireciona após fechar
@@ -596,8 +596,7 @@ const routeLogout = () => {
     })
     .catch((error) => {
       // Em caso de erro na API, ainda limpa localmente
-      localStorage.removeItem("userToken");
-      localStorage.removeItem("email");
+      clearLandingSession();
       isUserLoggedIn.value = false;
 
       confirmError(error.message || "Erro ao fazer logout", () => {

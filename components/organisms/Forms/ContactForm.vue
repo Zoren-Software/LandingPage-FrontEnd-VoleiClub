@@ -209,6 +209,7 @@ import {
   formatWhatsappPhoneMask,
 } from "~/utils/formatting/phoneMask";
 import { useReCaptcha } from "vue-recaptcha-v3";
+import { attributionPayload } from "~/utils/acquisitionChannel.js";
 
 const { $customFetch } = useNuxtApp();
 
@@ -274,6 +275,7 @@ const submit = async () => {
 
     await new Promise((resolve) => setTimeout(resolve, 1000));
 
+    const attribution = attributionPayload();
     data.value = await $customFetch("/leads", "POST", {
       body: JSON.stringify({
         tenant_id: form.value.tenant_id,
@@ -283,6 +285,11 @@ const submit = async () => {
         experience_level: form.value.experience_level.value,
         message: form.value.message,
         recaptchaToken: token,
+        ref: attribution.ref,
+        visitor_token: attribution.visitor_token,
+        utm_source: attribution.utm_source,
+        utm_medium: attribution.utm_medium,
+        utm_campaign: attribution.utm_campaign,
       }),
     })
       .then((response) => {

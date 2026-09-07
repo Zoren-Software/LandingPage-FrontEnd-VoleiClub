@@ -1,16 +1,32 @@
-export default defineNuxtRouteMiddleware((to, from, next) => {
-    // Verifica se está no lado do cliente antes de acessar localStorage
-    if (process.client) {
-        const token = localStorage.getItem('userToken');
-        const protectedRoutes = ['/leads']; // NOTE - Lista de rotas protegidas
+import {
+  homePath,
+  isAdminPath,
+  isPartnerPath,
+  isPartnerSession,
+  isProtectedPath,
+} from '~/utils/landingSession.js'
 
-        if (to.path === '/login' && token != null) {
-            return navigateTo('/');
-        }
+export default defineNuxtRouteMiddleware((to) => {
+  if (!process.client) {
+    return
+  }
 
-        if (protectedRoutes.includes(to.path) && !token) {
-            // Se tenta acessar uma rota protegida sem estar logado, redireciona para o login
-            return navigateTo('/login');
-        }
-    }
-});
+  const token = localStorage.getItem('userToken')
+  const destination = to.path
+
+  if (destination === '/login' && token != null) {
+    return navigateTo(homePath())
+  }
+
+  if (isProtectedPath(destination) && !token) {
+    return navigateTo('/login')
+  }
+
+  if (token && isPartnerSession() && isAdminPath(destination)) {
+    return navigateTo('/partner')
+  }
+
+  if (token && !isPartnerSession() && isPartnerPath(destination)) {
+    return navigateTo('/leads')
+  }
+})
