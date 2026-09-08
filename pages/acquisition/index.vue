@@ -3,6 +3,17 @@
     <h1 class="text-2xl font-bold mb-4">Canais de aquisição</h1>
     <p class="mb-4">Cadastre origens, parceiros e copie o link de indicação.</p>
     <ZButton color="primary" class="mb-4" @click="creating = true">Novo canal</ZButton>
+    <div class="flex gap-3 mb-4 flex-wrap">
+      <va-select
+        v-model="ownerUserId"
+        :options="ownerOptions"
+        valueBy="value"
+        textBy="text"
+        clearable
+        label="Parceiro / afiliado"
+        class="w-full max-w-xs"
+      />
+    </div>
     <va-data-table :items="channels" :columns="columns" />
     <va-modal v-model="creating" title="Novo canal">
       <va-alert v-if="formError" color="danger" class="mb-3">{{ formError }}</va-alert>
@@ -39,7 +50,7 @@
 </template>
 
 <script setup>
-import { computed, onMounted, reactive, ref } from 'vue'
+import { computed, onMounted, reactive, ref, watch } from 'vue'
 import ZButton from '~/components/atoms/Buttons/ZButton.vue'
 
 definePageMeta({ layout: 'logged' })
@@ -47,6 +58,8 @@ useHead({ titleTemplate: 'Canais' })
 
 const { $customFetch } = useNuxtApp()
 const channels = ref([])
+const partners = ref([])
+const ownerUserId = ref(null)
 const creating = ref(false)
 const saving = ref(false)
 const formError = ref('')
@@ -64,6 +77,12 @@ const types = [
   { value: 'other', text: 'Outro' },
 ]
 const needsPortal = computed(() => form.type === 'partner' || form.type === 'affiliate')
+const ownerOptions = computed(() =>
+  partners.value.map((partner) => ({
+    value: partner.id,
+    text: partner.links_count > 1 ? `${partner.name} (${partner.links_count})` : partner.name,
+  })),
+)
 const columns = [
   { key: 'name', label: 'Nome' },
   { key: 'slug', label: 'Slug' },
@@ -71,10 +90,20 @@ const columns = [
   { key: 'referral_url', label: 'Link' },
 ]
 
+async function loadPartners() {
+  const response = await $customFetch('/acquisition-partners', 'GET')
+  partners.value = response.data ?? []
+}
+
 async function load() {
-  const response = await $customFetch('/acquisition-channels', 'GET')
+  const query = ownerUserId.value ? `?owner_user_id=${ownerUserId.value}` : ''
+  const response = await $customFetch(`/acquisition-channels${query}`, 'GET')
   channels.value = response.data ?? []
 }
+
+watch(ownerUserId, () => {
+  void load()
+})
 
 async function submit() {
   saving.value = true
@@ -111,5 +140,8 @@ async function submit() {
   }
 }
 
-onMounted(load)
+onMounted(() => {
+  void loadPartners()
+  void load()
+})
 </script>
