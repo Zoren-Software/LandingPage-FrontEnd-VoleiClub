@@ -5,8 +5,9 @@
     <ZButton color="primary" class="mb-4" @click="creating = true">Novo canal</ZButton>
     <va-data-table :items="channels" :columns="columns" />
     <va-modal v-model="creating" title="Novo canal">
-      <va-input v-model="form.name" label="Nome" class="mb-3" />
-      <va-input v-model="form.slug" label="Slug" class="mb-3" />
+      <va-alert v-if="formError" color="danger" class="mb-3">{{ formError }}</va-alert>
+      <va-input v-model="form.name" label="Nome" class="mb-3" :error-messages="formFieldErrors.name" />
+      <va-input v-model="form.slug" label="Slug" class="mb-3" :error-messages="formFieldErrors.slug" />
       <va-select
         v-model="form.type"
         :options="types"
@@ -15,8 +16,20 @@
         label="Tipo"
         class="mb-3"
       />
-      <va-input v-if="needsPortal" v-model="form.email" label="E-mail do portal" class="mb-3" />
-      <va-input v-if="needsPortal" v-model="form.password" type="password" label="Senha do portal" />
+      <va-input
+        v-if="needsPortal"
+        v-model="form.email"
+        label="E-mail do portal"
+        class="mb-3"
+        :error-messages="formFieldErrors.email"
+      />
+      <va-input
+        v-if="needsPortal"
+        v-model="form.password"
+        type="password"
+        label="Senha do portal"
+        :error-messages="formFieldErrors.password"
+      />
       <template #footer>
         <ZButton @click="creating = false">Cancelar</ZButton>
         <ZButton color="primary" :loading="saving" @click="submit">Salvar</ZButton>
@@ -36,6 +49,8 @@ const { $customFetch } = useNuxtApp()
 const channels = ref([])
 const creating = ref(false)
 const saving = ref(false)
+const formError = ref('')
+const formFieldErrors = reactive({})
 const form = reactive({ name: '', slug: '', type: 'social_media', email: '', password: '' })
 const types = [
   { value: 'social_media', text: 'Rede social' },
@@ -63,6 +78,10 @@ async function load() {
 
 async function submit() {
   saving.value = true
+  formError.value = ''
+  Object.keys(formFieldErrors).forEach((field) => {
+    delete formFieldErrors[field]
+  })
   try {
     await $customFetch('/acquisition-channels', 'POST', {
       body: JSON.stringify({
@@ -79,6 +98,14 @@ async function submit() {
     form.email = ''
     form.password = ''
     await load()
+  } catch (reason) {
+    formError.value = reason instanceof Error ? reason.message : 'Não foi possível salvar o canal.'
+    const errors = reason?.response?.errors
+    if (errors && typeof errors === 'object') {
+      Object.entries(errors).forEach(([field, messages]) => {
+        formFieldErrors[field] = Array.isArray(messages) ? messages[0] : String(messages)
+      })
+    }
   } finally {
     saving.value = false
   }

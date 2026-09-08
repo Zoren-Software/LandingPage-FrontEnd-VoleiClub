@@ -7,6 +7,14 @@ function isBrowser() {
   return typeof window !== 'undefined' && typeof document !== 'undefined'
 }
 
+function currentSearch() {
+  if (!isBrowser()) {
+    return ''
+  }
+
+  return window.location?.search ?? ''
+}
+
 function storage() {
   return isBrowser() ? window.localStorage : null
 }
@@ -103,44 +111,41 @@ function hasAnyUtm(utms) {
 
 export function captureAcquisition({ ref, search = '' } = {}) {
   const visitorToken = getOrCreateVisitorToken()
-  const incomingRef = typeof ref === 'string' && ref.trim() !== '' ? ref.trim() : null
+  const params = new URLSearchParams(search.startsWith('?') ? search.slice(1) : search)
+  const fromArg = typeof ref === 'string' && ref.trim() !== '' ? ref.trim() : null
+  const fromSearch = params.get('ref')
+  const incomingRef = fromArg ?? (fromSearch && fromSearch.trim() !== '' ? fromSearch.trim() : null)
   const storedRef = readStoredRef()
-  const firstTouchRef = storedRef || incomingRef
+  const resolvedRef = incomingRef ?? storedRef
 
-  if (firstTouchRef && !storedRef) {
-    persist(ACQ_REF_KEY, firstTouchRef)
+  if (incomingRef) {
+    persist(ACQ_REF_KEY, incomingRef)
   }
 
   const storedUtms = readStoredUtms()
   const incomingUtms = utmsFromSearch(search)
-  const firstTouchUtms = hasAnyUtm(storedUtms) ? storedUtms : incomingUtms
+  const resolvedUtms = hasAnyUtm(incomingUtms) ? incomingUtms : storedUtms
 
-  if (!hasAnyUtm(storedUtms) && hasAnyUtm(incomingUtms)) {
-    persist(ACQ_UTM_KEY, JSON.stringify(firstTouchUtms))
+  if (hasAnyUtm(incomingUtms)) {
+    persist(ACQ_UTM_KEY, JSON.stringify(incomingUtms))
   }
 
   return {
-    ref: firstTouchRef,
+    ref: resolvedRef,
     visitor_token: visitorToken,
-    ...firstTouchUtms,
+    ...resolvedUtms,
   }
 }
 
 export function attributionPayload() {
-  return {
-    ref: readStoredRef(),
-    visitor_token: getOrCreateVisitorToken(),
-    ...readStoredUtms(),
-  }
+  return captureAcquisition({
+    search: currentSearch(),
+  })
 }
 
 export function visitPayload(incomingRef) {
-  const stored = attributionPayload()
-  const ref =
-    (typeof incomingRef === 'string' && incomingRef.trim() !== '' ? incomingRef.trim() : null) || stored.ref
-
-  return {
-    ...stored,
-    ref,
-  }
+  return captureAcquisition({
+    ref: incomingRef,
+    search: currentSearch(),
+  })
 }

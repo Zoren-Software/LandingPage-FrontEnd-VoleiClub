@@ -43,15 +43,29 @@ describe('acquisitionChannel', () => {
     installBrowserStorage()
   })
 
-  it('guarda first-touch e não sobrescreve um ref posterior', () => {
+  it('atualiza o ref quando a URL traz um novo canal', () => {
     const first = captureAcquisition({ ref: 'instagram', search: '?utm_source=bio' })
-    const second = captureAcquisition({ ref: 'tiktok', search: '?utm_source=ads' })
+    const second = captureAcquisition({ ref: 'claudinei-cerutti', search: '?utm_source=affiliate' })
 
     expect(first.ref).toBe('instagram')
-    expect(second.ref).toBe('instagram')
-    expect(second.utm_source).toBe('bio')
-    expect(localStorage.getItem(ACQ_REF_KEY)).toBe('instagram')
+    expect(second.ref).toBe('claudinei-cerutti')
+    expect(second.utm_source).toBe('affiliate')
+    expect(localStorage.getItem(ACQ_REF_KEY)).toBe('claudinei-cerutti')
     expect(first.visitor_token).toBe(second.visitor_token)
+  })
+
+  it('mantém o canal armazenado em acesso direto sem ref', () => {
+    captureAcquisition({ ref: 'instagram' })
+
+    expect(captureAcquisition({ ref: null }).ref).toBe('instagram')
+    expect(attributionPayload().ref).toBe('instagram')
+  })
+
+  it('lê o ref da querystring quando um novo canal chega na URL', () => {
+    captureAcquisition({ ref: 'instagram' })
+
+    expect(captureAcquisition({ search: '?ref=claudinei-cerutti' }).ref).toBe('claudinei-cerutti')
+    expect(localStorage.getItem(ACQ_REF_KEY)).toBe('claudinei-cerutti')
   })
 
   it('reusa o visitor_token persistido no payload de lead e visita', () => {
