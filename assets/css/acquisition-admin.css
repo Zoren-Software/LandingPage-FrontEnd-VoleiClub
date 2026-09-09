@@ -1,0 +1,218 @@
+.acq-page {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+.acq-toolbar {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+.acq-toolbar h1 {
+  margin: 0;
+  font-size: clamp(22px, 2.2vw, 30px);
+  line-height: 1.15;
+}
+.acq-toolbar p {
+  margin: 6px 0 0;
+  max-width: 54ch;
+  color: var(--va-secondary);
+  font-size: 14px;
+}
+.acq-toolbar__actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+.acq-card {
+  overflow: hidden;
+}
+.acq-filters {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px;
+  padding-bottom: 12px;
+  margin-bottom: 4px;
+  border-bottom: 1px solid var(--va-background-border, #e5e7eb);
+}
+.acq-filters__search {
+  width: min(100%, 280px);
+}
+.acq-filters__owner {
+  width: min(100%, 240px);
+}
+.acq-filters__spacer {
+  flex: 1 1 auto;
+}
+.acq-filters__meta {
+  color: var(--va-secondary);
+  font-size: 13px;
+}
+.acq-empty,
+.acq-error,
+.acq-loading {
+  padding: 24px 8px;
+  text-align: center;
+  color: var(--va-secondary);
+}
+.acq-table-wrap {
+  overflow: auto;
+}
+.acq-table {
+  width: 100%;
+  border-collapse: collapse;
+  table-layout: fixed;
+}
+.acq-table th,
+.acq-table td {
+  padding: 12px 14px;
+  text-align: left;
+  vertical-align: middle;
+  border-bottom: 1px solid var(--va-background-border, #e5e7eb);
+}
+.acq-table th {
+  color: var(--va-secondary);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+.acq-table tbody tr:hover {
+  background: color-mix(in srgb, var(--va-primary) 6%, transparent);
+}
+.acq-stack {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  min-width: 0;
+}
+.acq-stack__primary {
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 1.3;
+}
+.acq-stack__secondary {
+  color: var(--va-secondary);
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  font-size: 12px;
+  line-height: 1.3;
+}
+.acq-chip {
+  display: inline-flex;
+  align-items: center;
+  height: 24px;
+  padding: 0 10px;
+  border: 1px solid var(--va-background-border, #e5e7eb);
+  border-radius: 999px;
+  color: var(--va-secondary);
+  font-size: 11px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.acq-num {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+  font-weight: 600;
+}
+.acq-footer {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 8px;
+  padding-top: 12px;
+  border-top: 1px solid var(--va-background-border, #e5e7eb);
+}
+.acq-pager {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+.acq-pager__label {
+  min-width: 4.5rem;
+  text-align: center;
+  color: var(--va-secondary);
+  font-size: 13px;
+}
+.acq-metrics {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: 12px;
+}
+.acq-metric {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  padding: 14px 16px;
+  border: 1px solid var(--va-background-border, #e5e7eb);
+  border-radius: 14px;
+  background: var(--va-background-element);
+}
+.acq-metric__label {
+  font-size: 11px;
+  color: var(--va-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+.acq-metric__value {
+  margin-top: 8px;
+  font-size: clamp(18px, 1.6vw, 24px);
+  font-weight: 700;
+  line-height: 1.15;
+}
+.acq-metric__hint {
+  margin-top: 6px;
+  color: var(--va-secondary);
+  font-size: 12px;
+}
+.acq-progress {
+  display: block;
+  height: 6px;
+  margin-top: 10px;
+  overflow: hidden;
+  border-radius: 999px;
+  background: var(--va-background-border, #e5e7eb);
+}
+.acq-progress__fill {
+  display: block;
+  height: 100%;
+  border-radius: inherit;
+  background: var(--va-primary);
+}
+.acq-col-name { width: 28%; }
+.acq-col-type { width: 18%; }
+.acq-col-link { width: 42%; }
+.acq-col-leads { width: 12%; }
+.acq-col-email { width: 24%; }
+.acq-col-origin { width: 22%; }
+.acq-col-status { width: 14%; }
+.acq-col-date { width: 18%; color: var(--va-secondary); white-space: nowrap; }
+.acq-clip {
+  display: block;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.acq-modal-fields {
+  display: flex;
+  flex-direction: column;
+}
+.acq-modal-fields .va-input,
+.acq-modal-fields .va-select {
+  width: 100%;
+}
+
+@media (max-width: 800px) {
+  .acq-filters__search,
+  .acq-filters__owner {
+    width: 100%;
+  }
+  .acq-col-type,
+  .acq-col-date,
+  .acq-col-origin {
+    display: none;
+  }
+}
