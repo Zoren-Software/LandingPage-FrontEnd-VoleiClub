@@ -1,8 +1,13 @@
 import { beforeEach, describe, expect, it } from 'vitest'
 import {
   ACQ_REF_KEY,
+  acquisitionChannelsQuery,
   attributionPayload,
   captureAcquisition,
+  channelTypeLabel,
+  publicReferralUrl,
+  referralCopyUrl,
+  referralDisplayPath,
   visitPayload,
 } from '../acquisitionChannel.js'
 import { clearLandingSession, homePath, saveUserRole } from '../landingSession.js'
@@ -99,5 +104,33 @@ describe('landingSession', () => {
 
     expect(homePath()).toBe('/leads')
     expect(localStorage.getItem('userToken')).toBeNull()
+  })
+})
+
+describe('referral helpers', () => {
+  it('monta a URL pública e o caminho de exibição do ref', () => {
+    expect(publicReferralUrl('claudinei-tiktok', 'http://localhost:3001')).toBe(
+      'http://localhost:3001/?ref=claudinei-tiktok',
+    )
+    expect(referralDisplayPath('claudinei-tiktok')).toBe('?ref=claudinei-tiktok')
+    expect(channelTypeLabel('partner')).toBe('Parceiro')
+    expect(channelTypeLabel('paid_traffic')).toBe('Tráfego pago')
+  })
+
+  it('copia a URL canônica do canal quando a API envia referral_url', () => {
+    expect(referralCopyUrl('tiktok', 'http://localhost:3002/?ref=tiktok')).toBe(
+      'http://localhost:3002/?ref=tiktok',
+    )
+    expect(referralCopyUrl('tiktok')).toBe(publicReferralUrl('tiktok'))
+  })
+
+  it('filtra canais por busca e dono na querystring', () => {
+    expect(
+      acquisitionChannelsQuery({
+        search: 'claudinei',
+        ownerUserId: 9,
+        page: 2,
+      }),
+    ).toBe('?per_page=15&page=2&search=claudinei&owner_user_id=9')
   })
 })

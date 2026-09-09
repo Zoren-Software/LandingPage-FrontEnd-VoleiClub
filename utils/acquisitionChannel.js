@@ -149,3 +149,53 @@ export function visitPayload(incomingRef) {
     search: currentSearch(),
   })
 }
+
+export const CHANNEL_TYPE_LABELS = {
+  social_media: 'Mídia social',
+  partner: 'Parceiro',
+  affiliate: 'Afiliado',
+  paid_traffic: 'Tráfego pago',
+  organic: 'Orgânico',
+  event: 'Evento',
+  email_marketing: 'E-mail marketing',
+  content: 'Conteúdo',
+  other: 'Outro',
+}
+
+export function channelTypeLabel(type) {
+  return CHANNEL_TYPE_LABELS[type] ?? type ?? '—'
+}
+
+export function publicReferralUrl(slug, origin) {
+  const resolvedOrigin = origin ?? (typeof window !== 'undefined' ? window.location?.origin ?? '' : '')
+  const ref = encodeURIComponent(String(slug ?? '').trim())
+  const base = String(resolvedOrigin).replace(/\/$/, '')
+
+  return `${base}/?ref=${ref}`
+}
+
+export function referralCopyUrl(slug, referralUrl) {
+  if (typeof referralUrl === 'string' && referralUrl.trim() !== '') {
+    return referralUrl.trim()
+  }
+
+  return publicReferralUrl(slug)
+}
+
+export function referralDisplayPath(slug) {
+  return `?ref=${String(slug ?? '').trim()}`
+}
+
+export function acquisitionChannelsQuery({ search, ownerUserId, page = 1, perPage = 15 } = {}) {
+  const params = new URLSearchParams()
+  params.set('per_page', String(perPage))
+  params.set('page', String(page))
+  if (search) {
+    params.set('search', search)
+  }
+  if (ownerUserId) {
+    params.set('owner_user_id', String(ownerUserId))
+  }
+
+  return `?${params.toString()}`
+}

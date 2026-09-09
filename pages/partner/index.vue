@@ -1,34 +1,159 @@
 <template>
-  <div class="p-4">
-    <div class="flex items-center justify-between mb-4 gap-4 flex-wrap">
+  <div class="p-4 acq-page">
+    <header class="acq-toolbar">
       <div>
-        <h1 class="text-2xl font-bold mb-1">{{ channelName }}</h1>
-        <p>Acompanhe os leads gerados pelos seus links.</p>
+        <div class="text-xs uppercase tracking-wide text-gray-500 mb-1">Portal do parceiro</div>
+        <h1>{{ channelName }}</h1>
+        <p>Acompanhe os leads gerados pelos seus links. Crie um por rede ou campanha.</p>
       </div>
-      <ZButton color="primary" @click="openCreate">Novo link</ZButton>
-    </div>
-    <div class="flex gap-4 mb-6">
-      <div>
-        <div class="text-sm">Leads</div>
-        <div class="text-xl font-bold">{{ leadsCount }}</div>
+      <div class="acq-toolbar__actions">
+        <ZButton preset="secondary" :loading="loading" :disabled="loading" @click="load">Atualizar</ZButton>
+        <ZButton color="primary" data-test="create-partner-link" @click="openCreate">Novo link</ZButton>
       </div>
-      <div>
-        <div class="text-sm">Conversões</div>
-        <div class="text-xl font-bold">{{ conversionsCount }}</div>
-      </div>
-    </div>
-    <h2 class="text-lg font-semibold mb-2">Seus links</h2>
-    <va-data-table :items="links" :columns="linkColumns" class="mb-6">
-      <template #cell(referral_url)="{ rowData }">
-        {{ rowData.referral_url }}
-      </template>
-    </va-data-table>
-    <h2 class="text-lg font-semibold mb-2">Seus leads</h2>
-    <va-data-table :items="leads" :columns="columns" />
-    <va-modal v-model="creating" title="Novo link">
+    </header>
+
+    <va-alert v-if="error" color="danger" class="mb-0">
+      {{ error }}
+      <ZButton class="ml-3" preset="plain" color="danger" @click="load">Tentar novamente</ZButton>
+    </va-alert>
+
+    <va-card class="acq-card">
+      <va-card-title>
+        <div>
+          <div>Seus links</div>
+          <p class="acq-filters__meta mt-1">Crie um link por rede ou campanha para ver de onde veio cada lead.</p>
+        </div>
+      </va-card-title>
+      <va-card-content>
+        <div v-if="!links.length" class="acq-empty">Nenhum link ainda.</div>
+        <div v-else class="acq-table-wrap">
+          <table class="acq-table">
+            <thead>
+              <tr>
+                <th class="acq-col-name">Nome</th>
+                <th class="acq-col-type">Tipo</th>
+                <th class="acq-col-link">Link</th>
+                <th class="acq-col-leads acq-num">Leads</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr v-for="link in links" :key="link.id">
+                <td class="acq-col-name">
+                  <div class="acq-stack">
+                    <span class="acq-stack__primary">{{ link.name }}</span>
+                    <span class="acq-stack__secondary">?ref={{ link.slug }}</span>
+                  </div>
+                </td>
+                <td class="acq-col-type">
+                  <span class="acq-chip">{{ channelTypeLabel(link.type) }}</span>
+                </td>
+                <td class="acq-col-link">
+                  <ZReferralCopyButton :slug="link.slug" :name="link.name" :url="link.referral_url" />
+                </td>
+                <td class="acq-col-leads acq-num">{{ link.leads_count ?? 0 }}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </va-card-content>
+    </va-card>
+
+    <section class="acq-metrics" aria-label="Resumo de aquisição">
+      <article v-for="card in cards" :key="card.label" class="acq-metric">
+        <span class="acq-metric__label">{{ card.label }}</span>
+        <strong class="acq-metric__value">{{ card.value }}</strong>
+        <span class="acq-metric__hint">{{ card.hint }}</span>
+        <span v-if="card.progress !== undefined" class="acq-progress" aria-hidden="true">
+          <span class="acq-progress__fill" :style="{ width: `${card.progress}%` }" />
+        </span>
+      </article>
+    </section>
+
+    <va-card class="acq-card">
+      <va-card-title>
+        <div class="flex items-center justify-between gap-3 flex-wrap w-full">
+          <div>
+            <div>Seus leads</div>
+            <p class="acq-filters__meta mt-1">Pessoas que chegaram pela sua indicação.</p>
+          </div>
+          <span class="acq-filters__meta">{{ total }} no total</span>
+        </div>
+      </va-card-title>
+      <va-card-content>
+        <div v-if="loading" class="acq-loading">Carregando leads…</div>
+        <div v-else-if="!leads.length" class="acq-empty">Nenhum lead pelo seu link ainda.</div>
+        <div v-else class="acq-table-wrap">
+          <table class="acq-table">
+            <thead>
+              <tr>
+                <th class="acq-col-name">Nome</th>
+                <th class="acq-col-email">E-mail</th>
+                <th class="acq-col-origin">Origem</th>
+                <th class="acq-col-status">Status</th>
+                <th class="acq-col-date">Data</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr v-for="lead in leads" :key="lead.id">
+                <td class="acq-col-name">
+                  <span class="acq-stack__primary">{{ lead.name }}</span>
+                </td>
+                <td class="acq-col-email">
+                  <span class="acq-stack__secondary acq-clip" :title="lead.email">{{ lead.email }}</span>
+                </td>
+                <td class="acq-col-origin">
+                  <div v-if="lead.channel" class="acq-stack">
+                    <span class="acq-stack__primary">{{ lead.channel.name }}</span>
+                    <span class="acq-stack__secondary">?ref={{ lead.channel.slug }}</span>
+                  </div>
+                  <span v-else class="acq-stack__secondary">Sem canal</span>
+                </td>
+                <td class="acq-col-status">
+                  <span class="acq-chip">{{ lead.status === 'Cliente' ? 'Cliente' : 'Lead' }}</span>
+                </td>
+                <td class="acq-col-date">{{ formatShortDate(lead.created_at) }}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div v-if="!loading && !error && leads.length" class="acq-footer">
+          <div class="acq-pager">
+            <ZButton
+              preset="plain"
+              icon="chevron_left"
+              data-test="partner-prev"
+              :disabled="loading || page <= 1"
+              @click="goToPage(page - 1)"
+            />
+            <span class="acq-pager__label">{{ page }} / {{ lastPage }}</span>
+            <ZButton
+              preset="plain"
+              icon="chevron_right"
+              data-test="partner-next"
+              :disabled="loading || page >= lastPage"
+              @click="goToPage(page + 1)"
+            />
+          </div>
+        </div>
+      </va-card-content>
+    </va-card>
+
+    <va-modal v-model="creating" title="Novo link" size="small">
       <va-alert v-if="formError" color="danger" class="mb-3">{{ formError }}</va-alert>
-      <va-input v-model="form.name" label="Nome" class="mb-3" />
-      <va-input v-model="form.slug" label="Slug" class="mb-3" />
+      <va-input
+        v-model="form.name"
+        label="Nome"
+        class="mb-3"
+        :error-messages="formFieldErrors.name"
+        @update:model-value="clearFormField('name')"
+      />
+      <va-input
+        v-model="form.slug"
+        label="Slug"
+        class="mb-3"
+        :error-messages="formFieldErrors.slug"
+        @update:model-value="clearFormField('slug')"
+      />
       <va-select
         v-model="form.type"
         :options="types"
@@ -39,31 +164,44 @@
       />
       <template #footer>
         <ZButton @click="creating = false">Cancelar</ZButton>
-        <ZButton color="primary" :loading="saving" @click="submit">Salvar</ZButton>
+        <ZButton color="primary" data-test="save-partner-link" :loading="saving" @click="submitCreate">Salvar</ZButton>
       </template>
     </va-modal>
   </div>
 </template>
 
 <script setup>
-import { onMounted, reactive, ref } from 'vue'
+import { computed, onMounted, reactive, ref } from 'vue'
 import ZButton from '~/components/atoms/Buttons/ZButton.vue'
+import ZReferralCopyButton from '~/components/molecules/Acquisition/ZReferralCopyButton.vue'
+import { channelTypeLabel } from '~/utils/acquisitionChannel'
+import '~/assets/css/acquisition-admin.css'
 
 definePageMeta({ layout: 'logged' })
 useHead({ titleTemplate: 'Portal do parceiro' })
 
 const { $customFetch } = useNuxtApp()
 const channelName = ref('Seu canal')
-const leadsCount = ref(0)
-const conversionsCount = ref(0)
 const links = ref([])
 const leads = ref([])
-const creating = ref(false)
+const leadsCount = ref(0)
+const conversionsCount = ref(0)
+const revenueCents = ref(0)
+const conversionRate = ref(0)
+const goalProgress = ref(null)
+const loading = ref(false)
 const saving = ref(false)
+const creating = ref(false)
+const error = ref('')
 const formError = ref('')
+const formFieldErrors = reactive({})
+const page = ref(1)
+const lastPage = ref(1)
+const total = ref(0)
+let requestSequence = 0
 const form = reactive({ name: '', slug: '', type: 'social_media' })
 const types = [
-  { value: 'social_media', text: 'Rede social' },
+  { value: 'social_media', text: 'Mídia social' },
   { value: 'paid_traffic', text: 'Tráfego pago' },
   { value: 'organic', text: 'Orgânico' },
   { value: 'event', text: 'Evento' },
@@ -71,43 +209,128 @@ const types = [
   { value: 'content', text: 'Conteúdo' },
   { value: 'other', text: 'Outro' },
 ]
-const linkColumns = [
-  { key: 'name', label: 'Nome' },
-  { key: 'type', label: 'Tipo' },
-  { key: 'referral_url', label: 'Link' },
-  { key: 'leads_count', label: 'Leads' },
-]
-const columns = [
-  { key: 'name', label: 'Nome' },
-  { key: 'email', label: 'E-mail' },
-  { key: 'status', label: 'Status' },
-  { key: 'origin', label: 'Origem' },
-]
+
+const cards = computed(() => {
+  const items = [
+    { label: 'Leads', value: String(leadsCount.value), hint: 'Pessoas que chegaram pelos seus links' },
+    { label: 'Conversões', value: String(conversionsCount.value), hint: 'Primeiro pagamento' },
+    { label: 'Taxa', value: formatPercent(conversionRate.value), hint: 'Conversões / leads' },
+    { label: 'Receita', value: formatMoney(revenueCents.value), hint: 'Valor atribuído' },
+  ]
+  if (goalProgress.value === null) {
+    return items
+  }
+  return [
+    ...items,
+    {
+      label: 'Meta',
+      value: formatPercent(goalProgress.value),
+      hint: 'Progresso do mês',
+      progress: Math.min(100, Math.max(0, goalProgress.value)),
+    },
+  ]
+})
+
+function formatMoney(cents) {
+  return ((Number(cents) || 0) / 100).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })
+}
+
+function formatPercent(value) {
+  return `${Number(value || 0).toLocaleString('pt-BR', { maximumFractionDigits: 1 })}%`
+}
+
+function formatShortDate(value) {
+  if (!value) {
+    return '—'
+  }
+  return new Date(value).toLocaleString('pt-BR', {
+    day: '2-digit',
+    month: '2-digit',
+    year: 'numeric',
+    hour: '2-digit',
+    minute: '2-digit',
+  })
+}
+
+function clearFormField(field) {
+  delete formFieldErrors[field]
+}
 
 function openCreate() {
   form.name = ''
   form.slug = ''
   form.type = 'social_media'
   formError.value = ''
+  Object.keys(formFieldErrors).forEach((field) => {
+    delete formFieldErrors[field]
+  })
   creating.value = true
 }
 
-async function load() {
-  const dashboard = await $customFetch('/partner/dashboard', 'GET')
-  channelName.value = dashboard.channel?.name ?? channelName.value
-  leadsCount.value = dashboard.cards?.leads ?? 0
-  conversionsCount.value = dashboard.cards?.conversions ?? 0
-  links.value = dashboard.links ?? []
-  const listed = await $customFetch('/partner/leads', 'GET')
-  leads.value = (listed.data ?? []).map((lead) => ({
-    ...lead,
-    origin: lead.channel?.name ?? '—',
-  }))
+async function loadLeads(nextPage = 1, parentSequence = requestSequence) {
+  const listed = await $customFetch(`/partner/leads?per_page=15&page=${nextPage}`, 'GET')
+  if (parentSequence !== requestSequence) {
+    return
+  }
+  leads.value = listed.data ?? []
+  page.value = listed.current_page ?? 1
+  lastPage.value = listed.last_page ?? 1
+  total.value = listed.total ?? leads.value.length
 }
 
-async function submit() {
+async function load() {
+  const sequence = ++requestSequence
+  loading.value = true
+  error.value = ''
+  try {
+    const dashboard = await $customFetch('/partner/dashboard', 'GET')
+    if (sequence !== requestSequence) {
+      return
+    }
+    channelName.value = dashboard.channel?.name ?? channelName.value
+    links.value = dashboard.links ?? []
+    leadsCount.value = dashboard.cards?.leads ?? 0
+    conversionsCount.value = dashboard.cards?.conversions ?? 0
+    revenueCents.value = dashboard.cards?.revenue_cents ?? 0
+    conversionRate.value = dashboard.cards?.conversion_rate ?? 0
+    goalProgress.value = dashboard.goal_progress_percent ?? null
+    await loadLeads(1, sequence)
+  } catch (reason) {
+    if (sequence !== requestSequence) {
+      return
+    }
+    error.value = reason instanceof Error ? reason.message : 'Não foi possível carregar o portal.'
+  } finally {
+    if (sequence === requestSequence) {
+      loading.value = false
+    }
+  }
+}
+
+async function goToPage(nextPage) {
+  const sequence = requestSequence
+  loading.value = true
+  error.value = ''
+  try {
+    await loadLeads(nextPage, sequence)
+  } catch (reason) {
+    if (sequence !== requestSequence) {
+      return
+    }
+    error.value = reason instanceof Error ? reason.message : 'Não foi possível carregar os leads.'
+  } finally {
+    if (sequence === requestSequence) {
+      loading.value = false
+    }
+  }
+}
+
+async function submitCreate() {
   saving.value = true
   formError.value = ''
+  Object.keys(formFieldErrors).forEach((field) => {
+    delete formFieldErrors[field]
+  })
   try {
     await $customFetch('/partner/channels', 'POST', {
       body: JSON.stringify({
@@ -120,6 +343,12 @@ async function submit() {
     await load()
   } catch (reason) {
     formError.value = reason instanceof Error ? reason.message : 'Não foi possível criar o link.'
+    const errors = reason?.response?.errors
+    if (errors && typeof errors === 'object') {
+      Object.entries(errors).forEach(([field, messages]) => {
+        formFieldErrors[field] = Array.isArray(messages) ? messages[0] : String(messages)
+      })
+    }
   } finally {
     saving.value = false
   }
