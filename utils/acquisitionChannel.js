@@ -199,3 +199,51 @@ export function acquisitionChannelsQuery({ search, ownerUserId, page = 1, perPag
 
   return `?${params.toString()}`
 }
+
+export const PORTAL_PASSWORD_MIN_LENGTH = 8
+export const PORTAL_PASSWORD_MIN_MESSAGE = 'A senha deve ter pelo menos 8 caracteres.'
+
+export function localizeValidationMessage(message) {
+  const value = String(message ?? '')
+  if (/password field must be at least 8/i.test(value) || /password must be at least 8/i.test(value)) {
+    return PORTAL_PASSWORD_MIN_MESSAGE
+  }
+
+  return value
+}
+
+export function portalPasswordError(password) {
+  if (!password || String(password).length < PORTAL_PASSWORD_MIN_LENGTH) {
+    return PORTAL_PASSWORD_MIN_MESSAGE
+  }
+
+  return ''
+}
+
+export function applyApiValidationErrors(target, reason) {
+  const errors = reason?.response?.errors
+  if (!errors || typeof errors !== 'object') {
+    return
+  }
+
+  Object.entries(errors).forEach(([field, messages]) => {
+    const raw = Array.isArray(messages) ? messages[0] : String(messages)
+    target[field] = localizeValidationMessage(raw)
+  })
+}
+
+export function formErrorFromApi(reason, fallback) {
+  const errors = reason?.response?.errors
+  if (errors && typeof errors === 'object') {
+    const first = Object.values(errors)[0]
+    const raw = Array.isArray(first) ? first[0] : String(first)
+
+    return localizeValidationMessage(raw) || fallback
+  }
+
+  if (reason instanceof Error && reason.message) {
+    return localizeValidationMessage(reason.message)
+  }
+
+  return fallback
+}

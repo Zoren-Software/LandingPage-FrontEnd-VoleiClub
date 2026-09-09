@@ -2,9 +2,12 @@ import { beforeEach, describe, expect, it } from 'vitest'
 import {
   ACQ_REF_KEY,
   acquisitionChannelsQuery,
+  applyApiValidationErrors,
   attributionPayload,
   captureAcquisition,
   channelTypeLabel,
+  formErrorFromApi,
+  portalPasswordError,
   publicReferralUrl,
   referralCopyUrl,
   referralDisplayPath,
@@ -132,5 +135,27 @@ describe('referral helpers', () => {
         page: 2,
       }),
     ).toBe('?per_page=15&page=2&search=claudinei&owner_user_id=9')
+  })
+})
+
+describe('validação do canal', () => {
+  it('pede senha com pelo menos 8 caracteres em português', () => {
+    expect(portalPasswordError('123456')).toBe('A senha deve ter pelo menos 8 caracteres.')
+    expect(portalPasswordError('12345678')).toBe('')
+  })
+
+  it('traduz o 422 de senha da API e mantém o modal com o erro no campo', () => {
+    const fields = {}
+    const reason = new Error('The password field must be at least 8 characters.')
+    reason.response = {
+      errors: {
+        password: ['The password field must be at least 8 characters.'],
+      },
+    }
+
+    applyApiValidationErrors(fields, reason)
+
+    expect(fields.password).toBe('A senha deve ter pelo menos 8 caracteres.')
+    expect(formErrorFromApi(reason, 'Falha')).toBe('A senha deve ter pelo menos 8 caracteres.')
   })
 })

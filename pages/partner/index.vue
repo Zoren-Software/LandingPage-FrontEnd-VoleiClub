@@ -138,34 +138,40 @@
       </va-card-content>
     </va-card>
 
-    <va-modal v-model="creating" title="Novo link" size="small">
-      <va-alert v-if="formError" color="danger" class="mb-3">{{ formError }}</va-alert>
-      <va-input
-        v-model="form.name"
-        label="Nome"
-        class="mb-3"
-        :error-messages="formFieldErrors.name"
-        @update:model-value="clearFormField('name')"
-      />
-      <va-input
-        v-model="form.slug"
-        label="Slug"
-        class="mb-3"
-        :error-messages="formFieldErrors.slug"
-        @update:model-value="clearFormField('slug')"
-      />
-      <va-select
-        v-model="form.type"
-        :options="types"
-        valueBy="value"
-        textBy="text"
-        label="Tipo / rede"
-        class="mb-3"
-      />
-      <template #footer>
-        <ZButton @click="creating = false">Cancelar</ZButton>
-        <ZButton color="primary" data-test="save-partner-link" :loading="saving" @click="submitCreate">Salvar</ZButton>
-      </template>
+    <va-modal
+      v-model="creating"
+      title="Novo link"
+      size="small"
+      ok-text="Salvar"
+      :cancel-text="$t('button_cancel')"
+      :beforeOk="submitCreate"
+      :ok-props="{ loading: saving, disabled: saving, 'data-test': 'save-partner-link' }"
+    >
+      <div class="acq-modal-fields">
+        <va-alert v-if="formError" color="danger" class="mb-3">{{ formError }}</va-alert>
+        <va-input
+          v-model="form.name"
+          label="Nome"
+          class="mb-3"
+          :error-messages="formFieldErrors.name"
+          @update:model-value="clearFormField('name')"
+        />
+        <va-input
+          v-model="form.slug"
+          label="Slug"
+          class="mb-3"
+          :error-messages="formFieldErrors.slug"
+          @update:model-value="clearFormField('slug')"
+        />
+        <va-select
+          v-model="form.type"
+          :options="types"
+          valueBy="value"
+          textBy="text"
+          label="Tipo / rede"
+          class="mb-3"
+        />
+      </div>
     </va-modal>
   </div>
 </template>
@@ -174,7 +180,8 @@
 import { computed, onMounted, reactive, ref } from 'vue'
 import ZButton from '~/components/atoms/Buttons/ZButton.vue'
 import ZReferralCopyButton from '~/components/molecules/Acquisition/ZReferralCopyButton.vue'
-import { channelTypeLabel } from '~/utils/acquisitionChannel'
+import { applyApiValidationErrors, channelTypeLabel, formErrorFromApi } from '~/utils/acquisitionChannel'
+import { confirmSuccess } from '~/utils/sweetAlert2/swalHelper'
 import '~/assets/css/acquisition-admin.css'
 
 definePageMeta({ layout: 'logged' })
@@ -325,7 +332,7 @@ async function goToPage(nextPage) {
   }
 }
 
-async function submitCreate() {
+async function submitCreate(hide) {
   saving.value = true
   formError.value = ''
   Object.keys(formFieldErrors).forEach((field) => {
@@ -339,16 +346,12 @@ async function submitCreate() {
         type: form.type,
       }),
     })
-    creating.value = false
+    hide()
     await load()
+    confirmSuccess('Link criado com sucesso.')
   } catch (reason) {
-    formError.value = reason instanceof Error ? reason.message : 'Não foi possível criar o link.'
-    const errors = reason?.response?.errors
-    if (errors && typeof errors === 'object') {
-      Object.entries(errors).forEach(([field, messages]) => {
-        formFieldErrors[field] = Array.isArray(messages) ? messages[0] : String(messages)
-      })
-    }
+    applyApiValidationErrors(formFieldErrors, reason)
+    formError.value = formErrorFromApi(reason, 'Não foi possível criar o link.')
   } finally {
     saving.value = false
   }

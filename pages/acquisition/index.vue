@@ -97,50 +97,57 @@
       </va-card-content>
     </va-card>
 
-    <va-modal v-model="creating" title="Novo canal" size="small">
-      <va-alert v-if="formError" color="danger" class="mb-3">{{ formError }}</va-alert>
-      <va-input
-        v-model="form.name"
-        label="Nome"
-        class="mb-3"
-        :error-messages="formFieldErrors.name"
-        @update:model-value="clearFormField('name')"
-      />
-      <va-input
-        v-model="form.slug"
-        label="Slug"
-        class="mb-3"
-        :error-messages="formFieldErrors.slug"
-        @update:model-value="clearFormField('slug')"
-      />
-      <va-select
-        v-model="form.type"
-        :options="types"
-        valueBy="value"
-        textBy="text"
-        label="Tipo"
-        class="mb-3"
-      />
-      <va-input
-        v-if="needsPortal"
-        v-model="form.email"
-        label="E-mail do portal"
-        class="mb-3"
-        :error-messages="formFieldErrors.email"
-        @update:model-value="clearFormField('email')"
-      />
-      <va-input
-        v-if="needsPortal"
-        v-model="form.password"
-        type="password"
-        label="Senha do portal"
-        :error-messages="formFieldErrors.password"
-        @update:model-value="clearFormField('password')"
-      />
-      <template #footer>
-        <ZButton @click="creating = false">Cancelar</ZButton>
-        <ZButton color="primary" data-test="save-channel" :loading="saving" @click="submit">Salvar</ZButton>
-      </template>
+    <va-modal
+      v-model="creating"
+      title="Novo canal"
+      size="small"
+      ok-text="Salvar"
+      :cancel-text="$t('button_cancel')"
+      :beforeOk="submit"
+      :ok-props="{ loading: saving, disabled: saving, 'data-test': 'save-channel' }"
+    >
+      <div class="acq-modal-fields">
+        <va-alert v-if="formError" color="danger" class="mb-3">{{ formError }}</va-alert>
+        <va-input
+          v-model="form.name"
+          label="Nome"
+          class="mb-3"
+          :error-messages="formFieldErrors.name"
+          @update:model-value="clearFormField('name')"
+        />
+        <va-input
+          v-model="form.slug"
+          label="Slug"
+          class="mb-3"
+          :error-messages="formFieldErrors.slug"
+          @update:model-value="clearFormField('slug')"
+        />
+        <va-select
+          v-model="form.type"
+          :options="types"
+          valueBy="value"
+          textBy="text"
+          label="Tipo"
+          class="mb-3"
+        />
+        <va-input
+          v-if="needsPortal"
+          v-model="form.email"
+          label="E-mail do portal"
+          class="mb-3"
+          :error-messages="formFieldErrors.email"
+          @update:model-value="clearFormField('email')"
+        />
+        <va-input
+          v-if="needsPortal"
+          v-model="form.password"
+          type="password"
+          label="Senha do portal"
+          messages="Mínimo de 8 caracteres"
+          :error-messages="formFieldErrors.password"
+          @update:model-value="clearFormField('password')"
+        />
+      </div>
     </va-modal>
   </div>
 </template>
@@ -149,7 +156,15 @@
 import { computed, onMounted, reactive, ref, watch } from 'vue'
 import ZButton from '~/components/atoms/Buttons/ZButton.vue'
 import ZReferralCopyButton from '~/components/molecules/Acquisition/ZReferralCopyButton.vue'
-import { acquisitionChannelsQuery, channelTypeLabel, CHANNEL_TYPE_LABELS } from '~/utils/acquisitionChannel'
+import {
+  acquisitionChannelsQuery,
+  applyApiValidationErrors,
+  CHANNEL_TYPE_LABELS,
+  channelTypeLabel,
+  formErrorFromApi,
+  portalPasswordError,
+} from '~/utils/acquisitionChannel'
+import { confirmSuccess } from '~/utils/sweetAlert2/swalHelper'
 import '~/assets/css/acquisition-admin.css'
 
 definePageMeta({ layout: 'logged' })
@@ -248,12 +263,24 @@ async function load(nextPage = 1) {
   }
 }
 
-async function submit() {
+async function submit(hide) {
   saving.value = true
   formError.value = ''
   Object.keys(formFieldErrors).forEach((field) => {
     delete formFieldErrors[field]
   })
+
+  if (needsPortal.value) {
+    const passwordError = portalPasswordError(form.password)
+    if (passwordError) {
+      formFieldErrors.password = passwordError
+      formError.value = passwordError
+      saving.value = false
+
+      return
+    }
+  }
+
   try {
     await $customFetch('/acquisition-channels', 'POST', {
       body: JSON.stringify({
@@ -264,17 +291,13 @@ async function submit() {
         password: form.password || undefined,
       }),
     })
-    creating.value = false
+    hide()
     resetCreateForm()
     await load(1)
+    confirmSuccess('Canal criado com sucesso.')
   } catch (reason) {
-    formError.value = reason instanceof Error ? reason.message : 'Não foi possível salvar o canal.'
-    const errors = reason?.response?.errors
-    if (errors && typeof errors === 'object') {
-      Object.entries(errors).forEach(([field, messages]) => {
-        formFieldErrors[field] = Array.isArray(messages) ? messages[0] : String(messages)
-      })
-    }
+    applyApiValidationErrors(formFieldErrors, reason)
+    formError.value = formErrorFromApi(reason, 'Não foi possível salvar o canal.')
   } finally {
     saving.value = false
   }

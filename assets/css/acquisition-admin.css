@@ -196,6 +196,14 @@
   text-overflow: ellipsis;
   white-space: nowrap;
 }
+.acq-modal-fields {
+  display: flex;
+  flex-direction: column;
+}
+.acq-modal-fields .va-input,
+.acq-modal-fields .va-select {
+  width: 100%;
+}
 
 @media (max-width: 800px) {
   .acq-filters__search,
