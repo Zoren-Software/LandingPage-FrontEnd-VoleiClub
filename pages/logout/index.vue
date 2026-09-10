@@ -21,6 +21,7 @@
 import { ref, onMounted } from "vue";
 import { useRouter } from "vue-router";
 import { confirmSuccess, confirmError } from "~/utils/sweetAlert2/swalHelper";
+import { clearLandingSession } from "~/utils/landingSession.js";
 
 definePageMeta({
   layout: "default",
@@ -61,8 +62,7 @@ const performLogout = async () => {
     });
 
     // Limpa o localStorage
-    localStorage.removeItem("userToken");
-    localStorage.removeItem("email");
+    clearLandingSession();
     isLoggingOut.value = false;
 
     // Mostra mensagem e redireciona após fechar
@@ -71,8 +71,7 @@ const performLogout = async () => {
     });
   } catch (error) {
     // Em caso de erro, ainda limpa localmente
-    localStorage.removeItem("userToken");
-    localStorage.removeItem("email");
+    clearLandingSession();
     isLoggingOut.value = false;
 
     confirmError(error.message || "Erro ao fazer logout", () => {

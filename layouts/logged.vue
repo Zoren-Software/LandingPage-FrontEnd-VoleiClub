@@ -43,6 +43,30 @@
             $t("menu_title_home")
           }}</va-navbar-item>
           <va-navbar-item
+            v-if="!isPartner"
+            @click="routeLeads()"
+            class="va-button"
+            >{{ $t("menu_title_leads") }}</va-navbar-item
+          >
+          <va-navbar-item
+            v-if="!isPartner"
+            @click="routeAcquisition()"
+            class="hidden va-button sm:block"
+            >{{ $t("menu_title_acquisition") }}</va-navbar-item
+          >
+          <va-navbar-item
+            v-if="!isPartner"
+            @click="routeAcquisitionDashboard()"
+            class="hidden va-button sm:block"
+            >{{ $t("menu_title_acquisition_dashboard") }}</va-navbar-item
+          >
+          <va-navbar-item
+            v-if="isPartner"
+            @click="routePartner()"
+            class="va-button"
+            >{{ $t("menu_title_partner") }}</va-navbar-item
+          >
+          <va-navbar-item
             @click="routeRegister()"
             class="hidden va-button sm:block"
             >{{ $t("menu_title_register") }}</va-navbar-item
@@ -104,13 +128,19 @@
 import { ref } from "vue";
 import { useRouter } from "vue-router";
 import { useI18n } from "#imports";
+import { clearLandingSession, isPartnerSession } from "~/utils/landingSession.js";
 
 const router = useRouter();
 const showSidebar = ref(false);
+const isPartner = ref(false);
 const { $customFetch } = useNuxtApp();
 import { confirmSuccess, confirmError } from "~/utils/sweetAlert2/swalHelper";
 
 const { locale } = useI18n();
+
+if (typeof localStorage !== "undefined") {
+  isPartner.value = isPartnerSession();
+}
 
 // Carregar o idioma do localStorage ou usar 'en' como padrão
 if (!localStorage.getItem("selectedLanguage")) {
@@ -160,6 +190,22 @@ const routeHome = () => {
   router.push("/");
 };
 
+const routeLeads = () => {
+  router.push("/leads");
+};
+
+const routeAcquisition = () => {
+  router.push("/acquisition");
+};
+
+const routeAcquisitionDashboard = () => {
+  router.push("/acquisition/dashboard");
+};
+
+const routePartner = () => {
+  router.push("/partner");
+};
+
 const goToIndex = () => {
   router.push("/");
 };
@@ -182,8 +228,7 @@ const routeLogout = () => {
   })
     .then((response) => {
       // Limpa dados primeiro
-      localStorage.removeItem("userToken");
-      localStorage.removeItem("email");
+      clearLandingSession();
 
       // Mostra mensagem e redireciona após fechar
       confirmSuccess(response.message || "Logout efetuado com sucesso!", () => {
@@ -192,8 +237,7 @@ const routeLogout = () => {
     })
     .catch((error) => {
       // Em caso de erro na API, ainda limpa localmente
-      localStorage.removeItem("userToken");
-      localStorage.removeItem("email");
+      clearLandingSession();
 
       confirmError(error.message || "Erro ao fazer logout", () => {
         router.push("/");

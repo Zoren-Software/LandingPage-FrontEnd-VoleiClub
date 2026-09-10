@@ -52,6 +52,7 @@ import ZButton from "~/components/atoms/Buttons/ZButton";
 const { $customFetch } = useNuxtApp();
 import { ref } from "vue";
 import { confirmSuccess, confirmError } from "~/utils/sweetAlert2/swalHelper";
+import { homePath, saveUserRole } from "~/utils/landingSession.js";
 
 const email = ref("");
 const password = ref("");
@@ -82,12 +83,13 @@ const login = async () => {
     // Salva os dados de autenticação primeiro
     localStorage.setItem("userToken", response.token);
     localStorage.setItem("email", email.value);
+    saveUserRole(response.data?.role);
     success.value = true;
     successMessage.value = ["Login efetuado com sucesso!"];
 
     // Mostra mensagem de sucesso e redireciona após o usuário fechar o alerta
     confirmSuccess(response.message || "Login efetuado com sucesso!", () => {
-      navigateTo("/leads");
+      navigateTo(homePath());
     });
   } catch (errorLog) {
     error.value = true;
