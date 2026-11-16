@@ -13,7 +13,8 @@
     "test": "vitest run",
     "test:watch": "vitest",
     "orca:setup": "node scripts/orca-setup.mjs",
-    "orca:clean": "node scripts/orca-clean.mjs"
+    "orca:clean": "node scripts/orca-clean.mjs",
+    "orca:selftest": "node scripts/orca-selftest.mjs"
   },
   "devDependencies": {
     "@nuxt/devtools": "^1.2.0",
