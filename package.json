@@ -11,7 +11,9 @@
     "postinstall": "nuxt prepare",
     "update-browserslist": "npx update-browserslist-db@latest",
     "test": "vitest run",
-    "test:watch": "vitest"
+    "test:watch": "vitest",
+    "orca:setup": "node scripts/orca-setup.mjs",
+    "orca:clean": "node scripts/orca-clean.mjs"
   },
   "devDependencies": {
     "@nuxt/devtools": "^1.2.0",
